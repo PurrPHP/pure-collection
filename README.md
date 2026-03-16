@@ -20,17 +20,19 @@ CollectionInterface
     └── AbstractMap      (associative array)
 ```
 
+Inspired by Kotlin [collections](https://kotlinlang.org/docs/collections-overview.html).
+
 ## Available Classes
 
-| Class | Description |
-|-------|-------------|
-| `IntList` | Ordered list of integers |
+| Class | Description                                 |
+|-------|---------------------------------------------|
+| `IntList` | List of integers                            |
 | `IntSet` | Unique list of integers with set operations |
-| `IntUniqueNotEmptyList` | Non-empty unique list of integers |
-| `IntMap` | Associative map of integers |
-| `StringList` | Ordered list of strings |
-| `StringSet` | Unique list of strings with set operations |
-| `StringNotEmptySet` | Non-empty unique list of strings |
+| `IntUniqueNotEmptyList` | Non-empty unique list of integers           |
+| `IntMap` | Associative map of integers                 |
+| `StringList` | List of strings                             |
+| `StringSet` | Unique list of strings with set operations  |
+| `StringNotEmptySet` | Non-empty unique list of strings            |
 
 ## Usage
 
@@ -48,6 +50,7 @@ $sorted  = $numbers->sorted(fn(int $a, int $b): int => $b <=> $a);
 
 $numbers->count();      // 5
 $numbers->isEmpty();    // false
+$numbers->isNotEmpty(); // true
 $numbers->max();        // 5
 $numbers->min();        // 1
 ```
@@ -89,10 +92,10 @@ $map->groupBy(fn(int $v): string => $v % 2 === 0 ? 'even' : 'odd');
 All collections implement `CollectionInterface`:
 
 ```php
-$collection->findFirst();                    // first item (or null)
+$collection->findFirst();                   // first item (or null)
 $collection->findFirst(fn($x) => ...);      // first matching item
-$collection->findLast();                     // last item (or null)
-$collection->findFirstAfter($needle);        // item after $needle
+$collection->findLast();                    // last item (or null)
+$collection->findFirstAfter($needle);       // item after $needle
 $collection->contains($value);              // bool
 $collection->any(fn($x) => ...);            // bool — any match
 $collection->all(fn($x) => ...);            // bool — all match
@@ -104,8 +107,8 @@ $collection->reduce(fn($carry, $x) => ..., $initial); // scalar
 $collection->sorted(fn($a, $b) => ...);     // new sorted collection
 $collection->slice($offset, $limit);        // new sliced collection
 $collection->unique();                      // new deduplicated collection
-$collection->chunks($size);                // array of collections
-$collection->groupBy(fn($x) => ...);       // grouped array
+$collection->chunks($size);                 // array of collections
+$collection->groupBy(fn($x) => ...);        // grouped array
 $collection->flattenGroupBy(fn($x) => ...); // keyed array
 $collection->toArray();                     // plain PHP array
 $collection->count();                       // int
@@ -126,6 +129,19 @@ class DateSet extends AbstractSet
     public function __construct(\DateTimeImmutable ...$dates)
     {
         parent::__construct($dates);
+    }
+    
+    /**
+     * @inheritDoc
+     */
+    protected function filterUniqValues(array $items) {
+        $u = [];
+        
+        foreach ($items as $item){
+            $u[$item->getTimeStamp()] = $item;
+        }
+        
+        return new self(...$u);
     }
 }
 ```
