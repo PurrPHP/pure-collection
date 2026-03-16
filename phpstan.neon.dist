@@ -1,0 +1,18 @@
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+
+    excludePaths:
+        - vendor
+        - coverage
+
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+
+    ignoreErrors:
+        # Add specific ignores here if needed
+
+    bootstrapFiles:
+        - vendor/autoload.php
