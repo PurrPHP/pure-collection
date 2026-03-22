@@ -11,12 +11,6 @@ help: ## Show this help message
 build: ## Build Docker image for development
 	docker build --target development -t $(DEV_IMAGE) .
 
-build-prod: ## Build production Docker image
-	docker build --target production -t $(PROD_IMAGE) .
-
-test: build ## Run PHPUnit tests in Docker container
-	docker run --rm $(DEV_IMAGE) composer test
-
 test-coverage: build ## Run tests with coverage report in Docker container
 	docker run --rm -v $(PWD)/coverage:/app/coverage $(DEV_IMAGE) composer test-coverage
 
@@ -35,17 +29,8 @@ cs-fix: build ## Fix code style issues in Docker container (copy changes out)
 analyse: build ## Run static analysis in Docker container
 	docker run --rm $(DEV_IMAGE) composer analyse
 
-refactor: build ## Run code refactoring in Docker container (copy changes out)
-	docker run --name temp-refactor $(DEV_IMAGE) composer refactor; \
-	docker cp temp-refactor:/app/src/. ./src/ 2>/dev/null || true; \
-	docker cp temp-refactor:/app/tests/. ./tests/ 2>/dev/null || true; \
-	docker rm temp-refactor
-
 check: build ## Run all checks (style, analysis, tests) in Docker container
 	docker run --rm $(DEV_IMAGE) composer check
-
-test-php: ## Run tests on PHP 8.3 (standalone, no Docker image required)
-	docker run --rm -v $(PWD):/app -w /app php:8.3-cli-alpine sh -c "apk add --no-cache git unzip curl zip && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && composer install --dev --no-interaction && composer test"
 
 shell: build ## Open interactive shell in development container
 	docker run --rm -it $(DEV_IMAGE) sh

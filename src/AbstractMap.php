@@ -22,5 +22,4 @@ abstract class AbstractMap extends AbstractCollection
 
         return $result;
     }
-
 }
