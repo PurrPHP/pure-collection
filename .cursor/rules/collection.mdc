@@ -1,31 +1,31 @@
 ---
-description: Паттерны и соглашения библиотеки purrphp/collection для создания новых коллекций
+description: Patterns and conventions of the purrphp/collection library for creating new collections
 globs: src/**/*.php
 alwaysApply: false
 ---
 
-# purrphp/collection — паттерны расширения
+# purrphp/collection — extension patterns
 
-## Иерархия классов
+## Class hierarchy
 
 ```
 AbstractCollection
-├── AbstractList     — упорядоченный список (array_values, числовые ключи)
-│   ├── AbstractSet  — множество (дедупликация в конструкторе)
+├── AbstractList     — ordered list (array_values, numeric keys)
+│   ├── AbstractSet  — set (deduplication in constructor)
 │   └── ...List / ...NotEmptyList
-└── AbstractMap      — ассоциативная карта (string/int ключи)
-    └── AbstractMutableMap  — мутабельная карта (ArrayAccess)
+└── AbstractMap      — associative map (string/int keys)
+    └── AbstractMutableMap  — mutable map (ArrayAccess)
 ```
 
-**Когда что использовать:**
-- `AbstractList` — порядок важен, дубли допустимы
-- `AbstractSet` — уникальность элементов, порядок не важен
-- `AbstractMap` — ключ → значение, неизменяемый
-- `AbstractMutableMap` — ключ → значение с ArrayAccess-мутацией
+**When to use which:**
+- `AbstractList` — order matters, duplicates are allowed
+- `AbstractSet` — unique elements, order does not matter
+- `AbstractMap` — key → value, immutable
+- `AbstractMutableMap` — key → value with ArrayAccess mutation
 
-## Создание новой коллекции
+## Creating a new collection
 
-### Минимальный List
+### Minimal List
 
 ```php
 /** @template-extends AbstractList<MyType> */
@@ -38,22 +38,7 @@ class MyTypeList extends AbstractList
 }
 ```
 
-### Целочисленная коллекция — подключить IntCollectionTrait
-
-```php
-/** @template-extends AbstractList<int> */
-class MyIntList extends AbstractList implements IntCollectionInterface
-{
-    use IntCollectionTrait; // даёт max(), min(), avg(), sum(), notZeroValues()
-
-    public function __construct(int ...$numbers)
-    {
-        parent::__construct($numbers);
-    }
-}
-```
-
-### NotEmpty-вариант
+### NotEmpty variant
 
 ```php
 class MyTypeNotEmptyList extends MyTypeList
@@ -71,29 +56,29 @@ class MyTypeNotEmptyList extends MyTypeList
 }
 ```
 
-## Иммутабельность
+## Immutability
 
-Все методы, возвращающие `static`, создают **новый экземпляр**:
+All methods returning `static` must create a **new instance**:
 
 ```php
-// ✅ Правильно
+// ✅ Correct
 return new static(...$filteredItems);
 
-// ❌ Неправильно — мутация $this->collection
+// ❌ Incorrect — mutates $this->collection
 $this->collection = $filteredItems;
 ```
 
-## Psalm-аннотации (обязательны)
+## Psalm annotations (required)
 
 ```php
-/** @template-extends AbstractList<MyType> */        // для List/Set
-/** @template-extends AbstractCollection<string, MyType> */ // для Map
-/** @template-implements CollectionInterface<MyType> */ // на интерфейсе
+/** @template-extends AbstractList<MyType> */        // for List/Set
+/** @template-extends AbstractCollection<string, MyType> */ // for Map
+/** @template-implements CollectionInterface<MyType> */ // on interfaces
 ```
 
-## filterUniqValues в Set-классах
+## filterUniqValues in Set classes
 
-Если нужна кастомная дедупликация (например, по полю объекта), переопределить:
+To customise deduplication (e.g. by an object field), override:
 
 ```php
 protected function filterUniqValues(array $items): array
@@ -106,6 +91,6 @@ protected function filterUniqValues(array $items): array
 }
 ```
 
-## Исключения
+## Exceptions
 
-Использовать `Purr\Collection\Exception\InvalidArgumentException` (расширяет `\InvalidArgumentException`).
+Use `Purr\Collection\Exception\InvalidArgumentException` (extends `\InvalidArgumentException`).
