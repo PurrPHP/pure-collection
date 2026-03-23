@@ -1,0 +1,111 @@
+---
+description: Паттерны и соглашения библиотеки purrphp/collection для создания новых коллекций
+globs: src/**/*.php
+alwaysApply: false
+---
+
+# purrphp/collection — паттерны расширения
+
+## Иерархия классов
+
+```
+AbstractCollection
+├── AbstractList     — упорядоченный список (array_values, числовые ключи)
+│   ├── AbstractSet  — множество (дедупликация в конструкторе)
+│   └── ...List / ...NotEmptyList
+└── AbstractMap      — ассоциативная карта (string/int ключи)
+    └── AbstractMutableMap  — мутабельная карта (ArrayAccess)
+```
+
+**Когда что использовать:**
+- `AbstractList` — порядок важен, дубли допустимы
+- `AbstractSet` — уникальность элементов, порядок не важен
+- `AbstractMap` — ключ → значение, неизменяемый
+- `AbstractMutableMap` — ключ → значение с ArrayAccess-мутацией
+
+## Создание новой коллекции
+
+### Минимальный List
+
+```php
+/** @template-extends AbstractList<MyType> */
+class MyTypeList extends AbstractList
+{
+    public function __construct(MyType ...$items)
+    {
+        parent::__construct($items);
+    }
+}
+```
+
+### Целочисленная коллекция — подключить IntCollectionTrait
+
+```php
+/** @template-extends AbstractList<int> */
+class MyIntList extends AbstractList implements IntCollectionInterface
+{
+    use IntCollectionTrait; // даёт max(), min(), avg(), sum(), notZeroValues()
+
+    public function __construct(int ...$numbers)
+    {
+        parent::__construct($numbers);
+    }
+}
+```
+
+### NotEmpty-вариант
+
+```php
+class MyTypeNotEmptyList extends MyTypeList
+{
+    /**
+     * @throws \Purr\Collection\Exception\InvalidArgumentException
+     */
+    public function __construct(MyType ...$items)
+    {
+        if (!$items) {
+            throw new \Purr\Collection\Exception\InvalidArgumentException('Items are empty');
+        }
+        parent::__construct(...$items);
+    }
+}
+```
+
+## Иммутабельность
+
+Все методы, возвращающие `static`, создают **новый экземпляр**:
+
+```php
+// ✅ Правильно
+return new static(...$filteredItems);
+
+// ❌ Неправильно — мутация $this->collection
+$this->collection = $filteredItems;
+```
+
+## Psalm-аннотации (обязательны)
+
+```php
+/** @template-extends AbstractList<MyType> */        // для List/Set
+/** @template-extends AbstractCollection<string, MyType> */ // для Map
+/** @template-implements CollectionInterface<MyType> */ // на интерфейсе
+```
+
+## filterUniqValues в Set-классах
+
+Если нужна кастомная дедупликация (например, по полю объекта), переопределить:
+
+```php
+protected function filterUniqValues(array $items): array
+{
+    $seen = [];
+    return array_filter($items, function ($item) use (&$seen) {
+        $key = $item->getId();
+        return isset($seen[$key]) ? false : ($seen[$key] = true);
+    });
+}
+```
+
+## Исключения
+
+Использовать `Purr\Collection\Exception\InvalidArgumentException` (расширяет `\InvalidArgumentException`).

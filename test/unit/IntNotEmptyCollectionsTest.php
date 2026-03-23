@@ -10,18 +10,12 @@ use Purr\Collection\IntNotEmptyList;
 use Purr\Collection\IntNotEmptySet;
 
 #[CoversClass(IntNotEmptyList::class)]
-final class IntUniqueNotEmptyListTest extends TestCase
+#[CoversClass(IntNotEmptySet::class)]
+final class IntNotEmptyCollectionsTest extends TestCase
 {
     public function testUnique_Constructed_ReturnsUniqueSet(): void
     {
-        $list = new IntNotEmptySet(
-            1,
-            2,
-            3,
-            4,
-            2,
-            3,
-        );
+        $list = new IntNotEmptySet(1, 2, 3, 4, 2, 3);
 
         self::assertSame([1, 2, 3, 4], $list->unique()->toArray());
     }
@@ -32,6 +26,14 @@ final class IntUniqueNotEmptyListTest extends TestCase
         $this->expectExceptionMessage('Numbers are empty');
 
         new IntNotEmptyList();
+    }
+
+    public function testConstructor_EmptySet_throwsInvalidArgumentException(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Numbers are empty');
+
+        new IntNotEmptySet();
     }
 
     public function testMax_Constructed_ReturnsMax(): void

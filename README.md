@@ -26,7 +26,8 @@ CollectionInterface
 |-------|---------------------------------------------|
 | `IntList` | List of integers                            |
 | `IntSet` | Unique list of integers with set operations |
-| `IntUniqueNotEmptyList` | Non-empty unique list of integers           |
+| `IntNotEmptyList` | Non-empty list of integers                  |
+| `IntNotEmptySet` | Non-empty unique list of integers           |
 | `IntMap` | Associative map of integers                 |
 | `StringList` | List of strings                             |
 | `StringSet` | Unique list of strings with set operations  |
@@ -62,7 +63,7 @@ use Purr\Collection\StringSet;
 $set = new IntSet(1, 2, 3, 2, 1); // duplicates are removed
 $set->toArray();                   // [1, 2, 3]
 
-$ids = IntSet::fromString('1,2,3', delimeter: ',');
+$ids = IntSet::fromString('1,2,3', separator: ',');
 $ids->join(',');                   // "1,2,3"
 
 $tags = new StringSet('php', 'oop', 'php');
@@ -84,6 +85,9 @@ $map = new IntMap(...['a' => 1, 'b' => 2, 'c' => 3]);
 $map->filter(fn(int $v): bool => $v > 1)->toArray(); // ['b' => 2, 'c' => 3]
 $map->groupBy(fn(int $v): string => $v % 2 === 0 ? 'even' : 'odd');
 ```
+
+### Mutable collections
+// todo describe
 
 ### Common Operations
 

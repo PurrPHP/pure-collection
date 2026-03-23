@@ -8,6 +8,9 @@ use Purr\Collection\Exception\InvalidArgumentException;
 
 class IntNotEmptySet extends IntSet
 {
+    /**
+     * @throws InvalidArgumentException when no numbers provided
+     */
     public function __construct(int ...$numbers)
     {
         if (!$numbers) {

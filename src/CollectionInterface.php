@@ -14,8 +14,8 @@ use Iterator;
 interface CollectionInterface extends \Countable, Iterator
 {
     /**
-     * If predicate provided returns last collection item satisfied predicate.
-     * Without predicate returns last item from collection.
+     * If predicate provided returns first collection item satisfied predicate.
+     * Without predicate returns first item from collection.
      *
      * @param null|callable(TValue): bool $predicate
      *

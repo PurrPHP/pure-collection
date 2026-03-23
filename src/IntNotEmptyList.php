@@ -7,6 +7,9 @@ use Purr\Collection\Exception\InvalidArgumentException;
 
 class IntNotEmptyList extends IntList
 {
+    /**
+     * @throws InvalidArgumentException when no numbers provided
+     */
     public function __construct(int ...$numbers)
     {
         if (!$numbers) {

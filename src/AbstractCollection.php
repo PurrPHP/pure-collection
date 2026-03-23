@@ -69,7 +69,7 @@ abstract class AbstractCollection implements CollectionInterface
          */
         $nextKey = $keys[$keyPosition + 1] ?? null;
 
-        return $nextKey ? $this->collection[$nextKey] : null;
+        return $nextKey !== null ? $this->collection[$nextKey] : null;
     }
 
     /**

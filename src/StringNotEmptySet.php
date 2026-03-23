@@ -8,6 +8,9 @@ use Purr\Collection\Exception\InvalidArgumentException;
 
 class StringNotEmptySet extends StringSet
 {
+    /**
+     * @throws InvalidArgumentException when no strings provided
+     */
     public function __construct(string ...$strings)
     {
         if (!$strings) {
