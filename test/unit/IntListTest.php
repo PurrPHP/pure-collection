@@ -12,7 +12,7 @@ use Purr\Collection\IntList;
 #[CoversClass(IntList::class)]
 class IntListTest extends TestCase
 {
-    public function testConstructorMapProvidedReturnsTargetList(): void
+    public function testConstructor_MapProvided_ReturnsTargetList(): void
     {
         $list = new IntList(...[1, 2]);
 
@@ -20,7 +20,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindFirst')]
-    public function testFindFirstConstructedReturnsTargetValue(
+    public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?int $result,
         ?callable $predicate,
         array $source
@@ -42,7 +42,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindFirstAfter')]
-    public function testFindFirstAfterConstructedReturnsTargetValue(
+    public function testFindFirstAfter_WithNeedle_ReturnsTargetValue(
         ?int $result,
         int $needle,
         array $source
@@ -63,7 +63,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindLast')]
-    public function testFindLastConstructedReturnsTargetValue(?int $result, array $source): void
+    public function testFindLast_Constructed_ReturnsTargetValue(?int $result, array $source): void
     {
         $list = new IntList(...$source);
 
@@ -80,7 +80,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerContains')]
-    public function testContainsConstructedReturnsTargetValue(bool $result, int $needle, array $source): void
+    public function testContains_WithNeedle_ReturnsTargetBool(bool $result, int $needle, array $source): void
     {
         $list = new IntList(...$source);
 
@@ -97,7 +97,7 @@ class IntListTest extends TestCase
         ];
     }
 
-    public function testFilterConstructedReturnsTargetList(): void
+    public function testFilter_MultipleFilters_ReturnsFilteredList(): void
     {
         $list = new IntList(1, 2, 3, 4, 5);
 
@@ -107,7 +107,7 @@ class IntListTest extends TestCase
         self::assertSame([1, 3, 5], $list->filter($filter1, $filter2)->toArray());
     }
 
-    public function testFilterOneItemAfterFilterReturnsTargetList(): void
+    public function testFilter_OneItemRemains_ReturnsOneItemList(): void
     {
         $list = new IntList(1, 2);
 
@@ -116,7 +116,7 @@ class IntListTest extends TestCase
         self::assertSame([1], $list->filter($filter1)->toArray());
     }
 
-    public function testFilterFilterRemovesAllReturnsEmptyList(): void
+    public function testFilter_AllRemoved_ReturnsEmptyList(): void
     {
         $list = new IntList(1);
 
@@ -125,7 +125,7 @@ class IntListTest extends TestCase
         self::assertSame([], $list->filter($filter1)->toArray());
     }
 
-    public function testFilterNotConstructedReturnsTargetList(): void
+    public function testFilterNot_MultipleFilters_ReturnsFilteredList(): void
     {
         $list = new IntList(1, 2, 3, 4, 5);
 
@@ -135,7 +135,7 @@ class IntListTest extends TestCase
         self::assertSame([1, 3, 5], $list->filterNot($filter1, $filter2)->toArray());
     }
 
-    public function testFilterNotOneItemAfterFilterReturnsTargetList(): void
+    public function testFilterNot_OneItemRemains_ReturnsOneItemList(): void
     {
         $list = new IntList(1, 2);
 
@@ -144,7 +144,7 @@ class IntListTest extends TestCase
         self::assertSame([1], $list->filterNot($filter1)->toArray());
     }
 
-    public function testFilterNotFilterRemovesAllReturnsEmptyList(): void
+    public function testFilterNot_AllRemoved_ReturnsEmptyList(): void
     {
         $list = new IntList(1);
 
@@ -153,14 +153,14 @@ class IntListTest extends TestCase
         self::assertSame([], $list->filterNot($filter1)->toArray());
     }
 
-    public function testMapConstructedReturnsTargetMap(): void
+    public function testMap_Constructed_ReturnsTargetArray(): void
     {
         $list = new IntList(1, 2);
 
         self::assertSame([2, 3], $list->map(fn (int $i): int => $i + 1));
     }
 
-    public function testGroupByConstructedReturnsTargetMap(): void
+    public function testGroupBy_Constructed_ReturnsGroupedMap(): void
     {
         $list = new IntList(
             ...[1, 2, 3, 4]
@@ -179,7 +179,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerSorted')]
-    public function testSortedAscToDescReturnsTargetList(array $result, array $source): void
+    public function testSorted_AscToDesc_ReturnsDescList(array $result, array $source): void
     {
         $list = new IntList(...$source);
 
@@ -196,7 +196,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerSlice')]
-    public function testSliceConstructedReturnsTargetValue(
+    public function testSlice_WithOffsetAndLimit_ReturnsTargetList(
         array $result,
         array $source,
         int $offset,
@@ -217,7 +217,7 @@ class IntListTest extends TestCase
         ];
     }
 
-    public function testToArrayConstructedReturnsGivenList(): void
+    public function testToArray_Constructed_ReturnsGivenList(): void
     {
         $list = new IntList(1, 2, 3);
 
@@ -225,7 +225,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerUnique')]
-    public function testUniqueSomeValuesReturnsTargetList(array $result, array $source): void
+    public function testUnique_SomeValues_ReturnsUniqueList(array $result, array $source): void
     {
         $list = new IntList(...$source);
 
@@ -241,49 +241,49 @@ class IntListTest extends TestCase
         ];
     }
 
-    public function testCountTwoElementsReturnsTwo(): void
+    public function testCount_TwoElements_ReturnsTwo(): void
     {
         $list = new IntList(1, 2);
 
         self::assertSame(2, $list->count());
     }
 
-    public function testIsEmptyEmptyReturnsTrue(): void
+    public function testIsEmpty_Empty_ReturnsTrue(): void
     {
         $list = new IntList();
 
         self::assertTrue($list->isEmpty());
     }
 
-    public function testIsEmptyNotEmptyReturnsFalse(): void
+    public function testIsEmpty_NotEmpty_ReturnsFalse(): void
     {
         $list = new IntList(1);
 
         self::assertFalse($list->isEmpty());
     }
 
-    public function testIsNotEmptyNotEmptyReturnsTrue(): void
+    public function testIsNotEmpty_NotEmpty_ReturnsTrue(): void
     {
         $list = new IntList(1);
 
         self::assertTrue($list->isNotEmpty());
     }
 
-    public function testIsNotEmptyEmptyReturnsFalse(): void
+    public function testIsNotEmpty_Empty_ReturnsFalse(): void
     {
         $list = new IntList();
 
         self::assertFalse($list->isNotEmpty());
     }
 
-    public function testToStringSetConstructedReturnsTargetList(): void
+    public function testToStringSet_Constructed_ReturnsTargetStringSet(): void
     {
         $list = new IntList(1, 2, 3, 4);
 
         self::assertSame(['1', '2', '3', '4'], $list->toStringSet()->toArray());
     }
 
-    public function testChunkConstructedReturnsTargetList(): void
+    public function testChunks_Constructed_ReturnsTargetChunks(): void
     {
         $list = new IntList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
@@ -295,7 +295,7 @@ class IntListTest extends TestCase
         );
     }
 
-    public function testChunksSingleElementReturnsIntListChunk(): void
+    public function testChunks_SingleElement_ReturnsIntListInstance(): void
     {
         $list = new IntList(1);
 
@@ -304,21 +304,21 @@ class IntListTest extends TestCase
         self::assertInstanceOf(IntList::class, $result[0]);
     }
 
-    public function testDestructSomeListReturnsSourceValues(): void
+    public function testDestruct_SomeList_ReturnsSourceValues(): void
     {
         $list = new IntList(1, 2, 3);
 
         self::assertSame([1, 2, 3], [...$list]);
     }
 
-    public function testMaxConstructedReturnsMax(): void
+    public function testMax_Constructed_ReturnsMax(): void
     {
         $list = new IntList(1, 2, 3, 4, 2, 3);
 
         self::assertSame(4, $list->max());
     }
 
-    public function testMinConstructedReturnsMin(): void
+    public function testMin_Constructed_ReturnsMin(): void
     {
         $list = new IntList(2, 3, 4, 2, 1);
 

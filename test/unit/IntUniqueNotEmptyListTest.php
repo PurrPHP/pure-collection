@@ -7,13 +7,14 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Purr\Collection\IntNotEmptyList;
+use Purr\Collection\IntNotEmptySet;
 
 #[CoversClass(IntNotEmptyList::class)]
 final class IntUniqueNotEmptyListTest extends TestCase
 {
-    public function testUniqueConstructedReturnsUniqList(): void
+    public function testUnique_Constructed_ReturnsUniqueSet(): void
     {
-        $list = new IntNotEmptyList(
+        $list = new IntNotEmptySet(
             1,
             2,
             3,
@@ -25,7 +26,7 @@ final class IntUniqueNotEmptyListTest extends TestCase
         self::assertSame([1, 2, 3, 4], $list->unique()->toArray());
     }
 
-    public function testConstructorEmptyListThrowsInvalidArgumentException(): void
+    public function testConstructor_EmptyList_throwsInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Numbers are empty');
@@ -33,16 +34,16 @@ final class IntUniqueNotEmptyListTest extends TestCase
         new IntNotEmptyList();
     }
 
-    public function testMaxConstructedReturnsMax(): void
+    public function testMax_Constructed_ReturnsMax(): void
     {
-        $list = new IntNotEmptyList(1, 2, 3, 4, 2, 3);
+        $list = new IntNotEmptySet(1, 2, 3, 4, 2, 3);
 
         self::assertSame(4, $list->max());
     }
 
-    public function testMinConstructedReturnsMin(): void
+    public function testMin_Constructed_ReturnsMin(): void
     {
-        $list = new IntNotEmptyList(2, 3, 4, 2, 1);
+        $list = new IntNotEmptySet(2, 3, 4, 2, 1);
 
         self::assertSame(1, $list->min());
     }

@@ -13,5 +13,9 @@ interface IntCollectionInterface extends CollectionInterface
 
     public function min(): ?int;
 
+    public function avg(): ?float;
+
+    public function sum(): int;
+
     public function notZeroValues(): static;
 }

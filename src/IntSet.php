@@ -9,6 +9,8 @@ namespace Purr\Collection;
  */
 class IntSet extends AbstractSet implements IntCollectionInterface
 {
+    use IntCollectionTrait;
+
     public function __construct(int ...$numbers)
     {
         parent::__construct($numbers);
@@ -36,18 +38,4 @@ class IntSet extends AbstractSet implements IntCollectionInterface
         return implode($separator, $this->collection);
     }
 
-    public function max(): ?int
-    {
-        return max($this->collection);
-    }
-
-    public function min(): ?int
-    {
-        return min($this->collection);
-    }
-
-    public function notZeroValues(): static
-    {
-        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
-    }
 }

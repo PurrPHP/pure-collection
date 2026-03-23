@@ -23,7 +23,7 @@ cs-check: build ## Check code style in Docker container
 cs-fix: build ## Fix code style issues in Docker container (copy changes out)
 	docker run --name temp-cs-fix $(DEV_IMAGE) composer cs-fix; \
 	docker cp temp-cs-fix:/app/src/. ./src/ 2>/dev/null || true; \
-	docker cp temp-cs-fix:/app/tests/. ./tests/ 2>/dev/null || true; \
+	docker cp temp-cs-fix:/app/test/. ./test/ 2>/dev/null || true; \
 	docker rm temp-cs-fix
 
 analyse: build ## Run static analysis in Docker container
@@ -49,7 +49,3 @@ update: build ## Update Composer dependencies in Docker container and copy out
 
 validate: build ## Validate composer.json in Docker container
 	docker run --rm $(DEV_IMAGE) composer validate --strict
-
-clean: ## Remove Docker images and clean up
-	-docker rmi $(DEV_IMAGE) $(PROD_IMAGE) 2>/dev/null || true
-	docker system prune -f

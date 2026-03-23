@@ -12,7 +12,7 @@ use Purr\Collection\IntMap;
 #[CoversClass(IntMap::class)]
 final class IntMapTest extends TestCase
 {
-    public function testConstructorListProvidedReturnsTargetList(): void
+    public function testConstructor_ListProvided_ReturnsTargetMap(): void
     {
         $map = new IntMap(1, 2);
 
@@ -20,7 +20,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerFindFirst')]
-    public function testFindFirstConstructedReturnsTargetValue(
+    public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?int $result,
         ?callable $predicate,
         array $source
@@ -44,7 +44,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerFindFirstAfter')]
-    public function testFindFirstAfterConstructedReturnsTargetValue(
+    public function testFindFirstAfter_WithNeedle_ReturnsTargetValue(
         ?int $result,
         int $needle,
         array $source
@@ -65,7 +65,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerFindLast')]
-    public function testFindLastConstructedReturnsTargetValue(?int $result, ?callable $predicate, array $source): void
+    public function testFindLast_WithOptionalPredicate_ReturnsTargetValue(?int $result, ?callable $predicate, array $source): void
     {
         $map = new IntMap(...$source);
 
@@ -84,7 +84,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerContains')]
-    public function testContainsConstructedReturnsTargetValue(bool $result, int $needle, array $source): void
+    public function testContains_WithNeedle_ReturnsTargetBool(bool $result, int $needle, array $source): void
     {
         $map = new IntMap(...$source);
 
@@ -101,7 +101,7 @@ final class IntMapTest extends TestCase
         ];
     }
 
-    public function testFilterConstructedReturnsTargetMap(): void
+    public function testFilter_MultipleFilters_ReturnsFilteredMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5]
@@ -117,7 +117,7 @@ final class IntMapTest extends TestCase
         ], $map->filter($filter1, $filter2)->toArray());
     }
 
-    public function testFilterOneItemAfterFilterReturnsTargetMap(): void
+    public function testFilter_OneItemRemains_ReturnsOneItemMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2]
@@ -128,7 +128,7 @@ final class IntMapTest extends TestCase
         self::assertSame(['a' => 1], $map->filter($filter1)->toArray());
     }
 
-    public function testFilterFilterRemovesAllReturnsEmptyMap(): void
+    public function testFilter_AllRemoved_ReturnsEmptyMap(): void
     {
         $map = new IntMap(
             ...['a' => 1]
@@ -139,7 +139,7 @@ final class IntMapTest extends TestCase
         self::assertSame([], $map->filter($filter1)->toArray());
     }
 
-    public function testFilterNotConstructedReturnsTargetMap(): void
+    public function testFilterNot_MultipleFilters_ReturnsFilteredMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5]
@@ -155,7 +155,7 @@ final class IntMapTest extends TestCase
         ], $map->filterNot($filter1, $filter2)->toArray());
     }
 
-    public function testFilterNotOneItemAfterFilterReturnsTargetMap(): void
+    public function testFilterNot_OneItemRemains_ReturnsOneItemMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2]
@@ -166,7 +166,7 @@ final class IntMapTest extends TestCase
         self::assertSame(['a' => 1], $map->filterNot($filter1)->toArray());
     }
 
-    public function testFilterNotFilterRemovesAllReturnsEmptyMap(): void
+    public function testFilterNot_AllRemoved_ReturnsEmptyMap(): void
     {
         $map = new IntMap(
             ...['a' => 1]
@@ -177,7 +177,7 @@ final class IntMapTest extends TestCase
         self::assertSame([], $map->filterNot($filter1)->toArray());
     }
 
-    public function testMapConstructedReturnsTargetMap(): void
+    public function testMap_Constructed_ReturnsTargetArray(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2]
@@ -191,7 +191,7 @@ final class IntMapTest extends TestCase
         self::assertSame(['a' => 1, 'b' => 2], $map->toArray(), 'no mutation of source');
     }
 
-    public function testGroupByConstructedReturnsTargetMap(): void
+    public function testGroupBy_Constructed_ReturnsGroupedMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4]
@@ -210,7 +210,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerSorted')]
-    public function testSortedAscToDescReturnsTargetList(array $result, array $source): void
+    public function testSorted_AscToDesc_ReturnsDescMap(array $result, array $source): void
     {
         $map = new IntMap(...$source);
 
@@ -227,7 +227,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerSlice')]
-    public function testSliceConstructedReturnsTargetValue(
+    public function testSlice_WithOffsetAndLimit_ReturnsTargetMap(
         array $result,
         array $source,
         int $offset,
@@ -248,7 +248,7 @@ final class IntMapTest extends TestCase
         ];
     }
 
-    public function testToArrayConstructedReturnsGivenMap(): void
+    public function testToArray_Constructed_ReturnsGivenMap(): void
     {
         $map = new IntMap(
             ...['a' => 1, 'b' => 2]
@@ -261,7 +261,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerUnique')]
-    public function testUniqueSomeValuesReturnsTargetMap(array $result, array $source): void
+    public function testUnique_SomeValues_ReturnsUniqueMap(array $result, array $source): void
     {
         $map = new IntMap(...$source);
 
@@ -277,21 +277,21 @@ final class IntMapTest extends TestCase
         ];
     }
 
-    public function testMaxConstructedReturnsMax(): void
+    public function testMax_Constructed_ReturnsMax(): void
     {
         $map = new IntMap(...['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 2, 'f' => 3]);
 
         self::assertSame(4, $map->max());
     }
 
-    public function testMinConstructedReturnsMin(): void
+    public function testMin_Constructed_ReturnsMin(): void
     {
         $map = new IntMap(...['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 2, 'f' => 3]);
 
         self::assertSame(1, $map->min());
     }
 
-    public function testMinConstructedReturnsTargetMap(): void
+    public function testNotZeroValues_WithZeroElement_ReturnsNonZeroMap(): void
     {
         $map = new IntMap(...['a' => 1, 'b' => 0, 'c' => 3]);
 

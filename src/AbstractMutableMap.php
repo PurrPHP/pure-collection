@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+use ArrayAccess;
+
 /**
  * @template TValue
  *
  * @template-extends AbstractCollection<array-key,TValue>
  */
-abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAccess
+abstract class AbstractMutableMap extends AbstractCollection implements ArrayAccess
 {
     /**
      * @param callable(TValue):string $keyCallable

@@ -14,7 +14,6 @@ return $config
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12' => true,
-        '@Symfony' => true,
         '@PhpCsFixer' => true,
         '@PHP81Migration' => true,
         'declare_strict_types' => true,
@@ -32,7 +31,7 @@ return $config
         ],
         'phpdoc_single_line_var_spacing' => true,
         'blank_line_after_opening_tag' => false,
-        'phpdoc_var_without_name' => true,
+        'phpdoc_var_without_name' => false,
         'method_argument_space' => [
             'on_multiline' => 'ensure_fully_multiline',
             'keep_multiple_spaces_after_comma' => true,
@@ -40,5 +39,6 @@ return $config
         'single_trait_insert_per_statement' => true,
         'general_phpdoc_annotation_remove' => ['annotations' => ['internal']],
         'php_unit_internal_class' => false,
+        'php_unit_method_casing' => false,
     ])
     ->setFinder($finder);

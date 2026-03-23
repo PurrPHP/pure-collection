@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Purr\Collection\StringNotEmptySet;
 
 #[CoversClass(StringNotEmptySet::class)]
-final class StringUniqueNotEmptyListTest extends TestCase
+final class StringNotEmptySetTest extends TestCase
 {
-    public function testUniqueConstructedReturnsUniqList(): void
+    public function testUnique_Constructed_ReturnsUniqueList(): void
     {
         $list = new StringNotEmptySet(
             'a',
@@ -24,7 +24,7 @@ final class StringUniqueNotEmptyListTest extends TestCase
         self::assertSame(['a', 'b', 'c'], $list->unique()->toArray());
     }
 
-    public function testConstructorEmptyListThrowsInvalidArgumentException(): void
+    public function testConstructor_EmptyList_throwsInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Strings are empty');

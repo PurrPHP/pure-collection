@@ -17,6 +17,7 @@ RUN apk add --no-cache --virtual .build-deps \
         opcache \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/* /tmp/*
 

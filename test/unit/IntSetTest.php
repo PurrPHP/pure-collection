@@ -9,82 +9,82 @@ use PHPUnit\Framework\TestCase;
 use Purr\Collection\IntSet;
 
 #[CoversClass(IntSet::class)]
-class IntUniqueListTest extends TestCase
+class IntSetTest extends TestCase
 {
-    public function testFromStringConstructedReturnsEmptyList(): void
+    public function testFromString_EmptyString_ReturnsEmptySet(): void
     {
         self::assertSame([], IntSet::fromString('', ',')->toArray());
     }
 
-    public function testFromStringIntsReturnsTargetList(): void
+    public function testFromString_IntString_ReturnsIntSet(): void
     {
         self::assertSame([1, 2], IntSet::fromString('1,2', ',')->toArray());
     }
 
-    public function testToArrayConstructedReturnsUniqValues(): void
+    public function testToArray_Constructed_ReturnsUniqueValues(): void
     {
         $set = new IntSet(1, 3, 2, 3, 1);
 
         self::assertSame([1, 3, 2], $set->toArray());
     }
 
-    public function testUniqueConstructedReturnsUniqValues(): void
+    public function testUnique_Constructed_ReturnsUniqueValues(): void
     {
         $set = new IntSet(1, 3, 2, 3, 1);
 
         self::assertSame([1, 3, 2], $set->unique()->toArray());
     }
 
-    public function testUniqueConstructedReturnsIntSet(): void
+    public function testUnique_Constructed_ReturnsIntSetInstance(): void
     {
         $set = new IntSet(1, 3, 2, 3, 1);
 
         self::assertInstanceOf(IntSet::class, $set->unique());
     }
 
-    public function testCountTwoElementsReturnsTwo(): void
+    public function testCount_TwoElements_ReturnsTwo(): void
     {
         $set = new IntSet(1, 2);
 
         self::assertSame(2, $set->count());
     }
 
-    public function testFilterCheckIsEvenReturnsEvenSet(): void
+    public function testFilter_EvenCheck_ReturnsEvenSet(): void
     {
         $set = new IntSet(1, 2, 3, 4);
 
         self::assertSame([2, 4], $set->filter(fn (int $a) => 0 === $a % 2)->toArray());
     }
 
-    public function testFilterCheckIsEvenReturnsIntSet(): void
+    public function testFilter_EvenCheck_ReturnsIntSetInstance(): void
     {
         $set = new IntSet(1, 2, 3, 4);
 
         self::assertInstanceOf(IntSet::class, $set->filter(fn (int $a) => 0 === $a % 2));
     }
 
-    public function testMaxConstructedReturnsMax(): void
+    public function testMax_Constructed_ReturnsMax(): void
     {
         $list = new IntSet(1, 2, 3, 4, 2, 3);
 
         self::assertSame(4, $list->max());
     }
 
-    public function testMinConstructedReturnsMin(): void
+    public function testMin_Constructed_ReturnsMin(): void
     {
         $list = new IntSet(2, 3, 4, 2, 1);
 
         self::assertSame(1, $list->min());
     }
 
-    public function testMinConstructedReturnsTargetMap(): void
+    public function testNotZeroValues_WithZeroElement_ReturnsNonZeroSet(): void
     {
         $list = new IntSet(2, 3, 0, 2, 1);
 
         self::assertSame([2, 3, 1], $list->notZeroValues()->toArray());
     }
 
-    public function testSlicePositiveOffsetAndLimitReturnsSlicedList(): void
+    public function testSlice_PositiveOffsetAndLimit_ReturnsSlicedSet(): void
     {
         $list = new IntSet(1, 2, 3, 4, 5);
 
@@ -93,7 +93,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([2, 3], $result->toArray());
     }
 
-    public function testSlicePositiveOffsetAndLimitReturnsIntUniqueList(): void
+    public function testSlice_PositiveOffsetAndLimit_ReturnsIntSetInstance(): void
     {
         $list = new IntSet(1, 2, 3, 4, 5);
 
@@ -102,7 +102,7 @@ class IntUniqueListTest extends TestCase
         self::assertInstanceOf(IntSet::class, $result);
     }
 
-    public function testSliceOffsetZeroAndLimitTwoReturnsFirstTwoElements(): void
+    public function testSlice_OffsetZeroLimitTwo_ReturnsFirstTwoElements(): void
     {
         $list = new IntSet(10, 20, 30, 40);
 
@@ -111,7 +111,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([10, 20], $result->toArray());
     }
 
-    public function testSliceNegativeOffsetReturnsElementsFromEnd(): void
+    public function testSlice_NegativeOffset_ReturnsElementsFromEnd(): void
     {
         $list = new IntSet(1, 2, 3, 4, 5);
 
@@ -120,7 +120,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([4, 5], $result->toArray());
     }
 
-    public function testSliceOffsetExceedsListSizeReturnsEmptyList(): void
+    public function testSlice_OffsetExceedsSize_ReturnsEmptySet(): void
     {
         $list = new IntSet(1, 2, 3);
 
@@ -129,7 +129,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([], $result->toArray());
     }
 
-    public function testSliceLimitExceedsRemainingElementsReturnsAvailableElements(): void
+    public function testSlice_LimitExceedsRemaining_ReturnsAvailableElements(): void
     {
         $list = new IntSet(1, 2, 3, 4);
 
@@ -138,7 +138,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([3, 4], $result->toArray());
     }
 
-    public function testSliceZeroLimitReturnsEmptyList(): void
+    public function testSlice_ZeroLimit_ReturnsEmptySet(): void
     {
         $list = new IntSet(1, 2, 3, 4);
 
@@ -147,7 +147,7 @@ class IntUniqueListTest extends TestCase
         self::assertSame([], $result->toArray());
     }
 
-    public function testSliceEmptyListReturnsEmptyList(): void
+    public function testSlice_EmptySet_ReturnsEmptySet(): void
     {
         $list = new IntSet();
 

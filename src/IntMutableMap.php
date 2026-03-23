@@ -11,24 +11,11 @@ use Purr\Collection\Exception\InvalidArgumentException;
  */
 class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
 {
+    use IntCollectionTrait;
+
     public function __construct(int ...$numbers)
     {
         parent::__construct($numbers);
-    }
-
-    public function max(): ?int
-    {
-        return max($this->collection);
-    }
-
-    public function min(): ?int
-    {
-        return min($this->collection);
-    }
-
-    public function notZeroValues(): static
-    {
-        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
     }
 
     protected function ensureType(mixed $value): void

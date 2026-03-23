@@ -117,7 +117,7 @@ interface CollectionInterface extends \Countable, Iterator
     /**
      * @psalm-type ComparisonResultType -1|0|1
      *
-     * @param callable(TValue,TValue):ComparisonResultType $comparator
+     * @psalm-param callable(TValue,TValue):ComparisonResultType $comparator
      */
     public function sorted(callable $comparator): static;
 

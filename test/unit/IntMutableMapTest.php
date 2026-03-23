@@ -11,13 +11,13 @@ use Purr\Collection\IntMutableMap;
 #[CoversClass(IntMutableMap::class)]
 class IntMutableMapTest extends TestCase
 {
-    public function testSetValueExistsRewritesValue(): void
+    public function testOffsetSet_ExistingKey_rewritesValue(): void
     {
         $m = new IntMutableMap();
 
         $m['a'] = 1;
         $m['a'] = 2;
 
-        self::assertSame([], $m->toArray());
+        self::assertSame(['a' => 2], $m->toArray());
     }
 }
