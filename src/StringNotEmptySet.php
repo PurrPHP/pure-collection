@@ -1,9 +1,10 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Purr\Collection;
 
-
-use TheSoul\Library\Collection\Exception\InvalidArgumentException;
+use Purr\Collection\Exception\InvalidArgumentException;
 
 class StringNotEmptySet extends StringSet
 {

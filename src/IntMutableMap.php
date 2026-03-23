@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Purr\Collection;
-
 
 use Purr\Collection\Exception\InvalidArgumentException;
 
@@ -28,13 +28,13 @@ class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
 
     public function notZeroValues(): static
     {
-        return new static(...$this->filter(static fn(int $i): bool => $i !== 0));
+        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
     }
 
     protected function ensureType(mixed $value): void
     {
         if (!is_int($value)) {
-            throw new InvalidArgumentException(sprintf("Invalid type. Got %s. Expects int", gettype($value)));
+            throw new InvalidArgumentException(sprintf('Invalid type. Got %s. Expects int', gettype($value)));
         }
     }
 }

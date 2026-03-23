@@ -1,6 +1,6 @@
 # purrphp/collection
 
-Immutable type-safe collection data structures for PHP 8.3+.
+Type-safe collections for PHP 8. Type safety based on native PHP features, not static analyzers.. Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html).
 
 ## Installation
 
@@ -19,8 +19,6 @@ CollectionInterface
     │   └── AbstractSet  (unique values)
     └── AbstractMap      (associative array)
 ```
-
-Inspired by Kotlin [collections](https://kotlinlang.org/docs/collections-overview.html).
 
 ## Available Classes
 
@@ -44,7 +42,7 @@ use Purr\Collection\IntList;
 $numbers = new IntList(1, 2, 3, 4, 5);
 
 $even    = $numbers->filter(fn(int $n): bool => $n % 2 === 0);
-$doubled = $numbers->map(fn(int $n): int => $n * 2);
+$doubled = $numbers->map(fn(int $n): int => $n * 2); // returns array
 $sum     = $numbers->reduce(fn(int $carry, int $n): int => $carry + $n, 0);
 $sorted  = $numbers->sorted(fn(int $a, int $b): int => $b <=> $a);
 
@@ -64,7 +62,7 @@ use Purr\Collection\StringSet;
 $set = new IntSet(1, 2, 3, 2, 1); // duplicates are removed
 $set->toArray();                   // [1, 2, 3]
 
-$ids = IntSet::fromString('1,2,3', ',');
+$ids = IntSet::fromString('1,2,3', delimeter: ',');
 $ids->join(',');                   // "1,2,3"
 
 $tags = new StringSet('php', 'oop', 'php');
@@ -97,11 +95,14 @@ $collection->findFirst(fn($x) => ...);      // first matching item
 $collection->findLast();                    // last item (or null)
 $collection->findFirstAfter($needle);       // item after $needle
 $collection->contains($value);              // bool
+
 $collection->any(fn($x) => ...);            // bool — any match
 $collection->all(fn($x) => ...);            // bool — all match
 $collection->none(fn($x) => ...);           // bool — none match
+
 $collection->filter(fn($x) => ...);         // new filtered collection
 $collection->filterNot(fn($x) => ...);      // new inverted-filter collection
+
 $collection->map(fn($x) => ...);            // array
 $collection->reduce(fn($carry, $x) => ..., $initial); // scalar
 $collection->sorted(fn($a, $b) => ...);     // new sorted collection
@@ -112,6 +113,7 @@ $collection->groupBy(fn($x) => ...);        // grouped array
 $collection->flattenGroupBy(fn($x) => ...); // keyed array
 $collection->toArray();                     // plain PHP array
 $collection->count();                       // int
+
 $collection->isEmpty();                     // bool
 $collection->isNotEmpty();                  // bool
 ```

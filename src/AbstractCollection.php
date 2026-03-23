@@ -7,12 +7,14 @@ namespace Purr\Collection;
 /**
  * @template TKey of array-key
  * @template TValue
+ *
  * @template-implements CollectionInterface<TValue>
  */
 abstract class AbstractCollection implements CollectionInterface
 {
     /**
      * @var array<TKey, TValue>
+     *
      * @readonly
      *
      * Cannot use native readonly property cause of $this->rewind(), $this->next()
@@ -28,12 +30,12 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @return TValue|null
+     * @return null|TValue
      */
     final public function findFirst(?callable $predicate = null): mixed
     {
-        if ($predicate === null) {
-            /** @psalm-suppress PossiblyNullArrayOffset */
+        if (null === $predicate) {
+            // @psalm-suppress PossiblyNullArrayOffset
             return $this->collection[array_key_first($this->collection)] ?? null;
         }
 
@@ -53,7 +55,7 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $needleKey = array_search($needle, $this->collection, true);
 
-        if ($needleKey === false) {
+        if (false === $needleKey) {
             return null;
         }
 
@@ -61,7 +63,7 @@ abstract class AbstractCollection implements CollectionInterface
         $keyPosition = array_search($needleKey, $keys, true);
 
         /**
-         * Impossible here
+         * Impossible here.
          *
          * @psalm-suppress PossiblyFalseOperand
          */
@@ -71,14 +73,14 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @param callable(TValue): bool|null $predicate
+     * @param null|callable(TValue): bool $predicate
      *
-     * @return TValue|null
+     * @return null|TValue
      */
     final public function findLast(?callable $predicate = null): mixed
     {
-        if ($predicate === null) {
-            /** @psalm-suppress PossiblyNullArrayOffset */
+        if (null === $predicate) {
+            // @psalm-suppress PossiblyNullArrayOffset
             return $this->collection[array_key_last($this->collection)] ?? null;
         }
 
@@ -142,6 +144,7 @@ abstract class AbstractCollection implements CollectionInterface
 
     /**
      * @param callable(TValue $value): string $keyCallable
+     *
      * @return array<string, TValue>
      */
     final public function flattenGroupBy(callable $keyCallable): array
@@ -168,7 +171,7 @@ abstract class AbstractCollection implements CollectionInterface
             $filtered = array_filter($filtered, $filter);
         }
 
-        /**
+        /*
          * It perfectly works. Collections don't support arguments except collection items
          *
          * @psalm-suppress UnsafeInstantiation
@@ -189,11 +192,11 @@ abstract class AbstractCollection implements CollectionInterface
             $filtered = array_filter(
                 $filtered,
                 /** @param TValue $item */
-                static fn($item) => !$filter($item)
+                static fn ($item) => !$filter($item)
             );
         }
 
-        /**
+        /*
          * It perfectly works. Collections don't support arguments except collection items
          *
          * @psalm-suppress UnsafeInstantiation
@@ -209,7 +212,7 @@ abstract class AbstractCollection implements CollectionInterface
 
     final public function isEmpty(): bool
     {
-        return $this->count() === 0;
+        return 0 === $this->count();
     }
 
     final public function isNotEmpty(): bool
@@ -221,7 +224,7 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $unique = $this->filterUniqValues($this->collection);
 
-        /**
+        /*
          * It perfectly works. Collections don't support arguments except collection items
          *
          * @psalm-suppress UnsafeInstantiation
@@ -232,7 +235,9 @@ abstract class AbstractCollection implements CollectionInterface
 
     /**
      * @template T
+     *
      * @param callable(TValue): T $fn
+     *
      * @return array<TKey, T>
      */
     final public function map(callable $fn): array
@@ -242,19 +247,20 @@ abstract class AbstractCollection implements CollectionInterface
 
     /**
      * @template K
+     *
      * @param callable(K, TValue): K $fn
-     * @param K $initial
+     * @param K                      $initial
+     *
      * @return K
      */
     final public function reduce(callable $fn, mixed $initial = null): mixed
     {
-        $result = array_reduce($this->collection, $fn, $initial);
-        return $result;
+        return array_reduce($this->collection, $fn, $initial);
     }
 
     final public function slice(int $offset, int $limit): static
     {
-        /**
+        /*
          * It perfectly works. Collections don't support arguments except collection items
          *
          * @psalm-suppress UnsafeInstantiation
@@ -271,7 +277,7 @@ abstract class AbstractCollection implements CollectionInterface
         $sortedCollection = $this->collection;
         uasort($sortedCollection, $comparator);
 
-        /**
+        /*
          * It perfectly works. Collections don't support arguments except collection items
          *
          * @psalm-suppress UnsafeInstantiation
@@ -281,7 +287,7 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * Returns array of collection elements
+     * Returns array of collection elements.
      *
      * @return array<TKey, TValue>
      */
@@ -303,7 +309,7 @@ abstract class AbstractCollection implements CollectionInterface
         return current($this->collection);
     }
 
-    final public function key(): string|int|null
+    final public function key(): int|string|null
     {
         return key($this->collection);
     }
@@ -316,7 +322,7 @@ abstract class AbstractCollection implements CollectionInterface
     final public function valid(): bool
     {
         $key = key($this->collection);
-        if ($key === null) {
+        if (null === $key) {
             return false;
         }
 
@@ -324,16 +330,8 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @param TValue[] $items
-     * @return TValue[]
-     */
-    protected function filterUniqValues(array $items): array
-    {
-        return array_unique($items);
-    }
-
-    /**
      * @psalm-suppress InvalidReturnType
+     *
      * @return array<int, static>
      */
     final public function chunks(int $size): array
@@ -342,16 +340,24 @@ abstract class AbstractCollection implements CollectionInterface
         $collectionsArray = array_fill(0, count($chunks), null);
 
         foreach ($chunks as $index => $chunkItem) {
-            /**
+            /*
              * @psalm-suppress UnsafeInstantiation
              * @psalm-suppress MixedArgumentTypeCoercion
              */
             $collectionsArray[$index] = new static(...$chunkItem);
         }
 
-        /**
-         * @psalm-suppress InvalidReturnStatement
-         */
+        // @psalm-suppress InvalidReturnStatement
         return $collectionsArray;
+    }
+
+    /**
+     * @param TValue[] $items
+     *
+     * @return TValue[]
+     */
+    protected function filterUniqValues(array $items): array
+    {
+        return array_unique($items);
     }
 }

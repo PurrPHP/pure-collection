@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Purr\Collection;
 
 /**
  * @template TValue
+ *
  * @template-extends AbstractCollection<int<0, max>,TValue>
  */
 abstract class AbstractList extends AbstractCollection
@@ -22,6 +24,7 @@ abstract class AbstractList extends AbstractCollection
 
     /**
      * @param callable(TValue):string $keyCallable
+     *
      * @return array<string,list<TValue>>
      */
     final public function groupBy(callable $keyCallable): array

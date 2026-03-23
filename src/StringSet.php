@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Purr\Collection;
 
 /**
@@ -17,11 +19,6 @@ class StringSet extends AbstractSet
      */
     public static function fromArray(array $strings): static
     {
-        /**
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         */
         return new static(...$strings);
     }
 
@@ -30,31 +27,16 @@ class StringSet extends AbstractSet
      */
     public static function fromIntList(array $numbers): static
     {
-        /**
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         */
-        return new static(...array_map(static fn(int $number): string => (string) $number, $numbers));
+        return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));
     }
 
     public static function fromInt(int ...$numbers): static
     {
-        /**
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         */
-        return new static(...array_map(static fn(int $number): string => (string) $number, $numbers));
+        return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));
     }
 
     public static function create(string ...$strings): static
     {
-        /**
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         */
         return new static(...$strings);
     }
 
@@ -63,16 +45,9 @@ class StringSet extends AbstractSet
         return in_array($value, $this->collection, true);
     }
 
-    /**
-     * @psalm-suppress MoreSpecificReturnType
-     */
     public function sortedAlphabetically(): static
     {
-        /**
-         * @psalm-suppress MoreSpecificReturnType
-         * @psalm-suppress LessSpecificReturnStatement
-         */
-        return $this->sorted(fn(string $a, string $b): int => $a <=> $b);
+        return $this->sorted(fn (string $a, string $b): int => $a <=> $b);
     }
 
     public function join(string $separator = ''): string

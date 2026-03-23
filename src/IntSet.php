@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Purr\Collection;
 
 /**
@@ -14,7 +16,7 @@ class IntSet extends AbstractSet implements IntCollectionInterface
 
     public static function fromString(string $string, string $separator): self
     {
-        if ($string === '') {
+        if ('' === $string) {
             return new self();
         }
 
@@ -24,7 +26,7 @@ class IntSet extends AbstractSet implements IntCollectionInterface
         return new self(...array_map('intval', $values));
     }
 
-    public function toStringUniqueList(): StringSet
+    public function toStringSet(): StringSet
     {
         return StringSet::fromIntList($this->collection);
     }
@@ -46,6 +48,6 @@ class IntSet extends AbstractSet implements IntCollectionInterface
 
     public function notZeroValues(): static
     {
-        return new static(...$this->filter(static fn(int $i): bool => $i !== 0));
+        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
     }
 }

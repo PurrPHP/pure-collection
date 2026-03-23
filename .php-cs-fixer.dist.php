@@ -31,11 +31,14 @@ return $config
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
         'phpdoc_single_line_var_spacing' => true,
+        'blank_line_after_opening_tag' => false,
         'phpdoc_var_without_name' => true,
         'method_argument_space' => [
             'on_multiline' => 'ensure_fully_multiline',
             'keep_multiple_spaces_after_comma' => true,
         ],
         'single_trait_insert_per_statement' => true,
+        'general_phpdoc_annotation_remove' => ['annotations' => ['internal']],
+        'php_unit_internal_class' => false,
     ])
     ->setFinder($finder);

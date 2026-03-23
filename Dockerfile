@@ -1,4 +1,4 @@
-FROM php:8.3-cli-alpine AS base
+FROM php:8.1-cli-alpine AS base
 
 RUN apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
@@ -15,6 +15,8 @@ RUN apk add --no-cache --virtual .build-deps \
     && docker-php-ext-install -j$(nproc) \
         zip \
         opcache \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
     && apk del .build-deps \
     && rm -rf /var/cache/apk/* /tmp/*
 

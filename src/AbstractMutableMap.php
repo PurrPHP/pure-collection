@@ -1,18 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Purr\Collection;
 
-use ArrayAccess;
-
 /**
  * @template TValue
+ *
  * @template-extends AbstractCollection<array-key,TValue>
  */
-abstract class AbstractMutableMap extends AbstractCollection implements ArrayAccess
+abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAccess
 {
     /**
      * @param callable(TValue):string $keyCallable
+     *
      * @return array<string,array<array-key,TValue>>
      */
     final public function groupBy(callable $keyCallable): array
@@ -51,13 +52,13 @@ abstract class AbstractMutableMap extends AbstractCollection implements ArrayAcc
     }
 
     /**
-     * @param array-key|null $offset
+     * @param null|array-key $offset
      */
     final public function offsetSet(mixed $offset, mixed $value): void
     {
         $this->ensureType($value);
 
-        if ($offset === null) {
+        if (null === $offset) {
             $this->collection[] = $value;
         } else {
             $this->collection[$offset] = $value;

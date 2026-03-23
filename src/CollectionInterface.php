@@ -1,29 +1,32 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Purr\Collection;
 
-use Countable;
 use Iterator;
 
 /**
  * @template TValue
+ *
  * @template-extends Iterator<array-key, TValue>
  */
-interface CollectionInterface extends Countable, Iterator
+interface CollectionInterface extends \Countable, Iterator
 {
     /**
      * If predicate provided returns last collection item satisfied predicate.
      * Without predicate returns last item from collection.
      *
-     * @param callable(TValue): bool|null $predicate
-     * @return TValue|null
+     * @param null|callable(TValue): bool $predicate
+     *
+     * @return null|TValue
      */
     public function findFirst(?callable $predicate = null): mixed;
 
     /**
      * @param TValue $needle
-     * @return TValue|null
+     *
+     * @return null|TValue
      */
     public function findFirstAfter(mixed $needle): mixed;
 
@@ -31,8 +34,9 @@ interface CollectionInterface extends Countable, Iterator
      * If predicate provided returns last collection item satisfied predicate.
      * Without predicate returns last item from collection.
      *
-     * @param callable(TValue): bool|null $predicate
-     * @return TValue|null
+     * @param null|callable(TValue): bool $predicate
+     *
+     * @return null|TValue
      */
     public function findLast(?callable $predicate = null): mixed;
 
@@ -46,7 +50,7 @@ interface CollectionInterface extends Countable, Iterator
     public function all(callable $predicate): bool;
 
     /**
-     * No one item satisfy predicate
+     * No one item satisfy predicate.
      *
      * @param callable(TValue): bool $predicate
      */
@@ -56,14 +60,15 @@ interface CollectionInterface extends Countable, Iterator
      * Groups collection items by some callback result.
      * Lists are grouped into lists, maps are grouped into maps.
      *
-     *
      * @param callable(TValue):string $keyCallable
-     * @return array<string,list<TValue>>|array<string,array<string,TValue>>
+     *
+     * @return array<string,array<string,TValue>>|array<string,list<TValue>>
      */
     public function groupBy(callable $keyCallable): array;
 
     /**
      * @param callable(TValue):string $keyCallable
+     *
      * @return array<string,TValue>
      */
     public function flattenGroupBy(callable $keyCallable): array;
@@ -94,20 +99,24 @@ interface CollectionInterface extends Countable, Iterator
      * @template TReturn
      *
      * @param callable(TValue):TReturn $fn
+     *
      * @return TReturn[]
      */
     public function map(callable $fn): array;
 
     /**
      * @template K
+     *
      * @param callable(K, TValue): K $fn
-     * @param K $initial
+     * @param K                      $initial
+     *
      * @return K
      */
     public function reduce(callable $fn, mixed $initial = null): mixed;
 
     /**
      * @psalm-type ComparisonResultType -1|0|1
+     *
      * @param callable(TValue,TValue):ComparisonResultType $comparator
      */
     public function sorted(callable $comparator): static;

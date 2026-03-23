@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace Purr\Collection;
 
 /**
@@ -12,7 +14,7 @@ class IntList extends AbstractList implements IntCollectionInterface
         parent::__construct($numbers);
     }
 
-    public function toStringUniqueList(): StringSet
+    public function toStringSet(): StringSet
     {
         return StringSet::fromIntList($this->collection);
     }
@@ -29,6 +31,6 @@ class IntList extends AbstractList implements IntCollectionInterface
 
     public function notZeroValues(): static
     {
-        return new static(...$this->filter(static fn(int $i): bool => $i !== 0));
+        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
     }
 }

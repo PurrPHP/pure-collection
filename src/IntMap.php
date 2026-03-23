@@ -1,7 +1,8 @@
 <?php
-declare(strict_types=1);
-namespace Purr\Collection;
 
+declare(strict_types=1);
+
+namespace Purr\Collection;
 
 /**
  * @template-extends AbstractMap<int>
@@ -25,6 +26,6 @@ class IntMap extends AbstractMap implements IntCollectionInterface
 
     public function notZeroValues(): static
     {
-        return new static(...$this->filter(static fn(int $i): bool => $i !== 0));
+        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
     }
 }
