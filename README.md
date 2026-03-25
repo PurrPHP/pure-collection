@@ -2,6 +2,12 @@
 
 Type-safe collections for PHP 8. Type safety based on native PHP features, not static analyzers. Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html).
 
+## Documentation
+
+- [Common Methods](docs/common-methods.md) — methods available on every collection
+- [Int Collections](docs/int-collections.md) — integer-typed classes and their specific API
+- [String Collections](docs/string-collections.md) — string-typed classes and their specific API
+
 ### Problem scope
 
 PHP doesn't have native features to work with object collections, there are only arrays. Sometimes it's difficult to understand object types in an array and it's necessary to write additional annotations to describe the code. Code is not safe from mistakes and writing different objects into the same array.
