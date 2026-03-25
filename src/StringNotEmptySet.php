@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
-use Purr\Collection\Exception\InvalidArgumentException;
+use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 class StringNotEmptySet extends StringSet
 {
     /**
-     * @throws InvalidArgumentException when no strings provided
+     * @throws InvalidArgumentTypeException when no strings provided
      */
     public function __construct(string ...$strings)
     {
         if (!$strings) {
-            throw new InvalidArgumentException('Strings are empty');
+            throw new InvalidArgumentTypeException('Strings are empty');
         }
 
         parent::__construct(...$strings);

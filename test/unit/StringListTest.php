@@ -160,7 +160,7 @@ class StringListTest extends TestCase
     {
         $list = new StringList('a', 'b');
 
-        self::assertTrue($list->all(fn (string $s): bool => strlen($s) === 1));
+        self::assertTrue($list->all(fn (string $s): bool => 1 === strlen($s)));
     }
 
     public function testNone_NoneMatchPredicate_ReturnsTrue(): void
@@ -174,7 +174,7 @@ class StringListTest extends TestCase
     {
         $list = new StringList('a', 'b', 'c');
 
-        self::assertSame('abc', $list->reduce(fn (string $carry, string $s): string => $carry . $s, ''));
+        self::assertSame('abc', $list->reduce(fn (string $carry, string $s): string => $carry.$s, ''));
     }
 
     public function testDestruct_SomeList_ReturnsSourceValues(): void

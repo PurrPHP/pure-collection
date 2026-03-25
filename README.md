@@ -1,6 +1,6 @@
 # purrphp/collection
 
-Type-safe collections for PHP 8. Type safety based on native PHP features, not static analyzers.. Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html).
+Type-safe collections for PHP 8. Type safety based on native PHP features, not static analyzers. Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html).
 
 ## Installation
 
@@ -8,13 +8,42 @@ Type-safe collections for PHP 8. Type safety based on native PHP features, not s
 composer require purrphp/collection
 ```
 
-## Overview
+### Problem scope
 
-Provides immutable, type-safe collection primitives built around a common interface hierarchy:
+PHP doesn't have native features to work with object collections, there are only arrays. Sometimes it's difficult to understand object types in an array and it's necessary to write additional annotations to describe the code. Code is not safe from mistakes and writing different objects into the same array.
+
+E.g.
+
+```php
+   $uuids = [];
+   $uuids[] = Uuid::fromInteger('1');
+   $uuids[] = '00000000-0000-0000-0000-000000000001';
+```
+
+PHP doesn't have no guard to avoid mess in array keys. Which can be important for frontend part of application, that expects only objects or arrays.
+
+```php
+   $uuids = [];
+   $uuids[] = Uuid::fromInteger('1');
+   $uuids['validUuid'] = '00000000-0000-0000-0000-000000000001';
+```
+
+This library is implemented to solve these problems and help write stable, unambiguous, and clear code. It reduces boilerplate by implementing useful collection functions.
+
+## Code structure
+
+As we said above, library is inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html). So there are next collection types:
+- list (// todo describe)
+- set (contains unique values of objects, //todo check descriptions)
+- map (dictionary, associative array)
+
+All of these structures have immutable (by default) and mutable implementations.
+
+Hierarchy:
 
 ```
 CollectionInterface
-└── AbstractCollection
+└── AbstractCollection (contains basic operation implemetations)
     ├── AbstractList
     │   └── AbstractSet  (unique values)
     └── AbstractMap      (associative array)

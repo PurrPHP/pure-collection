@@ -37,5 +37,4 @@ class IntSet extends AbstractSet implements IntCollectionInterface
     {
         return implode($separator, $this->collection);
     }
-
 }

@@ -69,7 +69,7 @@ abstract class AbstractCollection implements CollectionInterface
          */
         $nextKey = $keys[$keyPosition + 1] ?? null;
 
-        return $nextKey !== null ? $this->collection[$nextKey] : null;
+        return null !== $nextKey ? $this->collection[$nextKey] : null;
     }
 
     /**
@@ -167,16 +167,9 @@ abstract class AbstractCollection implements CollectionInterface
         $filtered = $this->collection;
 
         foreach ($filters as $filter) {
-            /** @var TValue $item */
             $filtered = array_filter($filtered, $filter);
         }
 
-        /*
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         * @psalm-suppress MixedArgumentTypeCoercion
-         */
         return new static(...$filtered);
     }
 
@@ -196,12 +189,6 @@ abstract class AbstractCollection implements CollectionInterface
             );
         }
 
-        /*
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         * @psalm-suppress MixedArgumentTypeCoercion
-         */
         return new static(...$filtered);
     }
 
@@ -224,12 +211,6 @@ abstract class AbstractCollection implements CollectionInterface
     {
         $unique = $this->filterUniqValues($this->collection);
 
-        /*
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         * @psalm-suppress MixedArgumentTypeCoercion
-         */
         return new static(...$unique);
     }
 
@@ -260,12 +241,6 @@ abstract class AbstractCollection implements CollectionInterface
 
     final public function slice(int $offset, int $limit): static
     {
-        /*
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         * @psalm-suppress MixedArgumentTypeCoercion
-         */
         return new static(...array_slice($this->collection, $offset, $limit, true));
     }
 
@@ -277,12 +252,6 @@ abstract class AbstractCollection implements CollectionInterface
         $sortedCollection = $this->collection;
         uasort($sortedCollection, $comparator);
 
-        /*
-         * It perfectly works. Collections don't support arguments except collection items
-         *
-         * @psalm-suppress UnsafeInstantiation
-         * @psalm-suppress MixedArgumentTypeCoercion
-         */
         return new static(...$sortedCollection);
     }
 

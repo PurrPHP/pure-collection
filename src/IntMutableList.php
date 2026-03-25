@@ -7,9 +7,9 @@ namespace Purr\Collection;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
- * @template-extends AbstractMap<int>
+ * @template-extends AbstractMutableList<int>
  */
-class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
+class IntMutableList extends AbstractMutableList implements IntCollectionInterface
 {
     use IntCollectionTrait;
 
@@ -21,7 +21,7 @@ class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
     protected function ensureType(mixed $value): void
     {
         if (!is_int($value)) {
-            throw new InvalidArgumentTypeException(sprintf('Invalid type. Got %s. Expects int', gettype($value)));
+            throw new InvalidArgumentTypeException(type: gettype($value), expects: 'int');
         }
     }
 }

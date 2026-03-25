@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
-use Purr\Collection\Exception\InvalidArgumentException;
+use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
  * @template TValue
@@ -56,7 +56,7 @@ abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAc
     /**
      * @param null|array-key $offset
      *
-     * @throws InvalidArgumentException when value type is invalid
+     * @throws InvalidArgumentTypeException when value type is invalid
      */
     final public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -70,7 +70,7 @@ abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAc
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentTypeException
      */
     abstract protected function ensureType(mixed $value): void;
 }

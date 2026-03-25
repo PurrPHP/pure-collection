@@ -8,13 +8,13 @@ trait IntCollectionTrait
 {
     public function max(): ?int
     {
-        /** @var int[] $this->collection */
+        // @var int[] $this->collection
         return [] === $this->collection ? null : max($this->collection);
     }
 
     public function min(): ?int
     {
-        /** @var int[] $this->collection */
+        // @var int[] $this->collection
         return [] === $this->collection ? null : min($this->collection);
     }
 
@@ -30,7 +30,7 @@ trait IntCollectionTrait
 
     public function sum(): int
     {
-        /** @var int[] $this->collection */
+        // @var int[] $this->collection
         return array_sum($this->collection);
     }
 
