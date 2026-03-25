@@ -152,6 +152,13 @@ final class IntNotEmptySetTest extends TestCase
         self::assertSame(['1', '2', '3'], $set->toStringSet()->toArray());
     }
 
+    public function testToStringSet_WithDuplicatesInSource_ReturnsDeduplicatedStringSet(): void
+    {
+        $set = new IntNotEmptySet(1, 2, 1, 3, 2);
+
+        self::assertSame(['1', '2', '3'], $set->toStringSet()->toArray());
+    }
+
     // endregion
 
     // region IntImmutableCollectionTrait: element-preserving transformations

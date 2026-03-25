@@ -13,6 +13,7 @@ use Purr\Collection\AbstractMutableList;
 use Purr\Collection\Exception\IndexOutOfBoundsException;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 use Purr\Collection\IntCollectionTrait;
+use Purr\Collection\IntList;
 use Purr\Collection\IntMutableList;
 
 #[CoversClass(IntMutableList::class)]
@@ -675,5 +676,97 @@ class IntMutableListTest extends TestCase
         $list = new IntMutableList();
 
         self::assertNull($list->range());
+    }
+
+    // diff
+
+    public function testDiff_RemovesMatchingElements_MutatesInPlace(): void
+    {
+        $list = new IntMutableList(1, 2, 3, 4);
+
+        $list->diff(new IntList(2, 3));
+
+        self::assertSame([1, 4], $list->toArray());
+    }
+
+    public function testDiff_NoOverlap_LeavesListUnchanged(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        $list->diff(new IntList(4, 5));
+
+        self::assertSame([1, 2, 3], $list->toArray());
+    }
+
+    public function testDiff_AllElementsMatch_LeavesEmptyList(): void
+    {
+        $list = new IntMutableList(1, 2);
+
+        $list->diff(new IntList(1, 2));
+
+        self::assertSame([], $list->toArray());
+    }
+
+    public function testDiff_ReindexesResult(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        $list->diff(new IntList(1));
+
+        self::assertSame([2, 3], $list->toArray());
+        self::assertSame(0, array_key_first($list->toArray()));
+    }
+
+    public function testDiff_ReturnsSelf(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        self::assertSame($list, $list->diff(new IntList(1)));
+    }
+
+    // intersect
+
+    public function testIntersect_KeepsOnlyMatchingElements_MutatesInPlace(): void
+    {
+        $list = new IntMutableList(1, 2, 3, 4);
+
+        $list->intersect(new IntList(2, 3, 5));
+
+        self::assertSame([2, 3], $list->toArray());
+    }
+
+    public function testIntersect_NoOverlap_LeavesEmptyList(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        $list->intersect(new IntList(4, 5));
+
+        self::assertSame([], $list->toArray());
+    }
+
+    public function testIntersect_AllElementsMatch_LeavesListUnchanged(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        $list->intersect(new IntList(1, 2, 3, 4));
+
+        self::assertSame([1, 2, 3], $list->toArray());
+    }
+
+    public function testIntersect_ReindexesResult(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        $list->intersect(new IntList(2, 3));
+
+        self::assertSame([2, 3], $list->toArray());
+        self::assertSame(0, array_key_first($list->toArray()));
+    }
+
+    public function testIntersect_ReturnsSelf(): void
+    {
+        $list = new IntMutableList(1, 2, 3);
+
+        self::assertSame($list, $list->intersect(new IntList(2)));
     }
 }

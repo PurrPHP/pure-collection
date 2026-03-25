@@ -291,6 +291,13 @@ class IntListTest extends TestCase
         self::assertSame(['1', '2', '3', '4'], $list->toStringSet()->toArray());
     }
 
+    public function testToStringSet_WithDuplicates_ReturnsDeduplicatedStringSet(): void
+    {
+        $list = new IntList(1, 2, 1, 3, 2);
+
+        self::assertSame(['1', '2', '3'], $list->toStringSet()->toArray());
+    }
+
     public function testChunks_Constructed_ReturnsTargetChunks(): void
     {
         $list = new IntList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
