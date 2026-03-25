@@ -102,6 +102,11 @@ abstract class AbstractCollection implements CollectionInterface
         return in_array($needle, $this->collection, true);
     }
 
+    public function has(mixed $needle): bool
+    {
+        return $this->contains($needle);
+    }
+
     /**
      * @param callable(TValue $value): bool $predicate
      */

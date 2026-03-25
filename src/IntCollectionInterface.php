@@ -53,10 +53,10 @@ interface IntCollectionInterface extends CollectionInterface
      */
     public function range(): ?int;
 
-    /** Returns a new collection for immutable clasees, or current collection sorted in ascending order. */
+    /** Returns a new collection for immutable classes, or current collection sorted in ascending order. */
     public function sortAsc(): static;
 
-    /** Returns a new collectionfor immutable clasees, or current collection sorted in descending order. */
+    /** Returns a new collection for immutable classes, or current collection sorted in descending order. */
     public function sortDesc(): static;
 
     /** Returns the sum of all elements. Returns 0 for an empty collection. */

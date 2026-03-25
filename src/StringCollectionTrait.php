@@ -15,11 +15,6 @@ trait StringCollectionTrait
         return new static(...array_diff($this->collection, $list2->toArray()));
     }
 
-    public function has(string $value): bool
-    {
-        return in_array($value, $this->collection, true);
-    }
-
     public function sortedAlphabetically(): static
     {
         return $this->sorted(fn (string $a, string $b): int => $a <=> $b);

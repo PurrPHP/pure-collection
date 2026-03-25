@@ -43,6 +43,9 @@ interface CollectionInterface extends \Countable, Iterator
     /** @param TValue $needle */
     public function contains(mixed $needle): bool;
 
+    /** @param TValue $needle */
+    public function has(mixed $needle): bool;
+
     /** @param callable(TValue): bool $predicate */
     public function any(callable $predicate): bool;
 
