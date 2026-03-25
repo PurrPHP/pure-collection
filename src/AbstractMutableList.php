@@ -84,9 +84,7 @@ abstract class AbstractMutableList extends AbstractList implements \ArrayAccess
         $size = count($this->collection);
 
         if ($offset < 0 || $offset > $size) {
-            throw new IndexOutOfBoundsException(
-                sprintf('Index %d is out of bounds for list of size %d', $offset, $size)
-            );
+            throw new IndexOutOfBoundsException($offset, $size);
         }
 
         foreach ($values as $value) {
@@ -211,9 +209,7 @@ abstract class AbstractMutableList extends AbstractList implements \ArrayAccess
     private function ensureIndexInBounds(int $offset): void
     {
         if (!array_key_exists($offset, $this->collection)) {
-            throw new IndexOutOfBoundsException(
-                sprintf('Index %d is out of bounds for list of size %d', $offset, count($this->collection))
-            );
+            throw new IndexOutOfBoundsException($offset, count($this->collection));
         }
     }
 }

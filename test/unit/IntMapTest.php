@@ -7,9 +7,17 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\AbstractCollection;
+use Purr\Collection\AbstractMap;
+use Purr\Collection\IntCollectionTrait;
+use Purr\Collection\IntImmutableCollectionTrait;
 use Purr\Collection\IntMap;
 
 #[CoversClass(IntMap::class)]
+#[CoversClass(AbstractMap::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(IntImmutableCollectionTrait::class)]
+#[CoversClass(IntCollectionTrait::class)]
 final class IntMapTest extends TestCase
 {
     public function testConstructor_ListProvided_ReturnsTargetMap(): void

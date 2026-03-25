@@ -15,6 +15,11 @@ trait StringCollectionTrait
         return new static(...array_diff($this->collection, $list2->toArray()));
     }
 
+    public function intersect(StringCollectionInterface $list2): static
+    {
+        return new static(...array_intersect($this->collection, $list2->toArray()));
+    }
+
     public function sortedAlphabetically(): static
     {
         return $this->sorted(fn (string $a, string $b): int => $a <=> $b);
@@ -23,6 +28,11 @@ trait StringCollectionTrait
     public function join(string $separator = ''): string
     {
         return implode($separator, $this->collection);
+    }
+
+    public function implode(string $separator = ''): string
+    {
+        return $this->join($separator);
     }
 
     protected function filterUniqValues(array $items): array

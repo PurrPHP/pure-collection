@@ -56,6 +56,6 @@ trait IntImmutableCollectionTrait
 
     public function intersect(IntCollectionInterface $collection): static
     {
-        return new static(...array_values(array_intersect($this->collection, $collection->toArray())));
+        return new static(...array_intersect($this->collection, $collection->toArray()));
     }
 }

@@ -7,10 +7,17 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Purr\Collection\Exception\InvalidArgumentException;
+use Purr\Collection\AbstractCollection;
+use Purr\Collection\AbstractList;
+use Purr\Collection\IntCollectionTrait;
+use Purr\Collection\IntImmutableCollectionTrait;
 use Purr\Collection\IntList;
 
 #[CoversClass(IntList::class)]
+#[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(IntImmutableCollectionTrait::class)]
+#[CoversClass(IntCollectionTrait::class)]
 class IntListTest extends TestCase
 {
     public function testConstructor_MapProvided_ReturnsTargetList(): void
@@ -333,5 +340,158 @@ class IntListTest extends TestCase
         $list = new IntList(2, 3, 4, 2, 1);
 
         self::assertSame(1, $list->min());
+    }
+
+    public function testSum_Constructed_ReturnsSum(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame(6, $list->sum());
+    }
+
+    public function testAvg_Constructed_ReturnsAverage(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame(2.0, $list->avg());
+    }
+
+    public function testAvg_Empty_ReturnsNull(): void
+    {
+        self::assertNull((new IntList())->avg());
+    }
+
+    public function testProduct_Constructed_ReturnsProduct(): void
+    {
+        $list = new IntList(2, 3, 4);
+
+        self::assertSame(24, $list->product());
+    }
+
+    public function testMedian_OddCount_ReturnsMiddle(): void
+    {
+        $list = new IntList(3, 1, 2);
+
+        self::assertSame(2.0, $list->median());
+    }
+
+    public function testMedian_EvenCount_ReturnsAverageOfMiddleTwo(): void
+    {
+        $list = new IntList(4, 1, 3, 2);
+
+        self::assertSame(2.5, $list->median());
+    }
+
+    public function testMedian_Empty_ReturnsNull(): void
+    {
+        self::assertNull((new IntList())->median());
+    }
+
+    public function testRange_Constructed_ReturnsRange(): void
+    {
+        $list = new IntList(1, 5, 3);
+
+        self::assertSame(4, $list->range());
+    }
+
+    public function testRange_Empty_ReturnsNull(): void
+    {
+        self::assertNull((new IntList())->range());
+    }
+
+    public function testJoin_WithSeparator_ReturnsJoinedString(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame('1,2,3', $list->join(','));
+    }
+
+    public function testImplode_WithSeparator_ReturnsJoinedString(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame('1-2-3', $list->implode('-'));
+    }
+
+    public function testFromString_ValidString_ReturnsIntList(): void
+    {
+        $list = IntList::fromString('1,2,3', ',');
+
+        self::assertSame([1, 2, 3], $list->toArray());
+    }
+
+    public function testFromString_EmptyString_ReturnsEmptyList(): void
+    {
+        self::assertSame([], IntList::fromString('', ',')->toArray());
+    }
+
+    public function testToStringList_Constructed_ReturnsStringList(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame(['1', '2', '3'], $list->toStringList()->toArray());
+    }
+
+    public function testAbs_WithNegativeValues_ReturnsAbsoluteList(): void
+    {
+        $list = new IntList(-3, 0, 2, -1);
+
+        self::assertSame([3, 0, 2, 1], $list->abs()->toArray());
+    }
+
+    public function testMultiply_ByFactor_ReturnsMultipliedList(): void
+    {
+        $list = new IntList(1, 2, 3);
+
+        self::assertSame([3, 6, 9], $list->multiply(3)->toArray());
+    }
+
+    public function testNegativeValues_Constructed_ReturnsNegativeOnly(): void
+    {
+        $list = new IntList(-2, 0, 1, 3);
+
+        self::assertSame([-2], $list->negativeValues()->toArray());
+    }
+
+    public function testNotZeroValues_Constructed_ReturnsNonZeroOnly(): void
+    {
+        $list = new IntList(0, 1, 0, 2);
+
+        self::assertSame([1, 2], $list->notZeroValues()->toArray());
+    }
+
+    public function testPositiveValues_Constructed_ReturnsPositiveOnly(): void
+    {
+        $list = new IntList(-2, 0, 1, 3);
+
+        self::assertSame([1, 3], $list->positiveValues()->toArray());
+    }
+
+    public function testSortAsc_Constructed_ReturnsSortedAscending(): void
+    {
+        $list = new IntList(3, 1, 2);
+
+        self::assertSame([1, 2, 3], $list->sortAsc()->toArray());
+    }
+
+    public function testSortDesc_Constructed_ReturnsSortedDescending(): void
+    {
+        $list = new IntList(3, 1, 2);
+
+        self::assertSame([3, 2, 1], $list->sortDesc()->toArray());
+    }
+
+    public function testDiff_WithAnotherList_ReturnsDifference(): void
+    {
+        $list = new IntList(1, 2, 3, 4);
+
+        self::assertSame([1, 4], $list->diff(new IntList(2, 3))->toArray());
+    }
+
+    public function testIntersect_WithAnotherList_ReturnsIntersection(): void
+    {
+        $list = new IntList(1, 2, 3, 4);
+
+        self::assertSame([2, 3], $list->intersect(new IntList(2, 3, 5))->toArray());
     }
 }

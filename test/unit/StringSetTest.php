@@ -6,9 +6,17 @@ namespace Purr\Collection\Test;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\AbstractCollection;
+use Purr\Collection\AbstractList;
+use Purr\Collection\AbstractSet;
+use Purr\Collection\StringCollectionTrait;
 use Purr\Collection\StringSet;
 
 #[CoversClass(StringSet::class)]
+#[CoversClass(AbstractSet::class)]
+#[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(StringCollectionTrait::class)]
 class StringSetTest extends TestCase
 {
     public function testToArray_Constructed_ReturnsUniqueValues(): void

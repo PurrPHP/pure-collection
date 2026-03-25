@@ -7,9 +7,15 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\AbstractCollection;
+use Purr\Collection\AbstractList;
+use Purr\Collection\StringCollectionTrait;
 use Purr\Collection\StringList;
 
 #[CoversClass(StringList::class)]
+#[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(StringCollectionTrait::class)]
 class StringListTest extends TestCase
 {
     public function testConstructor_StringsProvided_ReturnsTargetList(): void
@@ -182,5 +188,47 @@ class StringListTest extends TestCase
         $list = new StringList('a', 'b', 'c');
 
         self::assertSame(['a', 'b', 'c'], [...$list]);
+    }
+
+    public function testFromInts_IntArray_ReturnsStringList(): void
+    {
+        $list = StringList::fromInts(1, 2, 3);
+
+        self::assertSame(['1', '2', '3'], $list->toArray());
+    }
+
+    public function testJoin_WithSeparator_ReturnsJoinedString(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame('a,b,c', $list->join(','));
+    }
+
+    public function testJoin_WithoutSeparator_ReturnsConcatenatedString(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame('abc', $list->join());
+    }
+
+    public function testImplode_WithSeparator_ReturnsJoinedString(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame('a-b-c', $list->implode('-'));
+    }
+
+    public function testDiff_WithAnotherList_ReturnsDifference(): void
+    {
+        $list = new StringList('a', 'b', 'c', 'd');
+
+        self::assertSame(['a', 'd'], $list->diff(new StringList('b', 'c'))->toArray());
+    }
+
+    public function testIntersect_WithAnotherList_ReturnsIntersection(): void
+    {
+        $list = new StringList('a', 'b', 'c', 'd');
+
+        self::assertSame(['b', 'c'], $list->intersect(new StringList('b', 'c', 'e'))->toArray());
     }
 }

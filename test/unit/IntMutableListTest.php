@@ -7,15 +7,19 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\AbstractCollection;
 use Purr\Collection\AbstractList;
 use Purr\Collection\AbstractMutableList;
 use Purr\Collection\Exception\IndexOutOfBoundsException;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
+use Purr\Collection\IntCollectionTrait;
 use Purr\Collection\IntMutableList;
 
 #[CoversClass(IntMutableList::class)]
 #[CoversClass(AbstractMutableList::class)]
 #[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(IntCollectionTrait::class)]
 class IntMutableListTest extends TestCase
 {
     public function testConstruct_WithValues_ReturnsOrderedList(): void

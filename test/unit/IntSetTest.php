@@ -6,9 +6,19 @@ namespace Purr\Collection\Test;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\AbstractCollection;
+use Purr\Collection\AbstractList;
+use Purr\Collection\AbstractSet;
+use Purr\Collection\IntCollectionTrait;
+use Purr\Collection\IntImmutableCollectionTrait;
 use Purr\Collection\IntSet;
 
 #[CoversClass(IntSet::class)]
+#[CoversClass(AbstractSet::class)]
+#[CoversClass(AbstractList::class)]
+#[CoversClass(AbstractCollection::class)]
+#[CoversClass(IntImmutableCollectionTrait::class)]
+#[CoversClass(IntCollectionTrait::class)]
 class IntSetTest extends TestCase
 {
     public function testFromString_EmptyString_ReturnsEmptySet(): void
