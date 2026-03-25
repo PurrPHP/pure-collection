@@ -231,4 +231,180 @@ class StringListTest extends TestCase
 
         self::assertSame(['b', 'c'], $list->intersect(new StringList('b', 'c', 'e'))->toArray());
     }
+
+    public function testIntersect_NoOverlap_ReturnsEmptyList(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertSame([], $list->intersect(new StringList('c', 'd'))->toArray());
+    }
+
+    public function testIntersect_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertInstanceOf(StringList::class, $list->intersect(new StringList('a')));
+    }
+
+    public function testDiff_AllElementsRemoved_ReturnsEmptyList(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertSame([], $list->diff(new StringList('a', 'b'))->toArray());
+    }
+
+    public function testDiff_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertInstanceOf(StringList::class, $list->diff(new StringList('a')));
+    }
+
+    // region AbstractCollection: find methods
+
+    public function testFindLast_NoArgs_ReturnsLastElement(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame('c', $list->findLast());
+    }
+
+    public function testFindLast_WithPredicate_ReturnsLastMatchingElement(): void
+    {
+        $list = new StringList('a', 'bb', 'c', 'dd');
+
+        self::assertSame('dd', $list->findLast(static fn (string $s): bool => strlen($s) > 1));
+    }
+
+    public function testFindFirstAfter_Constructed_ReturnsNextElement(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame('b', $list->findFirstAfter('a'));
+    }
+
+    public function testFindFirstAfter_LastElement_ReturnsNull(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertNull($list->findFirstAfter('c'));
+    }
+
+    public function testFindFirstAfter_NotFound_ReturnsNull(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertNull($list->findFirstAfter('z'));
+    }
+
+    // endregion
+
+    // region AbstractCollection: has / flattenGroupBy
+
+    public function testHas_ExistingElement_ReturnsTrue(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertTrue($list->has('a'));
+    }
+
+    public function testFlattenGroupBy_Constructed_ReturnsGroupedArray(): void
+    {
+        $list = new StringList('a', 'bb', 'c');
+
+        $result = $list->flattenGroupBy(static fn (string $s): string => strlen($s) > 1 ? 'long' : 'short');
+
+        self::assertSame(['short' => 'c', 'long' => 'bb'], $result);
+    }
+
+    // endregion
+
+    // region StringCollectionTrait: sortedAlphabetically
+
+    public function testSortedAlphabetically_Constructed_ReturnsSortedList(): void
+    {
+        $list = new StringList('c', 'a', 'b');
+
+        self::assertSame(['a', 'b', 'c'], $list->sortedAlphabetically()->toArray());
+    }
+
+    public function testSortedAlphabetically_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('b', 'a');
+
+        self::assertInstanceOf(StringList::class, $list->sortedAlphabetically());
+    }
+
+    // endregion
+
+    // region AbstractList: indexOf / lastIndexOf
+
+    public function testIndexOf_ExistingElement_ReturnsIndex(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertSame(1, $list->indexOf('b'));
+    }
+
+    public function testIndexOf_NonExistingElement_ReturnsNull(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertNull($list->indexOf('z'));
+    }
+
+    public function testLastIndexOf_DuplicateValues_ReturnsLastIndex(): void
+    {
+        $list = new StringList('a', 'b', 'a', 'c', 'a');
+
+        self::assertSame(4, $list->lastIndexOf('a'));
+    }
+
+    // endregion
+
+    // region AbstractCollection: instance checks
+
+    public function testUnique_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'b', 'a');
+
+        self::assertInstanceOf(StringList::class, $list->unique());
+    }
+
+    public function testFilter_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'bb', 'c');
+
+        self::assertInstanceOf(StringList::class, $list->filter(static fn (string $s): bool => strlen($s) === 1));
+    }
+
+    public function testFilterNot_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'bb', 'c');
+
+        self::assertInstanceOf(StringList::class, $list->filterNot(static fn (string $s): bool => strlen($s) > 1));
+    }
+
+    public function testSlice_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('a', 'b', 'c');
+
+        self::assertInstanceOf(StringList::class, $list->slice(0, 2));
+    }
+
+    public function testSorted_ReturnsStringListInstance(): void
+    {
+        $list = new StringList('b', 'a');
+
+        self::assertInstanceOf(StringList::class, $list->sorted(static fn (string $a, string $b): int => $a <=> $b));
+    }
+
+    public function testChunks_EachChunkIsStringListInstance(): void
+    {
+        $list = new StringList('a', 'b');
+
+        self::assertInstanceOf(StringList::class, $list->chunks(1)[0]);
+    }
+
+    // endregion
 }
