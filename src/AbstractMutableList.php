@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+use ArrayAccess;
 use Purr\Collection\Exception\IndexOutOfBoundsException;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
@@ -12,7 +13,7 @@ use Purr\Collection\Exception\InvalidArgumentTypeException;
  *
  * @template-extends AbstractList<TValue>
  */
-abstract class AbstractMutableList extends AbstractList implements \ArrayAccess
+abstract class AbstractMutableList extends AbstractList implements ArrayAccess
 {
     /**
      * @param int $offset

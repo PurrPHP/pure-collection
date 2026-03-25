@@ -1,8 +1,21 @@
 # Common Collection Methods
 
-All collections implement `CollectionInterface`, which extends `Countable` and `Iterator`. This document covers the methods available on every collection class.
+All collections implement [`CollectionInterface`](../src/CollectionInterface.php), which extends `Countable` and `Iterator`. The default implementations are spread across a hierarchy of abstract classes:
+
+| Abstract class | Extends | Role |
+|----------------|---------|------|
+| [`AbstractCollection`](../src/AbstractCollection.php) | — | Base implementation of all `CollectionInterface` methods (searching, predicates, filtering, transforming, grouping, iteration) |
+| [`AbstractList`](../src/AbstractList.php) | `AbstractCollection` | Adds list-specific methods (`indexOf`, `lastIndexOf`) and list-flavoured `groupBy` |
+| [`AbstractSet`](../src/AbstractSet.php) | `AbstractList` | Extends `AbstractList`; deduplicates values on construction |
+| [`AbstractMap`](../src/AbstractMap.php) | `AbstractCollection` | Provides map-flavoured `groupBy` for associative (key → value) collections |
+| [`AbstractMutableList`](../src/AbstractMutableList.php) | `AbstractList` | Adds `ArrayAccess` and all mutating operations (`insert`, `remove`, `pop`, `shift`, `reverse`, `clear`, etc.) |
+| [`AbstractMutableMap`](../src/AbstractMutableMap.php) | `AbstractCollection` | Adds `ArrayAccess` and mutating operations for maps |
+
+This document covers the methods available on every collection class.
 
 ## Searching
+
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
 
 ### `findFirst(?callable $predicate = null): mixed`
 
@@ -50,6 +63,8 @@ Alias for `contains()`.
 
 ## Predicates
 
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
+
 ### `any(callable $predicate): bool`
 
 Returns `true` if **at least one** element satisfies the predicate.
@@ -78,6 +93,8 @@ $list->none(fn(int $n): bool => $n < 0); // true
 
 ## Filtering
 
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
+
 ### `filter(callable ...$filters): static`
 
 Returns a new collection containing only elements that satisfy **all** provided callables (AND logic).
@@ -97,6 +114,8 @@ $list->filterNot(fn(int $n): bool => $n % 2 === 0); // IntList(1, 3, 5)
 ---
 
 ## Transforming
+
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
 
 ### `map(callable $fn): array`
 
@@ -142,6 +161,8 @@ Returns a new collection with duplicate values removed.
 
 ## Grouping & Chunking
 
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php) · [`AbstractList`](../src/AbstractList.php) · [`AbstractMap`](../src/AbstractMap.php)
+
 ### `groupBy(callable $keyCallable): array`
 
 Groups elements by the string key returned by the callable. Lists produce `array<string, list<TValue>>`, maps produce `array<string, array<key, TValue>>`.
@@ -172,6 +193,8 @@ $list->chunks(2); // [IntList(1, 2), IntList(3, 4), IntList(5)]
 
 ## Sizing & State
 
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
+
 ### `count(): int`
 
 Returns the number of elements. Fulfils the `Countable` contract, so `count($collection)` also works.
@@ -193,6 +216,8 @@ Returns `true` if the collection has at least one element.
 
 ## Converting
 
+> Source: [`CollectionInterface`](../src/CollectionInterface.php) · [`AbstractCollection`](../src/AbstractCollection.php)
+
 ### `toArray(): array`
 
 Returns the underlying PHP array. For lists the keys are zero-based integers; for maps the original string/int keys are preserved.
@@ -204,6 +229,8 @@ $list->toArray(); // [1, 2, 3, 4, 5]
 ---
 
 ## List-only Methods
+
+> Source: [`AbstractList`](../src/AbstractList.php)
 
 The following methods are available on list-based classes (`IntList`, `IntSet`, `StringList`, `StringSet`, and their variants) but not on map-based classes.
 
@@ -226,6 +253,8 @@ Returns the index of the **last** occurrence of `$value`, or `null` if not found
 ---
 
 ## Mutable List Methods
+
+> Source: [`AbstractMutableList`](../src/AbstractMutableList.php)
 
 `IntMutableList` additionally implements `ArrayAccess` and provides the following mutating operations. All methods return `$this` for fluent chaining unless otherwise noted.
 
@@ -320,6 +349,8 @@ $list->clear(); // IntMutableList()
 
 ## Iterator
 
+> Source: [`AbstractCollection`](../src/AbstractCollection.php)
+
 All collections implement `Iterator`, so they can be used directly in `foreach` loops:
 
 ```php
@@ -327,3 +358,4 @@ foreach (new IntList(1, 2, 3) as $index => $value) {
     // $index: 0, 1, 2 — $value: 1, 2, 3
 }
 ```
+

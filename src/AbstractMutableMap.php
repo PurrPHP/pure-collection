@@ -69,6 +69,13 @@ abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAc
         }
     }
 
+    final public function clear(): static
+    {
+        $this->collection = [];
+
+        return $this;
+    }
+
     /**
      * @throws InvalidArgumentTypeException
      */
