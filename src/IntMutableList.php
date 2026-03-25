@@ -95,6 +95,15 @@ class IntMutableList extends AbstractMutableList implements IntCollectionInterfa
         return $this;
     }
 
+    public function intersect(IntCollectionInterface $collection): static
+    {
+        /** @var array<int<0, max>, int> $result */
+        $result = array_values(array_intersect($this->collection, $collection->toArray()));
+        $this->collection = $result;
+
+        return $this;
+    }
+
     protected function ensureType(mixed $value): void
     {
         if (!is_int($value)) {

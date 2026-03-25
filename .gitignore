@@ -32,11 +32,6 @@ Thumbs.db
 /build/
 /dist/
 
-# Environment files
-.env
-.env.local
-.env.*.local
-
 # Temporary files
 *.tmp
 *.temp

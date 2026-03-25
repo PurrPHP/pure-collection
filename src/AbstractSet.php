@@ -21,10 +21,6 @@ abstract class AbstractSet extends AbstractList
          */
         $unique = $this->filterUniqValues($items);
 
-        /*
-         * @psalm-suppress MixedArgumentTypeCoercion
-         * @psalm-suppress InvalidArgument
-         */
         parent::__construct($unique);
     }
 }

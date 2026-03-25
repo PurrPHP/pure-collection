@@ -7,6 +7,7 @@ namespace Purr\Collection\Test;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\Exception\InvalidArgumentException;
 use Purr\Collection\IntList;
 
 #[CoversClass(IntList::class)]
@@ -302,6 +303,15 @@ class IntListTest extends TestCase
         $result = $list->chunks(1);
 
         self::assertInstanceOf(IntList::class, $result[0]);
+    }
+
+    public function testChunks_ZeroChunkSize_ThrowsInvalidArgumentException(): void
+    {
+        $list = new IntList(1);
+
+        $this->expectException(\Purr\Collection\Exception\InvalidArgumentException::class);
+
+        $list->chunks(0);
     }
 
     public function testDestruct_SomeList_ReturnsSourceValues(): void

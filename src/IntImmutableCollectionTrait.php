@@ -53,4 +53,9 @@ trait IntImmutableCollectionTrait
     {
         return new static(...array_diff($this->collection, $collection->toArray()));
     }
+
+    public function intersect(IntCollectionInterface $collection): static
+    {
+        return new static(...array_values(array_intersect($this->collection, $collection->toArray())));
+    }
 }

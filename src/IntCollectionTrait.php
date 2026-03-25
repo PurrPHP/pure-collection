@@ -97,4 +97,9 @@ trait IntCollectionTrait
     {
         return StringSet::fromInts(...$this->collection);
     }
+
+    protected function filterUniqValues(array $items): array
+    {
+        return array_unique($items);
+    }
 }

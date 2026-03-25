@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+use Purr\Collection\Exception\InvalidArgumentException;
+
 /**
  * @template TKey of array-key
  * @template TValue
@@ -305,18 +307,17 @@ abstract class AbstractCollection implements CollectionInterface
      */
     final public function chunks(int $size): array
     {
+        if ($size <= 0) {
+            throw new InvalidArgumentException('Chunk size must be greater than zero.');
+        }
+
         $chunks = array_chunk($this->collection, $size, true);
         $collectionsArray = array_fill(0, count($chunks), null);
 
         foreach ($chunks as $index => $chunkItem) {
-            /*
-             * @psalm-suppress UnsafeInstantiation
-             * @psalm-suppress MixedArgumentTypeCoercion
-             */
             $collectionsArray[$index] = new static(...$chunkItem);
         }
 
-        // @psalm-suppress InvalidReturnStatement
         return $collectionsArray;
     }
 
@@ -325,8 +326,5 @@ abstract class AbstractCollection implements CollectionInterface
      *
      * @return TValue[]
      */
-    protected function filterUniqValues(array $items): array
-    {
-        return array_unique($items);
-    }
+    abstract protected function filterUniqValues(array $items): array;
 }

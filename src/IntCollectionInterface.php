@@ -81,4 +81,6 @@ interface IntCollectionInterface extends CollectionInterface
     public function toStringSet(): StringSet;
 
     public function diff(IntCollectionInterface $collection): static;
+
+    public function intersect(IntCollectionInterface $collection): static;
 }

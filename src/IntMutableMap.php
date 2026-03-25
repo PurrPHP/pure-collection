@@ -74,6 +74,13 @@ class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
         return $this;
     }
 
+    public function intersect(IntCollectionInterface $collection): static
+    {
+        $this->collection = array_intersect($this->collection, $collection->toArray());
+
+        return $this;
+    }
+
     protected function ensureType(mixed $value): void
     {
         if (!is_int($value)) {
