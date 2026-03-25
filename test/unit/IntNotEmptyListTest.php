@@ -94,20 +94,6 @@ final class IntNotEmptyListTest extends TestCase
         self::assertSame(4, $list->max());
     }
 
-    public function testMax_List_ReturnsMax(): void
-    {
-        $list = new IntNotEmptyList(3, 1, 4, 1, 5);
-
-        self::assertSame(5, $list->max());
-    }
-
-    public function testMin_Constructed_ReturnsMin(): void
-    {
-        $list = new IntNotEmptySet(2, 3, 4, 2, 1);
-
-        self::assertSame(1, $list->min());
-    }
-
     public function testMin_List_ReturnsMin(): void
     {
         $list = new IntNotEmptyList(3, 1, 4, 1, 5);

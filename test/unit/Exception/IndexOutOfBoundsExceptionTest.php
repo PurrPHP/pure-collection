@@ -19,4 +19,11 @@ class IndexOutOfBoundsExceptionTest extends TestCase
             'size' => 2
         ], $e->getContext());
     }
+
+    public function testGetMessage_Constructed_ReturnsFormattedMessage(): void
+    {
+        $e = new IndexOutOfBoundsException(3, 2);
+
+        self::assertEquals('Index 3 is out of bounds for list of size 2', $e->getMessage());
+    }
 }

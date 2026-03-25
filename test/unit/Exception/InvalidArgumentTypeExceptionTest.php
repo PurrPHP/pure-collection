@@ -19,4 +19,11 @@ class InvalidArgumentTypeExceptionTest extends TestCase
             'expects' => 'b',
         ], $e->getContext());
     }
+
+    public function testGetMessage_Constructed_ReturnsFormattedMessage(): void
+    {
+        $e = new InvalidArgumentTypeException('integer', 'string');
+
+        self::assertEquals('Invalid type. Got integer. Expects string', $e->getMessage());
+    }
 }
