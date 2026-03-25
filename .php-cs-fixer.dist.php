@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
-$finder = PhpCsFixer\Finder::create()
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = Finder::create()
     ->in(__DIR__)
     ->exclude(['var', 'vendor', 'coverage'])
     ->ignoreDotFiles(false)
-    ->ignoreVCS(true);
+    ->ignoreVCS(true)
+;
 
-$config = new PhpCsFixer\Config();
+$config = new Config();
 
 return $config
     ->setRiskyAllowed(true)
@@ -41,4 +45,5 @@ return $config
         'php_unit_internal_class' => false,
         'php_unit_method_casing' => false,
     ])
-    ->setFinder($finder);
+    ->setFinder($finder)
+;

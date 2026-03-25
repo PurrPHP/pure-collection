@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Purr\Collection\Exception;
 
-class InvalidArgumentTypeException extends \InvalidArgumentException
+class InvalidArgumentTypeException extends InvalidArgumentException
 {
     public function __construct(
         private readonly string $type,
         private readonly string $expects,
-        int                     $code = 0,
-        ?\Throwable             $previous = null
-    )
-    {
+        int $code = 0,
+        ?\Throwable $previous = null
+    ) {
         parent::__construct(sprintf('Invalid type. Got %s. Expects %s', $type, $expects), $code, $previous);
     }
 

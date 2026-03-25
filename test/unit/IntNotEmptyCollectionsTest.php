@@ -6,6 +6,7 @@ namespace Purr\Collection\Test;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Purr\Collection\Exception\InvalidArgumentException;
 use Purr\Collection\IntNotEmptyList;
 use Purr\Collection\IntNotEmptySet;
 
@@ -22,7 +23,7 @@ final class IntNotEmptyCollectionsTest extends TestCase
 
     public function testConstructor_EmptyList_throwsInvalidArgumentException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Numbers are empty');
 
         new IntNotEmptyList();
@@ -30,7 +31,7 @@ final class IntNotEmptyCollectionsTest extends TestCase
 
     public function testConstructor_EmptySet_throwsInvalidArgumentException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Numbers are empty');
 
         new IntNotEmptySet();

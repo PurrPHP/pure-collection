@@ -22,6 +22,26 @@ abstract class AbstractList extends AbstractCollection
         parent::__construct($values);
     }
 
+    final public function indexOf(mixed $value): ?int
+    {
+        $key = array_search($value, $this->collection, true);
+
+        return false === $key ? null : $key;
+    }
+
+    final public function lastIndexOf(mixed $value): ?int
+    {
+        $result = null;
+
+        foreach ($this->collection as $key => $item) {
+            if ($item === $value) {
+                $result = $key;
+            }
+        }
+
+        return $result;
+    }
+
     /**
      * @param callable(TValue):string $keyCallable
      *

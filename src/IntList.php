@@ -9,7 +9,7 @@ namespace Purr\Collection;
  */
 class IntList extends AbstractList implements IntCollectionInterface
 {
-    use IntCollectionTrait;
+    use IntImmutableCollectionTrait;
 
     public function __construct(int ...$numbers)
     {

@@ -9,7 +9,7 @@ namespace Purr\Collection;
  */
 class IntSet extends AbstractSet implements IntCollectionInterface
 {
-    use IntCollectionTrait;
+    use IntImmutableCollectionTrait;
 
     public function __construct(int ...$numbers)
     {
@@ -31,10 +31,5 @@ class IntSet extends AbstractSet implements IntCollectionInterface
     public function toStringSet(): StringSet
     {
         return StringSet::fromIntList($this->collection);
-    }
-
-    public function join(string $separator = ''): string
-    {
-        return implode($separator, $this->collection);
     }
 }

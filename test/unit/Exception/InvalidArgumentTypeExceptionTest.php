@@ -16,8 +16,7 @@ class InvalidArgumentTypeExceptionTest extends TestCase
 
         self::assertEquals([
             'type' => 'a',
-            'expects' => 'b'
+            'expects' => 'b',
         ], $e->getContext());
     }
-
 }

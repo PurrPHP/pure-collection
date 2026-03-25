@@ -6,18 +6,6 @@ namespace Purr\Collection;
 
 trait IntCollectionTrait
 {
-    public function max(): ?int
-    {
-        // @var int[] $this->collection
-        return [] === $this->collection ? null : max($this->collection);
-    }
-
-    public function min(): ?int
-    {
-        // @var int[] $this->collection
-        return [] === $this->collection ? null : min($this->collection);
-    }
-
     public function avg(): ?float
     {
         /** @var int[] $this->collection */
@@ -28,14 +16,58 @@ trait IntCollectionTrait
         return array_sum($this->collection) / count($this->collection);
     }
 
+    public function max(): ?int
+    {
+        // @var int[] $this->collection
+        return [] === $this->collection ? null : max($this->collection);
+    }
+
+    public function median(): ?float
+    {
+        if ([] === $this->collection) {
+            return null;
+        }
+
+        $sorted = $this->collection;
+        sort($sorted);
+        $count = count($sorted);
+        $mid = (int) ($count / 2);
+
+        if (0 === $count % 2) {
+            return ($sorted[$mid - 1] + $sorted[$mid]) / 2;
+        }
+
+        return (float) $sorted[$mid];
+    }
+
+    public function min(): ?int
+    {
+        // @var int[] $this->collection
+        return [] === $this->collection ? null : min($this->collection);
+    }
+
+    public function product(): int
+    {
+        return (int) array_product($this->collection);
+    }
+
+    public function range(): ?int
+    {
+        if ([] === $this->collection) {
+            return null;
+        }
+
+        return max($this->collection) - min($this->collection);
+    }
+
     public function sum(): int
     {
         // @var int[] $this->collection
         return array_sum($this->collection);
     }
 
-    public function notZeroValues(): static
+    public function join(string $separator = ''): string
     {
-        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
+        return implode($separator, $this->collection);
     }
 }

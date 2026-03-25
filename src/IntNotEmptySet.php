@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
-use Purr\Collection\Exception\InvalidArgumentTypeException;
+use Purr\Collection\Exception\InvalidArgumentException;
 
 class IntNotEmptySet extends IntSet
 {
     /**
-     * @throws InvalidArgumentTypeException when no numbers provided
+     * @throws InvalidArgumentException when no numbers provided
      */
     public function __construct(int ...$numbers)
     {
         if (!$numbers) {
-            throw new InvalidArgumentTypeException('Numbers are empty');
+            throw new InvalidArgumentException('Numbers are empty');
         }
 
         parent::__construct(...$numbers);

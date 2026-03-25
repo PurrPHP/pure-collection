@@ -9,7 +9,7 @@ namespace Purr\Collection;
  */
 class IntMap extends AbstractMap implements IntCollectionInterface
 {
-    use IntCollectionTrait;
+    use IntImmutableCollectionTrait;
 
     public function __construct(int ...$numbers)
     {
