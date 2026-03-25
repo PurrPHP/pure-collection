@@ -15,21 +15,4 @@ class IntSet extends AbstractSet implements IntCollectionInterface
     {
         parent::__construct($numbers);
     }
-
-    public static function fromString(string $string, string $separator): self
-    {
-        if ('' === $string) {
-            return new self();
-        }
-
-        /** @psalm-suppress ArgumentTypeCoercion $values */
-        $values = explode($separator, $string);
-
-        return new self(...array_map('intval', $values));
-    }
-
-    public function toStringSet(): StringSet
-    {
-        return StringSet::fromIntList($this->collection);
-    }
 }

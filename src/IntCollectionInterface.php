@@ -9,6 +9,8 @@ namespace Purr\Collection;
  */
 interface IntCollectionInterface extends CollectionInterface
 {
+    public static function fromString(string $string, string $separator): self;
+
     /** Returns a collection with each element replaced by its absolute value. */
     public function abs(): static;
 
@@ -66,4 +68,17 @@ interface IntCollectionInterface extends CollectionInterface
      * $a->join(',') returns "1,2".
      */
     public function join(string $separator = ''): string;
+
+    /**
+     * Alias for join.
+     *
+     * @see self::join
+     */
+    public function implode(string $separator = ''): string;
+
+    public function toStringList(): StringList;
+
+    public function toStringSet(): StringSet;
+
+    public function diff(IntCollectionInterface $collection): static;
 }

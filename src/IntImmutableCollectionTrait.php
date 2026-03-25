@@ -48,4 +48,9 @@ trait IntImmutableCollectionTrait
 
         return new static(...$sorted);
     }
+
+    public function diff(IntCollectionInterface $collection): static
+    {
+        return new static(...array_diff($this->collection, $collection->toArray()));
+    }
 }

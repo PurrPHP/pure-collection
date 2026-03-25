@@ -15,9 +15,4 @@ class IntList extends AbstractList implements IntCollectionInterface
     {
         parent::__construct($numbers);
     }
-
-    public function toStringSet(): StringSet
-    {
-        return StringSet::fromIntList($this->collection);
-    }
 }

@@ -67,6 +67,13 @@ class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
         return $this;
     }
 
+    public function diff(IntCollectionInterface $collection): static
+    {
+        $this->collection = array_diff($this->collection, $collection->toArray());
+
+        return $this;
+    }
+
     protected function ensureType(mixed $value): void
     {
         if (!is_int($value)) {

@@ -14,30 +14,9 @@ class StringSet extends AbstractSet
         parent::__construct($strings);
     }
 
-    /**
-     * @param string[] $strings
-     */
-    public static function fromArray(array $strings): static
-    {
-        return new static(...$strings);
-    }
-
-    /**
-     * @param int[] $numbers
-     */
-    public static function fromIntList(array $numbers): static
+    public static function fromInts(int ...$numbers): static
     {
         return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));
-    }
-
-    public static function fromInt(int ...$numbers): static
-    {
-        return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));
-    }
-
-    public static function create(string ...$strings): static
-    {
-        return new static(...$strings);
     }
 
     public function has(string $value): bool

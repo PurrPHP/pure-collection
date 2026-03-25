@@ -6,6 +6,18 @@ namespace Purr\Collection;
 
 trait IntCollectionTrait
 {
+    public static function fromString(string $string, string $separator): self
+    {
+        if ('' === $string) {
+            return new self();
+        }
+
+        /** @psalm-suppress ArgumentTypeCoercion $values */
+        $values = explode($separator, $string);
+
+        return new static(...array_map('intval', $values));
+    }
+
     public function avg(): ?float
     {
         /** @var int[] $this->collection */
@@ -69,5 +81,20 @@ trait IntCollectionTrait
     public function join(string $separator = ''): string
     {
         return implode($separator, $this->collection);
+    }
+
+    public function implode(string $separator = ''): string
+    {
+        return $this->join($separator);
+    }
+
+    public function toStringList(): StringList
+    {
+        return StringList::fromInts(...$this->collection);
+    }
+
+    public function toStringSet(): StringSet
+    {
+        return StringSet::fromInts(...$this->collection);
     }
 }

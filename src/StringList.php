@@ -13,4 +13,9 @@ class StringList extends AbstractList
     {
         parent::__construct($strings);
     }
+
+    public static function fromInts(int ...$numbers): static
+    {
+        return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));
+    }
 }
