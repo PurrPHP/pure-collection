@@ -1,0 +1,5 @@
+docker build --target development -t purrphp-collection:dev .
+docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-limit=1G src
+
+ [OK] No errors                                                                 
+
