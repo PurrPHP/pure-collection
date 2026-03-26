@@ -87,18 +87,32 @@ class StringSetTest extends TestCase
         self::assertSame('a-b-c', $set->implode('-'));
     }
 
-    public function testSortedAlphabetically_Constructed_ReturnsSortedSet(): void
+    public function testSortedAlphabeticallySortAsc_Constructed_ReturnsSortedSet(): void
     {
         $set = new StringSet('c', 'b', 'a');
 
         self::assertSame(['a', 'b', 'c'], $set->sortedAlphabetically()->toArray());
     }
 
-    public function testSortedAlphabetically_ReturnsStringSetInstance(): void
+    public function testSortedAlphabeticallySortAsc_ReturnsStringSetInstance(): void
     {
         $set = new StringSet('b', 'a');
 
         self::assertInstanceOf(StringSet::class, $set->sortedAlphabetically());
+    }
+
+    public function testSortedAlphabeticallyDesc_Constructed_ReturnsSortedSetDescending(): void
+    {
+        $set = new StringSet('a', 'c', 'b');
+
+        self::assertSame(['c', 'b', 'a'], $set->sortedAlphabetically(desc: true)->toArray());
+    }
+
+    public function testSortedAlphabetically_Desc_ReturnsStringSetInstance(): void
+    {
+        $set = new StringSet('a', 'b');
+
+        self::assertInstanceOf(StringSet::class, $set->sortedAlphabetically(desc: true));
     }
 
     // endregion

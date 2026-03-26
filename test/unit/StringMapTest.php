@@ -44,11 +44,18 @@ final class StringMapTest extends TestCase
 
     // region StringCollectionTrait: sortedAlphabetically
 
-    public function testSortedAlphabetically_Constructed_ReturnsSortedMapByValue(): void
+    public function testSortedAlphabeticallySortAsc_Constructed_ReturnsSortedMapByValue(): void
     {
         $map = new StringMap(...['c' => 'zebra', 'a' => 'apple', 'b' => 'banana']);
 
         self::assertSame(['apple', 'banana', 'zebra'], $map->sortedAlphabetically()->toArray());
+    }
+
+    public function testSortedAlphabeticallyDesc_Constructed_ReturnsSortedMapByValueDescending(): void
+    {
+        $map = new StringMap(...['c' => 'zebra', 'a' => 'apple', 'b' => 'banana']);
+
+        self::assertSame(['zebra', 'banana', 'apple'], $map->sortedAlphabetically(desc: true)->toArray());
     }
 
     // endregion
