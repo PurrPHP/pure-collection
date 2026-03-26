@@ -25,6 +25,7 @@ return $config
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => true,
         'no_unused_imports' => true,
+        'global_namespace_import' => false,
         'not_operator_with_successor_space' => false,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,

@@ -3,16 +3,16 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ -------------------------------------------------------------------- 
   Line   src/AbstractCollection.php                                          
  ------ -------------------------------------------------------------------- 
-  258    Parameter #1 $comparator (callable(TValue, TValue): int) of method  
+  259    Parameter #1 $comparator (callable(TValue, TValue): int) of method  
          Purr\Collection\AbstractCollection::sorted() should be compatible   
          with parameter $comparator (callable(mixed, mixed):                 
          Purr\Collection\ComparisonResultType) of method                     
          Purr\Collection\CollectionInterface<TValue>::sorted()               
-  286    Method Purr\Collection\AbstractCollection::current() should return  
+  287    Method Purr\Collection\AbstractCollection::current() should return  
          TValue but returns TValue|false.                                    
          💡 Type false is not always the same as TValue. It breaks the       
             contract for some argument types, typically subtypes.            
-  327    Method Purr\Collection\AbstractCollection::chunks() should return   
+  328    Method Purr\Collection\AbstractCollection::chunks() should return   
          array<int, static(Purr\Collection\AbstractCollection<TKey of        
          (int|string), TValue>)> but returns array<int,                      
          static(Purr\Collection\AbstractCollection<(int|string),             
@@ -22,10 +22,10 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ -------------------------------------------------------------------------------------- 
   Line   src/CollectionInterface.php                                                           
  ------ -------------------------------------------------------------------------------------- 
-  125    Parameter $comparator of method                                                       
+  126    Parameter $comparator of method                                                       
          Purr\Collection\CollectionInterface::sorted() has invalid type                        
          Purr\Collection\ComparisonResultType.                                                 
-  129    Method Purr\Collection\CollectionInterface::toArray() return type has                 
+  130    Method Purr\Collection\CollectionInterface::toArray() return type has                 
          no value type specified in iterable type array.                                       
          💡 See:                                                                               
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type  
@@ -236,9 +236,11 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ --------------------------------------------------------------------- 
   Line   src/StringCollectionInterface.php                                    
  ------ --------------------------------------------------------------------- 
-  6      Interface Purr\Collection\StringCollectionInterface extends generic  
+  9      Interface Purr\Collection\StringCollectionInterface extends generic  
          interface Purr\Collection\CollectionInterface but does not specify   
          its types: TValue                                                    
+  9      Interface Purr\Collection\StringCollectionInterface has @implements  
+         tag, but can not implement any interface, must extend from it.       
  ------ --------------------------------------------------------------------- 
 
  ------ ------------------------------------------------------------------------------ 
@@ -615,92 +617,76 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ -------------------------------------------------------------------------------------------- 
   Line   test/unit/IntListTest.php                                                                   
  ------ -------------------------------------------------------------------------------------------- 
-  30     Method                                                                                      
+  31     Method                                                                                      
          Purr\Collection\Test\IntListTest::testFindFirst_WithOptionalPredicate_ReturnsTargetValue()  
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  41     Method Purr\Collection\Test\IntListTest::providerFindFirst() return                         
-         type has no value type specified in iterable type array.                                    
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  52     Method                                                                                      
+  46     Method Purr\Collection\Test\IntListTest::providerFindFirst() should                         
+         return array<string, array<int, mixed>> but returns array<int|string,                       
+         array<int, array<int, int>|(Closure)|int|null>>.                                            
+  55     Method                                                                                      
          Purr\Collection\Test\IntListTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()        
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  63     Method Purr\Collection\Test\IntListTest::providerFindFirstAfter()                           
-         return type has no value type specified in iterable type array.                             
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  73     Method                                                                                      
+  70     Method Purr\Collection\Test\IntListTest::providerFindFirstAfter()                           
+         should return array<string, array<int, mixed>> but returns                                  
+         array<int|string, array<int, array<int, int>|int|null>>.                                    
+  78     Method                                                                                      
          Purr\Collection\Test\IntListTest::testFindLast_Constructed_ReturnsTargetValue()             
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  81     Method Purr\Collection\Test\IntListTest::providerFindLast() return                          
-         type has no value type specified in iterable type array.                                    
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  90     Method                                                                                      
+  90     Method Purr\Collection\Test\IntListTest::providerFindLast() should                          
+         return array<string, array<int, mixed>> but returns array<int|string,                       
+         array<int, array<int, int>|int|null>>.                                                      
+  97     Method                                                                                      
          Purr\Collection\Test\IntListTest::testContains_WithNeedle_ReturnsTargetBool()               
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  98     Method Purr\Collection\Test\IntListTest::providerContains() return                          
-         type has no value type specified in iterable type array.                                    
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  189    Method                                                                                      
+  198    Method                                                                                      
          Purr\Collection\Test\IntListTest::testSorted_AscToDesc_ReturnsDescList()                    
          has parameter $result with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  189    Method                                                                                      
+  198    Method                                                                                      
          Purr\Collection\Test\IntListTest::testSorted_AscToDesc_ReturnsDescList()                    
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  197    Method Purr\Collection\Test\IntListTest::providerSorted() return type                       
-         has no value type specified in iterable type array.                                         
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  206    Method                                                                                      
+  220    Method                                                                                      
          Purr\Collection\Test\IntListTest::testSlice_WithOffsetAndLimit_ReturnsTargetList()          
          has parameter $result with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  206    Method                                                                                      
+  220    Method                                                                                      
          Purr\Collection\Test\IntListTest::testSlice_WithOffsetAndLimit_ReturnsTargetList()          
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  218    Method Purr\Collection\Test\IntListTest::providerSlice() return type                        
-         has no value type specified in iterable type array.                                         
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  235    Method                                                                                      
+  239    Method Purr\Collection\Test\IntListTest::providerSlice() should                             
+         return array<string, array<int, mixed>> but returns array<int|string,                       
+         array<int, array<int, int>|int>>.                                                           
+  254    Method                                                                                      
          Purr\Collection\Test\IntListTest::testUnique_SomeValues_ReturnsUniqueList()                 
          has parameter $result with no value type specified in iterable type                         
          array.                                                                                      
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  235    Method                                                                                      
+  254    Method                                                                                      
          Purr\Collection\Test\IntListTest::testUnique_SomeValues_ReturnsUniqueList()                 
          has parameter $source with no value type specified in iterable type                         
          array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  243    Method Purr\Collection\Test\IntListTest::providerUnique() return type                       
-         has no value type specified in iterable type array.                                         
          💡 See:                                                                                     
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
  ------ -------------------------------------------------------------------------------------------- 
@@ -714,88 +700,72 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  225    Method Purr\Collection\Test\IntMapTest::providerFindFirst() return                         
-         type has no value type specified in iterable type array.                                   
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  236    Method                                                                                     
+  229    Method Purr\Collection\Test\IntMapTest::providerFindFirst() should                         
+         return array<string, array<int, mixed>> but returns array<int|string,                      
+         array<int, array<string, int>|(Closure)|int|null>>.                                        
+  238    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()        
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  247    Method Purr\Collection\Test\IntMapTest::providerFindFirstAfter()                           
-         return type has no value type specified in iterable type array.                            
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  257    Method                                                                                     
+  253    Method Purr\Collection\Test\IntMapTest::providerFindFirstAfter()                           
+         should return array<string, array<int, mixed>> but returns                                 
+         array<int|string, array<int, array<string, int>|int|null>>.                                
+  261    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testFindLast_WithOptionalPredicate_ReturnsTargetValue()   
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  265    Method Purr\Collection\Test\IntMapTest::providerFindLast() return                          
-         type has no value type specified in iterable type array.                                   
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  280    Method                                                                                     
+  273    Method Purr\Collection\Test\IntMapTest::providerFindLast() should                          
+         return array<string, array<int, mixed>> but returns array<int|string,                      
+         array<int, array<string, int>|(Closure)|int|null>>.                                        
+  286    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testContains_WithNeedle_ReturnsTargetBool()               
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  288    Method Purr\Collection\Test\IntMapTest::providerContains() return                          
-         type has no value type specified in iterable type array.                                   
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  521    Method                                                                                     
+  529    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
          has parameter $result with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  521    Method                                                                                     
+  529    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  529    Method Purr\Collection\Test\IntMapTest::providerUnique() return type                       
-         has no value type specified in iterable type array.                                        
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  542    Method                                                                                     
+  555    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testSorted_AscToDesc_ReturnsDescMap()                     
          has parameter $result with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  542    Method                                                                                     
+  555    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testSorted_AscToDesc_ReturnsDescMap()                     
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  550    Method Purr\Collection\Test\IntMapTest::providerSorted() return type                       
-         has no value type specified in iterable type array.                                        
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  559    Method                                                                                     
+  577    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
          has parameter $result with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  559    Method                                                                                     
+  577    Method                                                                                     
          Purr\Collection\Test\IntMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
          has parameter $source with no value type specified in iterable type                        
          array.                                                                                     
          💡 See:                                                                                    
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  571    Method Purr\Collection\Test\IntMapTest::providerSlice() return type                        
-         has no value type specified in iterable type array.                                        
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
+  596    Method Purr\Collection\Test\IntMapTest::providerSlice() should return                      
+         array<string, array<int, mixed>> but returns array<int|string,                             
+         array<int, array<string, int>|int>>.                                                       
  ------ ------------------------------------------------------------------------------------------- 
 
  ------ ---------------------------------------------------------------------------------------------- 
@@ -808,18 +778,13 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
          array.                                                                                        
          💡 See:                                                                                       
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  159    Method                                                                                        
-         Purr\Collection\Test\IntMutableListTest::providerIntCollectionMethods()                       
-         return type has no value type specified in iterable type array.                               
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  199    Cannot assign offset 'key' to Purr\Collection\IntMutableList.                                 
-  208    Offset 'key' does not exist on Purr\Collection\IntMutableList.                                
-  217    Expression "isset($list['key'])" on a separate line does not do                               
+  201    Cannot assign offset 'key' to Purr\Collection\IntMutableList.                                 
+  210    Offset 'key' does not exist on Purr\Collection\IntMutableList.                                
+  219    Expression "isset($list['key'])" on a separate line does not do                               
          anything.                                                                                     
-  217    Offset 'key' on Purr\Collection\IntMutableList in isset() does not                            
+  219    Offset 'key' on Purr\Collection\IntMutableList in isset() does not                            
          exist.                                                                                        
-  226    Cannot unset offset 'key' on Purr\Collection\IntMutableList.                                  
+  228    Cannot unset offset 'key' on Purr\Collection\IntMutableList.                                  
  ------ ---------------------------------------------------------------------------------------------- 
 
  ------ ------------------------------------------------------- 
@@ -837,110 +802,66 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
          array.                                                                                         
          💡 See:                                                                                        
             https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type           
-  53     Method Purr\Collection\Test\StringListTest::providerFindFirst()                                
-         return type has no value type specified in iterable type array.                                
-         💡 See:                                                                                        
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type           
  ------ ----------------------------------------------------------------------------------------------- 
 
- ------ ---------------------------------------------------------------------------------------------- 
-  Line   test/unit/StringMapTest.php                                                                   
- ------ ---------------------------------------------------------------------------------------------- 
-  101    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testFindFirst_WithOptionalPredicate_ReturnsTargetValue()  
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  112    Method Purr\Collection\Test\StringMapTest::providerFindFirst() return                         
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  123    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()        
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  134    Method Purr\Collection\Test\StringMapTest::providerFindFirstAfter()                           
-         return type has no value type specified in iterable type array.                               
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  144    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testFindLast_WithOptionalPredicate_ReturnsTargetValue()   
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  152    Method Purr\Collection\Test\StringMapTest::providerFindLast() return                          
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  167    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testContains_WithNeedle_ReturnsTargetBool()               
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  175    Method Purr\Collection\Test\StringMapTest::providerContains() return                          
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  406    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
-         has parameter $result with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  406    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  414    Method Purr\Collection\Test\StringMapTest::providerUnique() return                            
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  427    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                     
-         has parameter $result with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  427    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                     
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  435    Method Purr\Collection\Test\StringMapTest::providerSorted() return                            
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  444    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
-         has parameter $result with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  444    Method                                                                                        
-         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  456    Method Purr\Collection\Test\StringMapTest::providerSlice() return                             
-         type has no value type specified in iterable type array.                                      
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
- ------ ---------------------------------------------------------------------------------------------- 
+ ------ --------------------------------------------------------------------------------------------- 
+  Line   test/unit/StringMapTest.php                                                                  
+ ------ --------------------------------------------------------------------------------------------- 
+  127    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()       
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  150    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testFindLast_WithOptionalPredicate_ReturnsTargetValue()  
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  175    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testContains_WithNeedle_ReturnsTargetBool()              
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  416    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                 
+         has parameter $result with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  416    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                 
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  442    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                    
+         has parameter $result with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  442    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                    
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  464    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()          
+         has parameter $result with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+  464    Method                                                                                       
+         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()          
+         has parameter $source with no value type specified in iterable type                          
+         array.                                                                                       
+         💡 See:                                                                                      
+            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
+ ------ --------------------------------------------------------------------------------------------- 
 
- ------ ------------------------------------------------------- 
-  Line   test/unit/StringMutableMapTest.php                     
- ------ ------------------------------------------------------- 
-  85     Purr\Collection\StringMutableMap does not accept int.  
- ------ ------------------------------------------------------- 
-
- [ERROR] Found 249 errors                                                       
+ [ERROR] Found 233 errors                                                       
 

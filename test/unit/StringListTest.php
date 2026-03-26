@@ -40,6 +40,7 @@ class StringListTest extends TestCase
     }
 
     #[DataProvider('providerFindFirst')]
+    /** @param array<int, string> $source */
     public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?string $result,
         ?callable $predicate,
@@ -50,6 +51,7 @@ class StringListTest extends TestCase
         self::assertSame($result, $list->findFirst($predicate));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindFirst(): array
     {
         return [

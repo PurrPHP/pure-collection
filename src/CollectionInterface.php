@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+use Countable;
 use Iterator;
 
 /**
@@ -11,7 +12,7 @@ use Iterator;
  *
  * @template-extends Iterator<array-key, TValue>
  */
-interface CollectionInterface extends \Countable, Iterator
+interface CollectionInterface extends Countable, Iterator
 {
     /**
      * If predicate provided returns first collection item satisfied predicate.

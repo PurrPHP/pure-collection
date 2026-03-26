@@ -210,6 +210,7 @@ final class IntMapTest extends TestCase
     // region AbstractCollection: find methods
 
     #[DataProvider('providerFindFirst')]
+    /** @param array<string, int> $source */
     public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?int $result,
         ?callable $predicate,
@@ -222,6 +223,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->findFirst($predicate));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindFirst(): array
     {
         return [
@@ -234,6 +236,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerFindFirstAfter')]
+    /** @param array<string, int> $source */
     public function testFindFirstAfter_WithNeedle_ReturnsTargetValue(
         ?int $result,
         int $needle,
@@ -244,6 +247,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->findFirstAfter($needle));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindFirstAfter(): array
     {
         return [
@@ -255,6 +259,7 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerFindLast')]
+    /** @param array<string, int> $source */
     public function testFindLast_WithOptionalPredicate_ReturnsTargetValue(?int $result, ?callable $predicate, array $source): void
     {
         $map = new IntMap(...$source);
@@ -262,6 +267,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->findLast($predicate));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindLast(): array
     {
         return [
@@ -278,6 +284,7 @@ final class IntMapTest extends TestCase
     // region AbstractCollection: contains / has / any / all / none
 
     #[DataProvider('providerContains')]
+    /** @param array<string, int> $source */
     public function testContains_WithNeedle_ReturnsTargetBool(bool $result, int $needle, array $source): void
     {
         $map = new IntMap(...$source);
@@ -285,6 +292,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->contains($needle));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerContains(): array
     {
         return [
@@ -519,6 +527,10 @@ final class IntMapTest extends TestCase
     // region AbstractCollection: unique
 
     #[DataProvider('providerUnique')]
+    /**
+     * @param array<string, int> $result
+     * @param array<string, int> $source
+     */
     public function testUnique_SomeValues_ReturnsUniqueMap(array $result, array $source): void
     {
         $map = new IntMap(...$source);
@@ -526,6 +538,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->unique()->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerUnique(): array
     {
         return [
@@ -540,6 +553,10 @@ final class IntMapTest extends TestCase
     // region AbstractCollection: sorted / slice
 
     #[DataProvider('providerSorted')]
+    /**
+     * @param array<string, int> $result
+     * @param array<string, int> $source
+     */
     public function testSorted_AscToDesc_ReturnsDescMap(array $result, array $source): void
     {
         $map = new IntMap(...$source);
@@ -547,6 +564,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->sorted(fn (int $i, int $j): int => $j <=> $i)->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerSorted(): array
     {
         return [
@@ -557,6 +575,10 @@ final class IntMapTest extends TestCase
     }
 
     #[DataProvider('providerSlice')]
+    /**
+     * @param array<string, int> $result
+     * @param array<string, int> $source
+     */
     public function testSlice_WithOffsetAndLimit_ReturnsTargetMap(
         array $result,
         array $source,
@@ -568,6 +590,7 @@ final class IntMapTest extends TestCase
         self::assertSame($result, $map->slice($offset, $limit)->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerSlice(): array
     {
         return [

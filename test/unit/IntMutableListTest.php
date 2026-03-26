@@ -146,6 +146,7 @@ class IntMutableListTest extends TestCase
     }
 
     #[DataProvider('providerIntCollectionMethods')]
+    /** @param array<int, int> $source */
     public function testIntCollectionTrait_WithValues_ReturnsExpected(
         string $method,
         array $source,
@@ -156,6 +157,7 @@ class IntMutableListTest extends TestCase
         self::assertSame($expected, $list->{$method}());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerIntCollectionMethods(): array
     {
         return [

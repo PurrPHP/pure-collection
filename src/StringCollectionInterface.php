@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+/**
+ * @template-implements CollectionInterface<string>
+ */
 interface StringCollectionInterface extends CollectionInterface
 {
     public static function fromInts(int ...$numbers): static;

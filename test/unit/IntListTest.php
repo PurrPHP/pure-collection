@@ -29,6 +29,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindFirst')]
+    /** @param array<int, int> $source */
     public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?int $result,
         ?callable $predicate,
@@ -39,6 +40,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->findFirst($predicate));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindFirst(): array
     {
         return [
@@ -51,6 +53,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindFirstAfter')]
+    /** @param array<int, int> $source */
     public function testFindFirstAfter_WithNeedle_ReturnsTargetValue(
         ?int $result,
         int $needle,
@@ -61,6 +64,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->findFirstAfter($needle));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindFirstAfter(): array
     {
         return [
@@ -72,6 +76,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerFindLast')]
+    /** @param array<int, int> $source */
     public function testFindLast_Constructed_ReturnsTargetValue(?int $result, array $source): void
     {
         $list = new IntList(...$source);
@@ -79,6 +84,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->findLast());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerFindLast(): array
     {
         return [
@@ -89,6 +95,7 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerContains')]
+    /** @param array<int, int> $source */
     public function testContains_WithNeedle_ReturnsTargetBool(bool $result, int $needle, array $source): void
     {
         $list = new IntList(...$source);
@@ -96,6 +103,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->contains($needle));
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerContains(): array
     {
         return [
@@ -188,6 +196,10 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerSorted')]
+    /**
+     * @param array<int, int> $result
+     * @param array<int, int> $source
+     */
     public function testSorted_AscToDesc_ReturnsDescList(array $result, array $source): void
     {
         $list = new IntList(...$source);
@@ -195,6 +207,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->sorted(fn (int $i, int $j): int => $j <=> $i)->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerSorted(): array
     {
         return [
@@ -205,6 +218,10 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerSlice')]
+    /**
+     * @param array<int, int> $result
+     * @param array<int, int> $source
+     */
     public function testSlice_WithOffsetAndLimit_ReturnsTargetList(
         array $result,
         array $source,
@@ -216,6 +233,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->slice($offset, $limit)->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerSlice(): array
     {
         return [
@@ -234,6 +252,10 @@ class IntListTest extends TestCase
     }
 
     #[DataProvider('providerUnique')]
+    /**
+     * @param array<int, int> $result
+     * @param array<int, int> $source
+     */
     public function testUnique_SomeValues_ReturnsUniqueList(array $result, array $source): void
     {
         $list = new IntList(...$source);
@@ -241,6 +263,7 @@ class IntListTest extends TestCase
         self::assertSame($result, $list->unique()->toArray());
     }
 
+    /** @return array<string, array<int, mixed>> */
     public static function providerUnique(): array
     {
         return [

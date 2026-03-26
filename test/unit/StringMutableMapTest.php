@@ -82,7 +82,7 @@ class StringMutableMapTest extends TestCase
 
         $this->expectException(InvalidArgumentTypeException::class);
 
-        $m['a'] = 123;
+        $m['a'] = 123; // @phpstan-ignore offsetAssign.valueType
     }
 
     // endregion
