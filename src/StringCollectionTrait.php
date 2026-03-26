@@ -5,6 +5,11 @@ namespace Purr\Collection;
 
 trait StringCollectionTrait
 {
+    public function __construct(string ...$strings)
+    {
+        parent::__construct($strings);
+    }
+
     public static function fromInts(int ...$numbers): static
     {
         return new static(...array_map(static fn (int $number): string => (string) $number, $numbers));

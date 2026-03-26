@@ -82,7 +82,7 @@ class IntMutableMapTest extends TestCase
 
         $this->expectException(InvalidArgumentTypeException::class);
 
-        $m['a'] = 'not an int';
+        $m['a'] = 'not an int'; // @phpstan-ignore offsetAssign.valueType
     }
 
     // endregion

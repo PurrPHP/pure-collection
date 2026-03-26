@@ -1,133 +1,84 @@
 docker build --target development -t purrphp-collection:dev .
-docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-limit=1G
- ------ -------------------------------------------------------------------- 
-  Line   src/AbstractCollection.php                                          
- ------ -------------------------------------------------------------------- 
-  259    Parameter #1 $comparator (callable(TValue, TValue): int) of method  
-         Purr\Collection\AbstractCollection::sorted() should be compatible   
-         with parameter $comparator (callable(mixed, mixed):                 
-         Purr\Collection\ComparisonResultType) of method                     
-         Purr\Collection\CollectionInterface<TValue>::sorted()               
-  287    Method Purr\Collection\AbstractCollection::current() should return  
-         TValue but returns TValue|false.                                    
-         💡 Type false is not always the same as TValue. It breaks the       
-            contract for some argument types, typically subtypes.            
-  328    Method Purr\Collection\AbstractCollection::chunks() should return   
-         array<int, static(Purr\Collection\AbstractCollection<TKey of        
-         (int|string), TValue>)> but returns array<int,                      
-         static(Purr\Collection\AbstractCollection<(int|string),             
-         mixed>)|null>.                                                      
- ------ -------------------------------------------------------------------- 
+docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-limit=1G src
+ ------ ------------------------------------------------------------------- 
+  Line   AbstractCollection.php                                             
+ ------ ------------------------------------------------------------------- 
+  328    Method Purr\Collection\AbstractCollection::chunks() should return  
+         array<int, static(Purr\Collection\AbstractCollection<TKey of       
+         (int|string), TValue>)> but returns array<int,                     
+         static(Purr\Collection\AbstractCollection<(int|string),            
+         mixed>)|null>.                                                     
+ ------ ------------------------------------------------------------------- 
 
- ------ -------------------------------------------------------------------------------------- 
-  Line   src/CollectionInterface.php                                                           
- ------ -------------------------------------------------------------------------------------- 
-  126    Parameter $comparator of method                                                       
-         Purr\Collection\CollectionInterface::sorted() has invalid type                        
-         Purr\Collection\ComparisonResultType.                                                 
-  130    Method Purr\Collection\CollectionInterface::toArray() return type has                 
-         no value type specified in iterable type array.                                       
-         💡 See:                                                                               
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type  
- ------ -------------------------------------------------------------------------------------- 
-
- ------ -------------------------------------------------------------------------------------- 
-  Line   src/Exception/IndexOutOfBoundsException.php                                           
- ------ -------------------------------------------------------------------------------------- 
-  9      Parameter $previous of method                                                         
-         Purr\Collection\Exception\IndexOutOfBoundsException::__construct()                    
-         has invalid type Purr\Collection\Exception\Throwable.                                 
-  11     Parameter #3 $previous of method Exception::__construct() expects                     
-         Throwable|null, Purr\Collection\Exception\Throwable|null given.                       
-  24     Method                                                                                
-         Purr\Collection\Exception\IndexOutOfBoundsException::getContext()                     
-         return type has no value type specified in iterable type array.                       
-         💡 See:                                                                               
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type  
- ------ -------------------------------------------------------------------------------------- 
-
- ------ -------------------------------------------------------------------------------------- 
-  Line   src/Exception/InvalidArgumentTypeException.php                                        
- ------ -------------------------------------------------------------------------------------- 
-  28     Method                                                                                
-         Purr\Collection\Exception\InvalidArgumentTypeException::getContext()                  
-         return type has no value type specified in iterable type array.                       
-         💡 See:                                                                               
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type  
- ------ -------------------------------------------------------------------------------------- 
+ ------ ---------------------------------------------------------------------- 
+  Line   Exception/InvalidArgumentTypeException.php                            
+ ------ ---------------------------------------------------------------------- 
+  35     Method                                                                
+         Purr\Collection\Exception\InvalidArgumentTypeException::getContext()  
+         should return array{offset: int|string, size: int} but returns        
+         array{type: string, expects: string}.                                 
+         💡 Array does not have offset 'offset'.                               
+ ------ ---------------------------------------------------------------------- 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntCollectionTrait.php (in context of class                               
-         Purr\Collection\IntList)                                                      
+  Line   IntCollectionTrait.php (in context of class Purr\Collection\IntList)          
  ------ ------------------------------------------------------------------------------ 
-  16     Parameter #1 $separator of function explode expects non-empty-string,         
-         string given.                                                                 
-  18     Unsafe usage of new static().                                                 
+  25     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  24     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
+  31     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntCollectionTrait.php (in context of class                               
-         Purr\Collection\IntMap)                                                       
+  Line   IntCollectionTrait.php (in context of class Purr\Collection\IntMap)           
  ------ ------------------------------------------------------------------------------ 
-  16     Parameter #1 $separator of function explode expects non-empty-string,         
-         string given.                                                                 
-  18     Unsafe usage of new static().                                                 
+  25     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  24     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
+  31     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntCollectionTrait.php (in context of class                               
+  Line   IntCollectionTrait.php (in context of class                                   
          Purr\Collection\IntMutableList)                                               
  ------ ------------------------------------------------------------------------------ 
-  16     Parameter #1 $separator of function explode expects non-empty-string,         
-         string given.                                                                 
-  18     Unsafe usage of new static().                                                 
+  25     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  24     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
+  31     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntCollectionTrait.php (in context of class                               
+  Line   IntCollectionTrait.php (in context of class                                   
          Purr\Collection\IntMutableMap)                                                
  ------ ------------------------------------------------------------------------------ 
-  16     Parameter #1 $separator of function explode expects non-empty-string,         
-         string given.                                                                 
-  18     Unsafe usage of new static().                                                 
+  25     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  24     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
+  31     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntCollectionTrait.php (in context of class                               
-         Purr\Collection\IntSet)                                                       
+  Line   IntCollectionTrait.php (in context of class Purr\Collection\IntSet)           
  ------ ------------------------------------------------------------------------------ 
-  16     Parameter #1 $separator of function explode expects non-empty-string,         
-         string given.                                                                 
-  18     Unsafe usage of new static().                                                 
+  25     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  24     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
-  28     Cannot access property $collection on array<int>.                             
+  31     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
+  35     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntImmutableCollectionTrait.php (in context of class                      
+  Line   IntImmutableCollectionTrait.php (in context of class                          
          Purr\Collection\IntList)                                                      
  ------ ------------------------------------------------------------------------------ 
   13     Unsafe usage of new static().                                                 
@@ -160,7 +111,7 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntImmutableCollectionTrait.php (in context of class                      
+  Line   IntImmutableCollectionTrait.php (in context of class                          
          Purr\Collection\IntMap)                                                       
  ------ ------------------------------------------------------------------------------ 
   13     Unsafe usage of new static().                                                 
@@ -193,7 +144,7 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/IntImmutableCollectionTrait.php (in context of class                      
+  Line   IntImmutableCollectionTrait.php (in context of class                          
          Purr\Collection\IntSet)                                                       
  ------ ------------------------------------------------------------------------------ 
   13     Unsafe usage of new static().                                                 
@@ -225,643 +176,59 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
  ------ ------------------------------------------------------------------------------ 
 
- ------ ---------------------------------------------------------------------- 
-  Line   src/IntSet.php                                                        
- ------ ---------------------------------------------------------------------- 
-  16     Parameter #1 $items of method                                         
-         Purr\Collection\AbstractSet<int>::__construct() expects array<int<0,  
-         max>, int>, array<int|string, int> given.                             
- ------ ---------------------------------------------------------------------- 
-
- ------ --------------------------------------------------------------------- 
-  Line   src/StringCollectionInterface.php                                    
- ------ --------------------------------------------------------------------- 
-  9      Interface Purr\Collection\StringCollectionInterface extends generic  
-         interface Purr\Collection\CollectionInterface but does not specify   
-         its types: TValue                                                    
-  9      Interface Purr\Collection\StringCollectionInterface has @implements  
-         tag, but can not implement any interface, must extend from it.       
- ------ --------------------------------------------------------------------- 
-
  ------ ------------------------------------------------------------------------------ 
-  Line   src/StringCollectionTrait.php (in context of class                            
+  Line   StringCollectionTrait.php (in context of class                                
          Purr\Collection\StringList)                                                   
  ------ ------------------------------------------------------------------------------ 
-  10     Unsafe usage of new static().                                                 
-         💡 See:                                                                       
-            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   15     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   20     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
+  25     Unsafe usage of new static().                                                 
+         💡 See:                                                                       
+            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/StringCollectionTrait.php (in context of class                            
+  Line   StringCollectionTrait.php (in context of class                                
          Purr\Collection\StringMap)                                                    
  ------ ------------------------------------------------------------------------------ 
-  10     Unsafe usage of new static().                                                 
-         💡 See:                                                                       
-            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   15     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   20     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
+  25     Unsafe usage of new static().                                                 
+         💡 See:                                                                       
+            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/StringCollectionTrait.php (in context of class                            
+  Line   StringCollectionTrait.php (in context of class                                
          Purr\Collection\StringMutableMap)                                             
  ------ ------------------------------------------------------------------------------ 
-  10     Unsafe usage of new static().                                                 
+  15     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
-  Line   src/StringCollectionTrait.php (in context of class                            
+  Line   StringCollectionTrait.php (in context of class                                
          Purr\Collection\StringSet)                                                    
  ------ ------------------------------------------------------------------------------ 
-  10     Unsafe usage of new static().                                                 
-         💡 See:                                                                       
-            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   15     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
   20     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
+  25     Unsafe usage of new static().                                                 
+         💡 See:                                                                       
+            https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
  ------ ------------------------------------------------------------------------------ 
 
- ------ ----------------------------------------------------------------------- 
-  Line   src/StringList.php                                                     
- ------ ----------------------------------------------------------------------- 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Iterator as string but it's already specified as mixed.      
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Purr\Collection\CollectionInterface as string but it's       
-         already specified as mixed.                                            
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Traversable as string but it's already specified as mixed.   
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
- ------ ----------------------------------------------------------------------- 
-
- ------ ----------------------------------------------------------------------- 
-  Line   src/StringMap.php                                                      
- ------ ----------------------------------------------------------------------- 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractMap specifies template type TValue of    
-         interface Iterator as string but it's already specified as mixed.      
-  10     Class Purr\Collection\AbstractMap specifies template type TValue of    
-         interface Purr\Collection\CollectionInterface as string but it's       
-         already specified as mixed.                                            
-  10     Class Purr\Collection\AbstractMap specifies template type TValue of    
-         interface Traversable as string but it's already specified as mixed.   
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
- ------ ----------------------------------------------------------------------- 
-
- ------ ----------------------------------------------------------------------- 
-  Line   src/StringMutableMap.php                                               
- ------ ----------------------------------------------------------------------- 
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  12     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  12     Class Purr\Collection\AbstractMutableMap specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Class Purr\Collection\AbstractMutableMap specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  12     Class Purr\Collection\AbstractMutableMap specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  12     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
- ------ ----------------------------------------------------------------------- 
-
- ------ ----------------------------------------------------------------------- 
-  Line   src/StringSet.php                                                      
- ------ ----------------------------------------------------------------------- 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Purr\Collection\CollectionInterface as string but  
-         it's already specified as mixed.                                       
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractCollection specifies template type       
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Iterator as string but it's already specified as mixed.      
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Iterator as string but it's already specified as mixed.      
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Purr\Collection\CollectionInterface as string but it's       
-         already specified as mixed.                                            
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Purr\Collection\CollectionInterface as string but it's       
-         already specified as mixed.                                            
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Traversable as string but it's already specified as mixed.   
-  10     Class Purr\Collection\AbstractList specifies template type TValue of   
-         interface Traversable as string but it's already specified as mixed.   
-  10     Class Purr\Collection\AbstractSet specifies template type TValue of    
-         interface Iterator as string but it's already specified as mixed.      
-  10     Class Purr\Collection\AbstractSet specifies template type TValue of    
-         interface Purr\Collection\CollectionInterface as string but it's       
-         already specified as mixed.                                            
-  10     Class Purr\Collection\AbstractSet specifies template type TValue of    
-         interface Traversable as string but it's already specified as mixed.   
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Iterator specifies template type TValue of interface         
-         Traversable as string but it's already specified as mixed.             
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Iterator as string but it's already specified as   
-         mixed.                                                                 
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  10     Interface Purr\Collection\CollectionInterface specifies template type  
-         TValue of interface Traversable as string but it's already specified   
-         as mixed.                                                              
-  16     Parameter #1 $items of method                                          
-         Purr\Collection\AbstractSet<string>::__construct() expects             
-         array<int<0, max>, string>, array<int|string, string> given.           
- ------ ----------------------------------------------------------------------- 
-
- ------ -------------------------------------------------------------------------------------------- 
-  Line   test/unit/IntListTest.php                                                                   
- ------ -------------------------------------------------------------------------------------------- 
-  31     Method                                                                                      
-         Purr\Collection\Test\IntListTest::testFindFirst_WithOptionalPredicate_ReturnsTargetValue()  
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  46     Method Purr\Collection\Test\IntListTest::providerFindFirst() should                         
-         return array<string, array<int, mixed>> but returns array<int|string,                       
-         array<int, array<int, int>|(Closure)|int|null>>.                                            
-  55     Method                                                                                      
-         Purr\Collection\Test\IntListTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()        
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  70     Method Purr\Collection\Test\IntListTest::providerFindFirstAfter()                           
-         should return array<string, array<int, mixed>> but returns                                  
-         array<int|string, array<int, array<int, int>|int|null>>.                                    
-  78     Method                                                                                      
-         Purr\Collection\Test\IntListTest::testFindLast_Constructed_ReturnsTargetValue()             
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  90     Method Purr\Collection\Test\IntListTest::providerFindLast() should                          
-         return array<string, array<int, mixed>> but returns array<int|string,                       
-         array<int, array<int, int>|int|null>>.                                                      
-  97     Method                                                                                      
-         Purr\Collection\Test\IntListTest::testContains_WithNeedle_ReturnsTargetBool()               
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  198    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testSorted_AscToDesc_ReturnsDescList()                    
-         has parameter $result with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  198    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testSorted_AscToDesc_ReturnsDescList()                    
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  220    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testSlice_WithOffsetAndLimit_ReturnsTargetList()          
-         has parameter $result with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  220    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testSlice_WithOffsetAndLimit_ReturnsTargetList()          
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  239    Method Purr\Collection\Test\IntListTest::providerSlice() should                             
-         return array<string, array<int, mixed>> but returns array<int|string,                       
-         array<int, array<int, int>|int>>.                                                           
-  254    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testUnique_SomeValues_ReturnsUniqueList()                 
-         has parameter $result with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
-  254    Method                                                                                      
-         Purr\Collection\Test\IntListTest::testUnique_SomeValues_ReturnsUniqueList()                 
-         has parameter $source with no value type specified in iterable type                         
-         array.                                                                                      
-         💡 See:                                                                                     
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type        
- ------ -------------------------------------------------------------------------------------------- 
-
- ------ ------------------------------------------------------------------------------------------- 
-  Line   test/unit/IntMapTest.php                                                                   
- ------ ------------------------------------------------------------------------------------------- 
-  212    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testFindFirst_WithOptionalPredicate_ReturnsTargetValue()  
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  229    Method Purr\Collection\Test\IntMapTest::providerFindFirst() should                         
-         return array<string, array<int, mixed>> but returns array<int|string,                      
-         array<int, array<string, int>|(Closure)|int|null>>.                                        
-  238    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()        
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  253    Method Purr\Collection\Test\IntMapTest::providerFindFirstAfter()                           
-         should return array<string, array<int, mixed>> but returns                                 
-         array<int|string, array<int, array<string, int>|int|null>>.                                
-  261    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testFindLast_WithOptionalPredicate_ReturnsTargetValue()   
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  273    Method Purr\Collection\Test\IntMapTest::providerFindLast() should                          
-         return array<string, array<int, mixed>> but returns array<int|string,                      
-         array<int, array<string, int>|(Closure)|int|null>>.                                        
-  286    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testContains_WithNeedle_ReturnsTargetBool()               
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  529    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
-         has parameter $result with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  529    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testUnique_SomeValues_ReturnsUniqueMap()                  
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  555    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testSorted_AscToDesc_ReturnsDescMap()                     
-         has parameter $result with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  555    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testSorted_AscToDesc_ReturnsDescMap()                     
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  577    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
-         has parameter $result with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  577    Method                                                                                     
-         Purr\Collection\Test\IntMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()           
-         has parameter $source with no value type specified in iterable type                        
-         array.                                                                                     
-         💡 See:                                                                                    
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type       
-  596    Method Purr\Collection\Test\IntMapTest::providerSlice() should return                      
-         array<string, array<int, mixed>> but returns array<int|string,                             
-         array<int, array<string, int>|int>>.                                                       
- ------ ------------------------------------------------------------------------------------------- 
-
- ------ ---------------------------------------------------------------------------------------------- 
-  Line   test/unit/IntMutableListTest.php                                                              
- ------ ---------------------------------------------------------------------------------------------- 
-  66     Purr\Collection\IntMutableList does not accept string.                                        
-  148    Method                                                                                        
-         Purr\Collection\Test\IntMutableListTest::testIntCollectionTrait_WithValues_ReturnsExpected()  
-         has parameter $source with no value type specified in iterable type                           
-         array.                                                                                        
-         💡 See:                                                                                       
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type          
-  201    Cannot assign offset 'key' to Purr\Collection\IntMutableList.                                 
-  210    Offset 'key' does not exist on Purr\Collection\IntMutableList.                                
-  219    Expression "isset($list['key'])" on a separate line does not do                               
-         anything.                                                                                     
-  219    Offset 'key' on Purr\Collection\IntMutableList in isset() does not                            
-         exist.                                                                                        
-  228    Cannot unset offset 'key' on Purr\Collection\IntMutableList.                                  
- ------ ---------------------------------------------------------------------------------------------- 
-
- ------ ------------------------------------------------------- 
-  Line   test/unit/IntMutableMapTest.php                        
- ------ ------------------------------------------------------- 
-  85     Purr\Collection\IntMutableMap does not accept string.  
- ------ ------------------------------------------------------- 
-
- ------ ----------------------------------------------------------------------------------------------- 
-  Line   test/unit/StringListTest.php                                                                   
- ------ ----------------------------------------------------------------------------------------------- 
-  42     Method                                                                                         
-         Purr\Collection\Test\StringListTest::testFindFirst_WithOptionalPredicate_ReturnsTargetValue()  
-         has parameter $source with no value type specified in iterable type                            
-         array.                                                                                         
-         💡 See:                                                                                        
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type           
- ------ ----------------------------------------------------------------------------------------------- 
-
- ------ --------------------------------------------------------------------------------------------- 
-  Line   test/unit/StringMapTest.php                                                                  
- ------ --------------------------------------------------------------------------------------------- 
-  127    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testFindFirstAfter_WithNeedle_ReturnsTargetValue()       
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  150    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testFindLast_WithOptionalPredicate_ReturnsTargetValue()  
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  175    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testContains_WithNeedle_ReturnsTargetBool()              
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  416    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                 
-         has parameter $result with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  416    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testUnique_SomeValues_ReturnsUniqueMap()                 
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  442    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                    
-         has parameter $result with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  442    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testSorted_DescOrder_ReturnsDescMap()                    
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  464    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()          
-         has parameter $result with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
-  464    Method                                                                                       
-         Purr\Collection\Test\StringMapTest::testSlice_WithOffsetAndLimit_ReturnsTargetMap()          
-         has parameter $source with no value type specified in iterable type                          
-         array.                                                                                       
-         💡 See:                                                                                      
-            https://phpstan.org/blog/solving-phpstan-no-value-type-specified-in-iterable-type         
- ------ --------------------------------------------------------------------------------------------- 
-
- [ERROR] Found 233 errors                                                       
+ [ERROR] Found 59 errors                                                        
 

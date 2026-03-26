@@ -280,7 +280,7 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @return TValue
+     * @return TValue|false
      */
     final public function current(): mixed
     {

@@ -13,11 +13,6 @@ class StringMutableMap extends AbstractMutableMap implements StringCollectionInt
 {
     use StringCollectionTrait;
 
-    public function __construct(string ...$strings)
-    {
-        parent::__construct($strings);
-    }
-
     public function sortAlphabetically(): static
     {
         asort($this->collection);

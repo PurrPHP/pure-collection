@@ -124,8 +124,8 @@ final class StringMapTest extends TestCase
         ];
     }
 
-    #[DataProvider('providerFindFirstAfter')]
     /** @param array<string, string> $source */
+    #[DataProvider('providerFindFirstAfter')]
     public function testFindFirstAfter_WithNeedle_ReturnsTargetValue(
         ?string $result,
         string $needle,
@@ -147,8 +147,8 @@ final class StringMapTest extends TestCase
         ];
     }
 
-    #[DataProvider('providerFindLast')]
     /** @param array<string, string> $source */
+    #[DataProvider('providerFindLast')]
     public function testFindLast_WithOptionalPredicate_ReturnsTargetValue(?string $result, ?callable $predicate, array $source): void
     {
         $map = new StringMap(...$source);
@@ -172,8 +172,8 @@ final class StringMapTest extends TestCase
 
     // region AbstractCollection: contains / has / any / all / none
 
-    #[DataProvider('providerContains')]
     /** @param array<string, string> $source */
+    #[DataProvider('providerContains')]
     public function testContains_WithNeedle_ReturnsTargetBool(bool $result, string $needle, array $source): void
     {
         $map = new StringMap(...$source);
@@ -413,11 +413,11 @@ final class StringMapTest extends TestCase
 
     // region AbstractCollection: unique
 
-    #[DataProvider('providerUnique')]
     /**
      * @param array<string, string> $result
      * @param array<string, string> $source
      */
+    #[DataProvider('providerUnique')]
     public function testUnique_SomeValues_ReturnsUniqueMap(array $result, array $source): void
     {
         $map = new StringMap(...$source);
@@ -439,11 +439,11 @@ final class StringMapTest extends TestCase
 
     // region AbstractCollection: sorted / slice
 
-    #[DataProvider('providerSorted')]
     /**
      * @param array<string, string> $result
      * @param array<string, string> $source
      */
+    #[DataProvider('providerSorted')]
     public function testSorted_DescOrder_ReturnsDescMap(array $result, array $source): void
     {
         $map = new StringMap(...$source);
@@ -461,11 +461,11 @@ final class StringMapTest extends TestCase
         ];
     }
 
-    #[DataProvider('providerSlice')]
     /**
      * @param array<string, string> $result
      * @param array<string, string> $source
      */
+    #[DataProvider('providerSlice')]
     public function testSlice_WithOffsetAndLimit_ReturnsTargetMap(
         array $result,
         array $source,

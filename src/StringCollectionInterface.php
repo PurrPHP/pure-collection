@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Purr\Collection;
 
 /**
- * @template-implements CollectionInterface<string>
+ * @template-extends CollectionInterface<string>
  */
 interface StringCollectionInterface extends CollectionInterface
 {

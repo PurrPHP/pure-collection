@@ -11,14 +11,9 @@ namespace Purr\Collection;
  */
 abstract class AbstractSet extends AbstractList
 {
+    /** @param TValue[] $items */
     protected function __construct(array $items)
     {
-        /**
-         * Psalm cannot understand inheritance.
-         *
-         * @psalm-suppress MixedArgumentTypeCoercion
-         * @psalm-suppress InvalidArgument
-         */
         $unique = $this->filterUniqValues($items);
 
         parent::__construct($unique);

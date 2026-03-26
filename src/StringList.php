@@ -10,9 +10,4 @@ namespace Purr\Collection;
 class StringList extends AbstractList implements StringCollectionInterface
 {
     use StringCollectionTrait;
-
-    public function __construct(string ...$strings)
-    {
-        parent::__construct($strings);
-    }
 }

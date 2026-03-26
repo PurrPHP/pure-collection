@@ -6,13 +6,15 @@ namespace Purr\Collection;
 
 trait IntCollectionTrait
 {
+    /**
+     * @param non-empty-string $separator
+     */
     public static function fromString(string $string, string $separator): self
     {
         if ('' === $string) {
             return new self();
         }
 
-        /** @psalm-suppress ArgumentTypeCoercion $values */
         $values = explode($separator, $string);
 
         return new static(...array_map('intval', $values));

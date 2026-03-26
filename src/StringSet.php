@@ -10,9 +10,4 @@ namespace Purr\Collection;
 class StringSet extends AbstractSet implements StringCollectionInterface
 {
     use StringCollectionTrait;
-
-    public function __construct(string ...$strings)
-    {
-        parent::__construct($strings);
-    }
 }

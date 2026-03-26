@@ -118,15 +118,14 @@ interface CollectionInterface extends Countable, Iterator
      */
     public function reduce(callable $fn, mixed $initial = null): mixed;
 
-    /**
-     * @psalm-type ComparisonResultType -1|0|1
-     *
-     * @psalm-param callable(TValue,TValue):ComparisonResultType $comparator
-     */
+    /** @param callable(TValue,TValue):int $comparator */
     public function sorted(callable $comparator): static;
 
     public function slice(int $offset, int $limit): static;
 
+    /**
+     * @return array<array-key, TValue>
+     */
     public function toArray(): array;
 
     public function unique(): static;

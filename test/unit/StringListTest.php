@@ -39,8 +39,8 @@ class StringListTest extends TestCase
         self::assertSame(['a', 'b', 'a'], $list->toArray());
     }
 
-    #[DataProvider('providerFindFirst')]
     /** @param array<int, string> $source */
+    #[DataProvider('providerFindFirst')]
     public function testFindFirst_WithOptionalPredicate_ReturnsTargetValue(
         ?string $result,
         ?callable $predicate,

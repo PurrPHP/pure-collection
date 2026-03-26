@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Purr\Collection\Exception;
 
+use Throwable;
+
 class IndexOutOfBoundsException extends \OutOfBoundsException
 {
     public function __construct(private readonly int|string $offset, private readonly int $size, int $code = 0, ?Throwable $previous = null)
@@ -21,6 +23,9 @@ class IndexOutOfBoundsException extends \OutOfBoundsException
         return $this->size;
     }
 
+    /**
+     * @return array{offset:int|string,size:int}
+     */
     public function getContext(): array
     {
         return [

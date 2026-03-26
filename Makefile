@@ -29,8 +29,8 @@ cs-fix: build ## Fix code style issues in Docker container (copy changes out)
 analyse: build ## Run static analysis in Docker container
 	docker run --rm $(DEV_IMAGE) composer analyse
 
-phpstan: build ## Run PHPStan static analysis in Docker container
-	docker run --rm $(DEV_IMAGE) ./vendor/bin/phpstan analyse --memory-limit=1G
+phpstan: build ## Run PHPStan static analysis in Docker container (optional: path=<file|dir>)
+	docker run --rm $(DEV_IMAGE) ./vendor/bin/phpstan analyse --memory-limit=1G $(path)
 
 check: build ## Run all checks (style, analysis, tests) in Docker container
 	docker run --rm $(DEV_IMAGE) composer check

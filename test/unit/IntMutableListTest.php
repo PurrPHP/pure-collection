@@ -63,7 +63,7 @@ class IntMutableListTest extends TestCase
 
         $this->expectException(InvalidArgumentTypeException::class);
 
-        $list[] = 'not-an-int';
+        $list[] = 'not-an-int'; // @phpstan-ignore offsetAssign.valueType
     }
 
     public function testOffsetUnset_MiddleElement_ReindexesList(): void
@@ -145,8 +145,8 @@ class IntMutableListTest extends TestCase
         self::assertSame([1, 3, 4], $list->toArray());
     }
 
-    #[DataProvider('providerIntCollectionMethods')]
     /** @param array<int, int> $source */
+    #[DataProvider('providerIntCollectionMethods')]
     public function testIntCollectionTrait_WithValues_ReturnsExpected(
         string $method,
         array $source,
@@ -157,7 +157,7 @@ class IntMutableListTest extends TestCase
         self::assertSame($expected, $list->{$method}());
     }
 
-    /** @return array<string, array<int, mixed>> */
+    /** @return array<array-key, array<int, mixed>> */
     public static function providerIntCollectionMethods(): array
     {
         return [
@@ -198,7 +198,7 @@ class IntMutableListTest extends TestCase
 
         $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
-        $list['key'] = 3;
+        $list['key'] = 3; // @phpstan-ignore offsetAssign.dimType
     }
 
     public function testOffsetGet_StringOffset_ThrowsInvalidArgumentException(): void
@@ -207,7 +207,7 @@ class IntMutableListTest extends TestCase
 
         $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
-        $_ = $list['key'];
+        $_ = $list['key']; // @phpstan-ignore offsetAccess.notFound
     }
 
     public function testOffsetExists_StringOffset_ThrowsInvalidArgumentException(): void
@@ -216,7 +216,7 @@ class IntMutableListTest extends TestCase
 
         $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
-        isset($list['key']);
+        isset($list['key']); // @phpstan-ignore isset.offset,expr.resultUnused
     }
 
     public function testOffsetUnset_StringOffset_ThrowsInvalidArgumentException(): void
@@ -225,7 +225,7 @@ class IntMutableListTest extends TestCase
 
         $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
-        unset($list['key']);
+        unset($list['key']);  // @phpstan-ignore unset.offset
     }
 
     public function testAdd_SingleValue_AppendsToEnd(): void
