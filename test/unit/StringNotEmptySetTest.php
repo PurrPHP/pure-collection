@@ -84,28 +84,28 @@ final class StringNotEmptySetTest extends TestCase
         self::assertSame('a-b-c', $set->implode('-'));
     }
 
-    public function testSortedAlphabeticallySortAsc_Constructed_ReturnsSortedSet(): void
+    public function testSortedAlphabetically_DefaultAsc_ReturnsSortedSet(): void
     {
         $set = new StringNotEmptySet('c', 'a', 'b');
 
         self::assertSame(['a', 'b', 'c'], $set->sortedAlphabetically()->toArray());
     }
 
-    public function testSortedAlphabeticallySortAsc_ReturnsNotEmptySetInstance(): void
+    public function testSortedAlphabetically_DefaultAsc_ReturnsNotEmptySetInstance(): void
     {
         $set = new StringNotEmptySet('b', 'a');
 
         self::assertInstanceOf(StringNotEmptySet::class, $set->sortedAlphabetically());
     }
 
-    public function testSortedAlphabeticallyDesc_Constructed_ReturnsSortedSetDescending(): void
+    public function testSortedAlphabetically_DescTrue_ReturnsSortedSetDescending(): void
     {
         $set = new StringNotEmptySet('a', 'c', 'b');
 
         self::assertSame(['c', 'b', 'a'], $set->sortedAlphabetically(desc: true)->toArray());
     }
 
-    public function testSortedAlphabetically_Desc_ReturnsNotEmptySetInstance(): void
+    public function testSortedAlphabetically_DescTrue_ReturnsNotEmptySetInstance(): void
     {
         $set = new StringNotEmptySet('a', 'b');
 

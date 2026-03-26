@@ -321,28 +321,28 @@ class StringListTest extends TestCase
 
     // region StringCollectionTrait: sortedAlphabetically
 
-    public function testSortedAlphabeticallySortAsc_Constructed_ReturnsSortedList(): void
+    public function testSortedAlphabetically_DefaultAsc_ReturnsSortedList(): void
     {
         $list = new StringList('c', 'a', 'b');
 
         self::assertSame(['a', 'b', 'c'], $list->sortedAlphabetically()->toArray());
     }
 
-    public function testSortedAlphabeticallySortAsc_ReturnsStringListInstance(): void
+    public function testSortedAlphabetically_DefaultAsc_ReturnsStringListInstance(): void
     {
         $list = new StringList('b', 'a');
 
         self::assertInstanceOf(StringList::class, $list->sortedAlphabetically());
     }
 
-    public function testSortedAlphabeticallyDesc_Constructed_ReturnsSortedListDescending(): void
+    public function testSortedAlphabetically_DescTrue_ReturnsSortedListDescending(): void
     {
         $list = new StringList('a', 'c', 'b');
 
         self::assertSame(['c', 'b', 'a'], $list->sortedAlphabetically(desc: true)->toArray());
     }
 
-    public function testSortedAlphabetically_Desc_ReturnsStringListInstance(): void
+    public function testSortedAlphabetically_DescTrue_ReturnsStringListInstance(): void
     {
         $list = new StringList('a', 'b');
 

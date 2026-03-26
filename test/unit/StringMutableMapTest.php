@@ -136,6 +136,26 @@ class StringMutableMapTest extends TestCase
 
     // endregion
 
+    // region AbstractMutableMap: clear
+
+    public function testClear_WithElements_EmptiesCollection(): void
+    {
+        $m = new StringMutableMap(...['a' => 'foo', 'b' => 'bar', 'c' => 'baz']);
+
+        $m->clear();
+
+        self::assertSame([], $m->toArray());
+    }
+
+    public function testClear_WithElements_ReturnsSelf(): void
+    {
+        $m = new StringMutableMap(...['a' => 'foo', 'b' => 'bar']);
+
+        self::assertSame($m, $m->clear());
+    }
+
+    // endregion
+
     // region AbstractMutableMap: groupBy
 
     public function testGroupBy_Constructed_ReturnsGroupedMap(): void
