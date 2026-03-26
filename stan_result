@@ -23,58 +23,58 @@ docker run --rm purrphp-collection:dev ./vendor/bin/phpstan analyse --memory-lim
  ------ ------------------------------------------------------------------------------ 
   Line   IntCollectionTrait.php (in context of class Purr\Collection\IntList)          
  ------ ------------------------------------------------------------------------------ 
-  25     Unsafe usage of new static().                                                 
+  23     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  31     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
+  29     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
   Line   IntCollectionTrait.php (in context of class Purr\Collection\IntMap)           
  ------ ------------------------------------------------------------------------------ 
-  25     Unsafe usage of new static().                                                 
+  23     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  31     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
+  29     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
   Line   IntCollectionTrait.php (in context of class                                   
          Purr\Collection\IntMutableList)                                               
  ------ ------------------------------------------------------------------------------ 
-  25     Unsafe usage of new static().                                                 
+  23     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  31     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
+  29     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
   Line   IntCollectionTrait.php (in context of class                                   
          Purr\Collection\IntMutableMap)                                                
  ------ ------------------------------------------------------------------------------ 
-  25     Unsafe usage of new static().                                                 
+  23     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  31     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
+  29     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 
   Line   IntCollectionTrait.php (in context of class Purr\Collection\IntSet)           
  ------ ------------------------------------------------------------------------------ 
-  25     Unsafe usage of new static().                                                 
+  23     Unsafe usage of new static().                                                 
          💡 See:                                                                       
             https://phpstan.org/blog/solving-phpstan-error-unsafe-usage-of-new-static  
-  31     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
-  35     Cannot access property $collection on array<int>.                             
+  29     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
+  33     Cannot access property $collection on array<int>.                             
  ------ ------------------------------------------------------------------------------ 
 
  ------ ------------------------------------------------------------------------------ 

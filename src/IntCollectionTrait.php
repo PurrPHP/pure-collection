@@ -6,6 +6,9 @@ namespace Purr\Collection;
 
 trait IntCollectionTrait
 {
+    /** @var int[] */
+    protected array $collection = [];
+
     /**
      * @param non-empty-string $separator
      */
