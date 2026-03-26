@@ -20,9 +20,11 @@ trait StringCollectionTrait
         return new static(...array_intersect($this->collection, $list2->toArray()));
     }
 
-    public function sortedAlphabetically(): static
+    public function sortedAlphabetically(bool $desc = false): static
     {
-        return $this->sorted(fn (string $a, string $b): int => $a <=> $b);
+        return $desc
+            ? $this->sorted(fn (string $a, string $b): int => $b <=> $a)
+            : $this->sorted(fn (string $a, string $b): int => $a <=> $b);
     }
 
     public function join(string $separator = ''): string

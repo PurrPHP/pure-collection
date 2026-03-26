@@ -1,4 +1,4 @@
-.PHONY: help build build-prod test test-coverage test-php cs-check cs-fix analyse refactor check install clean shell
+.PHONY: help build build-prod test test-coverage test-php cs-check cs-fix analyse phpstan refactor check install clean shell
 
 IMAGE_NAME = purrphp-collection
 DEV_IMAGE = $(IMAGE_NAME):dev
@@ -28,6 +28,9 @@ cs-fix: build ## Fix code style issues in Docker container (copy changes out)
 
 analyse: build ## Run static analysis in Docker container
 	docker run --rm $(DEV_IMAGE) composer analyse
+
+phpstan: build ## Run PHPStan static analysis in Docker container
+	docker run --rm $(DEV_IMAGE) ./vendor/bin/phpstan analyse --memory-limit=1G
 
 check: build ## Run all checks (style, analysis, tests) in Docker container
 	docker run --rm $(DEV_IMAGE) composer check

@@ -678,8 +678,6 @@ class IntMutableListTest extends TestCase
         self::assertNull($list->range());
     }
 
-    // diff
-
     public function testDiff_RemovesMatchingElements_MutatesInPlace(): void
     {
         $list = new IntMutableList(1, 2, 3, 4);
@@ -724,7 +722,6 @@ class IntMutableListTest extends TestCase
         self::assertSame($list, $list->diff(new IntList(1)));
     }
 
-    // intersect
 
     public function testIntersect_KeepsOnlyMatchingElements_MutatesInPlace(): void
     {
