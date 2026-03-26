@@ -16,7 +16,7 @@ class IndexOutOfBoundsExceptionTest extends TestCase
 
         self::assertEquals([
             'offset' => 3,
-            'size' => 2
+            'size' => 2,
         ], $e->getContext());
     }
 

@@ -389,7 +389,7 @@ class StringListTest extends TestCase
     {
         $list = new StringList('a', 'bb', 'c');
 
-        self::assertInstanceOf(StringList::class, $list->filter(static fn (string $s): bool => strlen($s) === 1));
+        self::assertInstanceOf(StringList::class, $list->filter(static fn (string $s): bool => 1 === strlen($s)));
     }
 
     public function testFilterNot_ReturnsStringListInstance(): void

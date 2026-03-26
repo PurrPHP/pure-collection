@@ -200,14 +200,14 @@ class StringMutableMapTest extends TestCase
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz', 'd' => 'qux']);
 
-        self::assertSame(['a' => 'foo', 'c' => 'baz', 'd' => 'qux'], $m->filter(static fn (string $s): bool => strlen($s) === 3)->toArray());
+        self::assertSame(['a' => 'foo', 'c' => 'baz', 'd' => 'qux'], $m->filter(static fn (string $s): bool => 3 === strlen($s))->toArray());
     }
 
     public function testFilterNot_LengthCheck_ReturnsFilteredMap(): void
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz', 'd' => 'qux']);
 
-        self::assertSame(['b' => 'barn'], $m->filterNot(static fn (string $s): bool => strlen($s) === 3)->toArray());
+        self::assertSame(['b' => 'barn'], $m->filterNot(static fn (string $s): bool => 3 === strlen($s))->toArray());
     }
 
     // endregion
@@ -264,7 +264,7 @@ class StringMutableMapTest extends TestCase
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'bar', 'c' => 'baz']);
 
-        self::assertTrue($m->all(static fn (string $s): bool => strlen($s) === 3));
+        self::assertTrue($m->all(static fn (string $s): bool => 3 === strlen($s)));
     }
 
     public function testNone_NoneMatch_ReturnsTrue(): void
@@ -300,7 +300,7 @@ class StringMutableMapTest extends TestCase
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz']);
 
-        self::assertSame('barn', $m->findFirst(static fn (string $s): bool => strlen($s) === 4));
+        self::assertSame('barn', $m->findFirst(static fn (string $s): bool => 4 === strlen($s)));
     }
 
     public function testFindLast_NoArgs_ReturnsLastElement(): void
@@ -314,7 +314,7 @@ class StringMutableMapTest extends TestCase
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz']);
 
-        self::assertSame('baz', $m->findLast(static fn (string $s): bool => strlen($s) === 3));
+        self::assertSame('baz', $m->findLast(static fn (string $s): bool => 3 === strlen($s)));
     }
 
     // endregion
@@ -332,7 +332,7 @@ class StringMutableMapTest extends TestCase
     {
         $m = new StringMutableMap(...['a' => 'foo', 'b' => 'bar', 'c' => 'baz']);
 
-        self::assertSame('foobarbaz', $m->reduce(static fn (string $carry, string $item): string => $carry . $item, ''));
+        self::assertSame('foobarbaz', $m->reduce(static fn (string $carry, string $item): string => $carry.$item, ''));
     }
 
     // endregion

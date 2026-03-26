@@ -8,7 +8,7 @@ interface StringCollectionInterface extends CollectionInterface
     public static function fromInts(int ...$numbers): static;
 
     /**
-     * Returns collection sorted by values
+     * Returns collection sorted by values.
      */
     public function sortedAlphabetically(bool $desc = false): static;
 

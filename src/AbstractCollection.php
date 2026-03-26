@@ -7,6 +7,8 @@ namespace Purr\Collection;
 use Purr\Collection\Exception\InvalidArgumentException;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template TKey of array-key
  * @template TValue
  *

@@ -9,6 +9,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Purr\Collection\AbstractCollection;
 use Purr\Collection\AbstractList;
+use Purr\Collection\Exception\InvalidArgumentException;
 use Purr\Collection\IntCollectionTrait;
 use Purr\Collection\IntImmutableCollectionTrait;
 use Purr\Collection\IntList;
@@ -323,7 +324,7 @@ class IntListTest extends TestCase
     {
         $list = new IntList(1);
 
-        $this->expectException(\Purr\Collection\Exception\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $list->chunks(0);
     }

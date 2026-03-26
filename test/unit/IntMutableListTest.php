@@ -194,7 +194,7 @@ class IntMutableListTest extends TestCase
     {
         $list = new IntMutableList(1, 2);
 
-        $this->expectExceptionObject(new InvalidArgumentTypeException('string','int'));
+        $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
         $list['key'] = 3;
     }
@@ -203,7 +203,7 @@ class IntMutableListTest extends TestCase
     {
         $list = new IntMutableList(1, 2);
 
-        $this->expectExceptionObject(new InvalidArgumentTypeException('string','int'));
+        $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
         $_ = $list['key'];
     }
@@ -212,7 +212,7 @@ class IntMutableListTest extends TestCase
     {
         $list = new IntMutableList(1, 2);
 
-        $this->expectExceptionObject(new InvalidArgumentTypeException('string','int'));
+        $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
         isset($list['key']);
     }
@@ -221,7 +221,7 @@ class IntMutableListTest extends TestCase
     {
         $list = new IntMutableList(1, 2);
 
-        $this->expectExceptionObject(new InvalidArgumentTypeException('string','int'));
+        $this->expectExceptionObject(new InvalidArgumentTypeException('string', 'int'));
 
         unset($list['key']);
     }
@@ -721,7 +721,6 @@ class IntMutableListTest extends TestCase
 
         self::assertSame($list, $list->diff(new IntList(1)));
     }
-
 
     public function testIntersect_KeepsOnlyMatchingElements_MutatesInPlace(): void
     {

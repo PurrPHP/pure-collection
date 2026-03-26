@@ -8,9 +8,6 @@ parameters:
         - vendor
         - coverage
 
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
-
     ignoreErrors:
         # Add specific ignores here if needed
 

@@ -207,14 +207,14 @@ final class StringMapTest extends TestCase
     {
         $map = new StringMap(...['a' => 'foo', 'b' => 'bar', 'c' => 'baz']);
 
-        self::assertTrue($map->all(static fn (string $s): bool => strlen($s) === 3));
+        self::assertTrue($map->all(static fn (string $s): bool => 3 === strlen($s)));
     }
 
     public function testAll_NotAllMatch_ReturnsFalse(): void
     {
         $map = new StringMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz']);
 
-        self::assertFalse($map->all(static fn (string $s): bool => strlen($s) === 3));
+        self::assertFalse($map->all(static fn (string $s): bool => 3 === strlen($s)));
     }
 
     public function testNone_NoneMatch_ReturnsTrue(): void
@@ -228,7 +228,7 @@ final class StringMapTest extends TestCase
     {
         $map = new StringMap(...['a' => 'foo', 'b' => 'barn', 'c' => 'baz']);
 
-        self::assertFalse($map->none(static fn (string $s): bool => strlen($s) === 4));
+        self::assertFalse($map->none(static fn (string $s): bool => 4 === strlen($s)));
     }
 
     // endregion
@@ -394,7 +394,7 @@ final class StringMapTest extends TestCase
     {
         $map = new StringMap(...['a' => 'foo', 'b' => 'bar', 'c' => 'baz', 'd' => 'qux']);
 
-        $result = $map->reduce(static fn (string $carry, string $item): string => $carry . $item, '');
+        $result = $map->reduce(static fn (string $carry, string $item): string => $carry.$item, '');
 
         self::assertSame('foobarbazqux', $result);
     }

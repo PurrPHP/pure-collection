@@ -7,7 +7,7 @@ namespace Purr\Collection;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
- * @template-extends AbstractMap<int>
+ * @template-extends AbstractMutableMap<int>
  */
 class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
 {

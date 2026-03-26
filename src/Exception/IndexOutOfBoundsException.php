@@ -21,11 +21,11 @@ class IndexOutOfBoundsException extends \OutOfBoundsException
         return $this->size;
     }
 
-    public function getContext():array
+    public function getContext(): array
     {
-     return [
-         'offset' => $this->offset,
-         'size' => $this->size,
-     ];
+        return [
+            'offset' => $this->offset,
+            'size' => $this->size,
+        ];
     }
 }

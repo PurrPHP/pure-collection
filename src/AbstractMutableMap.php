@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Purr\Collection;
 
+use ArrayAccess;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
  * @template TValue
  *
  * @template-extends AbstractCollection<array-key,TValue>
+ *
+ * @template-implements ArrayAccess<array-key,TValue>
  */
 abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAccess
 {
