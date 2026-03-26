@@ -384,18 +384,18 @@ class StringMutableMapTest extends TestCase
 
     // region StringCollectionTrait: sortedAlphabetically
 
-    public function testSortedAlphabeticallySortAsc_Constructed_ReturnsSortedMap(): void
+    public function testSortedAlphabeticallySort_Asc_ReturnsSortedMap(): void
     {
         $m = new StringMutableMap(...['c' => 'zebra', 'a' => 'apple', 'b' => 'banana']);
 
-        self::assertSame(['apple', 'banana', 'zebra'], $m->sortedAlphabetically()->toArray());
+        self::assertSame(['a' => 'apple', 'b' => 'banana', 'c' => 'zebra'], $m->sortedAlphabetically()->toArray());
     }
 
-    public function testSortedAlphabeticallyDesc_Constructed_ReturnsSortedMapDescending(): void
+    public function testSortedAlphabetically_Desc_ReturnsSortedMapDescending(): void
     {
         $m = new StringMutableMap(...['c' => 'zebra', 'a' => 'apple', 'b' => 'banana']);
 
-        self::assertSame(['zebra', 'banana', 'apple'], $m->sortedAlphabetically(desc: true)->toArray());
+        self::assertSame(['c' => 'zebra', 'b' => 'banana', 'a' => 'apple'], $m->sortedAlphabetically(desc: true)->toArray());
     }
 
     // endregion

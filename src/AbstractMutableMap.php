@@ -47,8 +47,10 @@ abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAc
 
     /**
      * @param array-key $offset
+     *
+     * @return TValue
      */
-    final public function offsetGet(mixed $offset): int
+    final public function offsetGet(mixed $offset): mixed
     {
         return $this->collection[$offset];
     }
