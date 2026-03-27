@@ -44,7 +44,7 @@ class MyTypeList extends AbstractList
         $u = [];
 
         foreach ($items as $item) {
-            $u[$item->getId()]   = $item;
+            $u[$item->getId()] = $item;
         }
 
         return $u;
@@ -88,7 +88,7 @@ class MyTypeSet extends AbstractSet
         $u = [];
 
         foreach ($items as $item) {
-            $u[$item->getId()]   = $item;
+            $u[$item->getId()] = $item;
         }
 
         return $u;
@@ -114,7 +114,7 @@ class MyTypeMap extends AbstractMap
         $u = [];
 
         foreach ($items as $item) {
-            $u[$item->getId()]   = $item;
+            $u[$item->getId()] = $item;
         }
 
         return $u;
@@ -151,7 +151,7 @@ class MyTypeMutableList extends AbstractMutableList
         $u = [];
 
         foreach ($items as $item) {
-            $u[$item->getId()]   = $item;
+            $u[$item->getId()] = $item;
         }
 
         return $u;

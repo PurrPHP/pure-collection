@@ -343,7 +343,7 @@ class IntMutableSetTest extends TestCase
 
         $this->expectException(InvalidArgumentTypeException::class);
 
-        $list->insert(1, 'not-an-int');
+        $list->insert(1, 'not-an-int'); // @phpstan-ignore argument.type
     }
 
     public function testInsert_ReturnsSameInstance(): void
