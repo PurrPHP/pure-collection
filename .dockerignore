@@ -1,0 +1,11 @@
+/vendor/
+/coverage/
+/.phpunit.cache/
+/.git/
+/.github/
+/docs/
+*.log
+*.tmp
+.env
+.env.*
+composer.lock
