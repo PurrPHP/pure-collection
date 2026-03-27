@@ -7,6 +7,8 @@ namespace Purr\Collection;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template-extends AbstractMutableMap<string>
  */
 class StringMutableMap extends AbstractMutableMap implements StringCollectionInterface

@@ -28,7 +28,7 @@ class InvalidArgumentTypeException extends InvalidArgumentException
     }
 
     /**
-     * @return array{offset:string|int,size:int}
+     * @return array{type: string, expects: string}
      */
     public function getContext(): array
     {

@@ -12,10 +12,10 @@ trait IntCollectionTrait
     /**
      * @param non-empty-string $separator
      */
-    public static function fromString(string $string, string $separator): self
+    public static function fromString(string $string, string $separator): static
     {
         if ('' === $string) {
-            return new self();
+            return new static();
         }
 
         $values = explode($separator, $string);
@@ -25,7 +25,6 @@ trait IntCollectionTrait
 
     public function avg(): ?float
     {
-        /** @var int[] $this->collection */
         if ([] === $this->collection) {
             return null;
         }

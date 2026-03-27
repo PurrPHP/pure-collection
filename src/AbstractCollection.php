@@ -308,8 +308,6 @@ abstract class AbstractCollection implements CollectionInterface
     }
 
     /**
-     * @psalm-suppress InvalidReturnType
-     *
      * @return array<int, static>
      */
     final public function chunks(int $size): array
@@ -319,10 +317,10 @@ abstract class AbstractCollection implements CollectionInterface
         }
 
         $chunks = array_chunk($this->collection, $size, true);
-        $collectionsArray = array_fill(0, count($chunks), null);
+        $collectionsArray = [];
 
-        foreach ($chunks as $index => $chunkItem) {
-            $collectionsArray[$index] = new static(...$chunkItem);
+        foreach ($chunks as $chunkItem) {
+            $collectionsArray[] = new static(...$chunkItem);
         }
 
         return $collectionsArray;

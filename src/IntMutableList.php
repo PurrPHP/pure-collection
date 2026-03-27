@@ -7,6 +7,8 @@ namespace Purr\Collection;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template-extends AbstractMutableList<int>
  */
 class IntMutableList extends AbstractMutableList implements IntCollectionInterface

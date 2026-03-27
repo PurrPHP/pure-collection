@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Purr\Collection;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template TValue
  *
  * @template-extends AbstractCollection<int<0, max>,TValue>

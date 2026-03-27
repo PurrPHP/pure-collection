@@ -9,6 +9,8 @@ use Purr\Collection\Exception\IndexOutOfBoundsException;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template TValue
  *
  * @template-extends AbstractList<TValue>

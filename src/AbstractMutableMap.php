@@ -8,6 +8,8 @@ use ArrayAccess;
 use Purr\Collection\Exception\InvalidArgumentTypeException;
 
 /**
+ * @phpstan-consistent-constructor
+ *
  * @template TValue
  *
  * @template-extends AbstractCollection<array-key,TValue>
