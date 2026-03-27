@@ -9,7 +9,7 @@ namespace Purr\Collection;
  *
  * @template-extends AbstractMap<string>
  */
-class StringMap extends AbstractMap implements StringCollectionInterface
+final class StringMap extends AbstractMap implements StringCollectionInterface
 {
     use StringCollectionTrait;
 }

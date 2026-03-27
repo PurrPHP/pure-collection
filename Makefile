@@ -38,6 +38,9 @@ check: build ## Run all checks (style, analysis, tests) in Docker container
 shell: build ## Open interactive shell in development container
 	docker run --rm -it $(DEV_IMAGE) sh
 
+composer: build ## Run Composer command in Docker container (usage: make composer cmd="require vendor/pkg")
+	docker run --rm $(DEV_IMAGE) composer $(cmd)
+
 install: ## Copy dependencies from built container to local
 	docker run --name temp-install $(DEV_IMAGE) ls; \
 	docker cp temp-install:/app/composer.lock ./composer.lock 2>/dev/null || true; \

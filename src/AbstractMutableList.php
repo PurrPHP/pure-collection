@@ -84,7 +84,7 @@ abstract class AbstractMutableList extends AbstractList implements ArrayAccess
      * @throws IndexOutOfBoundsException    when offset is out of list bounds
      * @throws InvalidArgumentTypeException when value type is invalid
      */
-    final public function insert(int $offset, mixed ...$values): static
+    public function insert(int $offset, mixed ...$values): static
     {
         $size = count($this->collection);
 

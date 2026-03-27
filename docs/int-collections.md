@@ -6,21 +6,24 @@ For methods shared by all collections see [Common Methods](common-methods.md).
 
 ## Available Classes
 
-| Class | Type | Description |
-|-------|------|-------------|
-| `IntList` | Immutable list | Ordered list of integers |
-| `IntSet` | Immutable set | Ordered list of **unique** integers |
+
+| Class             | Type           | Description                                     |
+| ----------------- | -------------- | ----------------------------------------------- |
+| `IntList`         | Immutable list | List of integers                                |
+| `IntSet`          | Immutable set  | List of **unique** integers                     |
 | `IntNotEmptyList` | Immutable list | Same as `IntList`, throws on empty construction |
-| `IntNotEmptySet` | Immutable set | Same as `IntSet`, throws on empty construction |
-| `IntMap` | Immutable map | Associative (key → int) map |
-| `IntMutableList` | Mutable list | Mutable ordered list of integers |
-| `IntMutableMap` | Mutable map | Mutable associative map of integers |
+| `IntNotEmptySet`  | Immutable set  | Same as `IntSet`, throws on empty construction  |
+| `IntMap`          | Immutable map  | Associative (key → int) map                     |
+| `IntMutableList`  | Mutable list   | Mutable list of integers                        |
+| `IntMutableMap`   | Mutable map    | Mutable associative map of integers             |
+| `IntMutableSet`   | Mutable set    | Mutable list of **unique** integers             |
+
 
 ### Immutable vs Mutable
 
 **Immutable** classes (`IntList`, `IntSet`, `IntNotEmptyList`, `IntNotEmptySet`, `IntMap`) never modify their internal state. Every transforming method returns a **new** instance.
 
-**Mutable** classes (`IntMutableList`, `IntMutableMap`) modify their internal state in place and return `$this` for fluent chaining.
+**Mutable** classes (`IntMutableList`, `IntMutableMap`, `IntMutableSet`) modify their internal state in place and return `$this` for fluent chaining.
 
 ### Not-empty Variants
 
@@ -255,11 +258,15 @@ Converts the collection to a `StringSet`.
 
 ---
 
-## Mutable-only: `add`
+## Mutable Collections
 
-`IntMutableList` provides an `add` method for appending elements:
+All methods documented in the sections above (aggregation, transformation, filtering, sorting, set operations) work the same way on mutable collections, but **modify the instance in place** instead of returning a new one.
 
-### `add(int ...$numbers): static`
+---
+
+### `IntMutableList`
+
+#### `add(int ...$numbers): static`
 
 Appends one or more integers to the end of the list. Returns `$this`.
 
@@ -268,7 +275,57 @@ $list = new IntMutableList(1, 2);
 $list->add(3, 4); // IntMutableList(1, 2, 3, 4)
 ```
 
-For other mutable operations (`insert`, `remove`, `pop`, `shift`, etc.) see [Common Methods — Mutable List Methods](common-methods.md#mutable-list-methods).
+For other mutation methods (`insert`, `remove`, `removeAll`, `prepend`, `pop`, `shift`, `clear`, `reverse`) and `ArrayAccess` usage see [Common Methods — Mutable List Methods](common-methods.md#mutable-list-methods).
+
+---
+
+### `IntMutableMap`
+
+`IntMutableMap` implements `ArrayAccess`, allowing map entries to be read, added, updated, and removed using array syntax:
+
+```php
+$map = new IntMutableMap(...['a' => 1, 'b' => 2]);
+
+$map['c'] = 3;        // add new key
+$map['a'] = 10;       // update existing key
+unset($map['b']);      // remove key
+isset($map['a']);      // true
+$map['a'];            // 10
+```
+
+Assigning a non-integer value throws `InvalidArgumentTypeException`.
+
+`IntMutableMap` also provides a `clear()` method that removes all entries and returns `$this`.
+
+```php
+$map->clear(); // IntMutableMap([])
+```
+
+---
+
+### `IntMutableSet`
+
+`IntMutableSet` extends `IntMutableList` and enforces uniqueness. Duplicate values are silently dropped.
+
+#### `add(int ...$numbers): static`
+
+Appends one or more integers, ignoring any that are already present in the set. Returns `$this`.
+
+```php
+$set = new IntMutableSet(1, 2, 3);
+$set->add(3, 4, 4); // IntMutableSet(1, 2, 3, 4)
+```
+
+#### Uniqueness after `abs()`
+
+Calling `abs()` on a set may produce duplicates (e.g. `-2` and `2` both become `2`). `IntMutableSet` automatically deduplicates after the operation:
+
+```php
+$set = new IntMutableSet(-2, -1, 1, 2);
+$set->abs(); // IntMutableSet(1, 2)
+```
+
+> **Note:** Mutations performed via `ArrayAccess` (`$set[$i] = $v`) or inherited methods like `insert()` and `prepend()` do **not** enforce uniqueness automatically. Use `add()` to safely append values to a set.
 
 ---
 
@@ -302,3 +359,4 @@ echo $data->max();     // 42
 echo $data->median();  // 15.5
 echo $data->range();   // 38
 ```
+

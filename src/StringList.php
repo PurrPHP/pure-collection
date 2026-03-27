@@ -9,7 +9,7 @@ namespace Purr\Collection;
  *
  * @template-extends AbstractList<string>
  */
-class StringList extends AbstractList implements StringCollectionInterface
+final class StringList extends AbstractList implements StringCollectionInterface
 {
     use StringCollectionTrait;
 }

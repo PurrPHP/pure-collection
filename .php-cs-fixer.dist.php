@@ -26,6 +26,7 @@ return $config
         'ordered_imports' => true,
         'no_unused_imports' => true,
         'global_namespace_import' => false,
+        'no_empty_comment' => true,
         'not_operator_with_successor_space' => false,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
@@ -43,6 +44,7 @@ return $config
         ],
         'single_trait_insert_per_statement' => true,
         'general_phpdoc_annotation_remove' => ['annotations' => ['internal']],
+        'no_superfluous_phpdoc_tags' => ['allow_mixed' => false, 'remove_inheritdoc' => false],
         'php_unit_internal_class' => false,
         'php_unit_method_casing' => false,
     ])

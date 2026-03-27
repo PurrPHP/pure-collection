@@ -38,6 +38,17 @@ class IntMutableSet extends IntMutableList
         return $this;
     }
 
+    /**
+     * @param int ...$values
+     */
+    public function insert(int $offset, ...$values): static
+    {
+        parent::insert($offset, $values);
+        $this->normalizeSet();
+
+        return $this;
+    }
+
     private function normalizeSet(): void
     {
         /** @var array<int<0, max>, int> $unique */

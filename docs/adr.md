@@ -1,33 +1,115 @@
-Collections has basic methods described in `AbstractCollection`
+# Architecture Decision Records
 
-In PHP there are no way to have strict property only except describe method argument types.
+This document describes the key architectural decisions made in this library and explains the reasoning behind them.
 
-List contains only array values without string keys - it's handled in `AbstractList` by `array_values()`, other collection don't call this method, they pass given value as is (`[1,2]`, `['a' => 2, 'b' => 3]`).
+---
 
-Set contains only uniq values - to filter then we must have special function to filter uniq values, cause in the common way we manage objects collection with special criteria (for user it can be uuid, id or email (use email here email - wrong pattern :)). Так появилась функция AbstractCollection::filterUniqValuesю
+## 1. Type enforcement via constructor argument types
 
-For удобства mutable collections implement `\ArrayAcces`, to allow set values like `$map['a'] = 1;`. 
+PHP does not support typed class properties for collection elements natively. The chosen approach is to enforce types through constructor argument types using variadic parameters:
 
-ArrayAcces has described methods and it's not possible override them.
-`public function offsetSet(mixed $offset, mixed $value): void`
+```php
+public function __construct(MyType ...$items)
+```
 
-For manage types strictness here we've added 
+This leverages PHP's built-in type checking and provides clear, IDE-friendly signatures without additional validation boilerplate.
 
-`abstract protected function ensureType(mixed $value): void;`
+---
 
-Mutable lists have only int indexes, so we must check passed key in offsetSet - added `ensureIntOffset`. In mutable list we can set value only for existed index - added `ensureIndexInBounds`.
+## 2. List always reindexes to sequential integer keys
 
-How to implement your own collection.
+`AbstractList` always wraps its internal array with `array_values()` to guarantee sequential integer keys starting from zero. Maps and other collection types do not do this — they preserve the keys exactly as provided (`[1, 2]`, `['a' => 2, 'b' => 3]`).
 
-Implemnent childern for target collection type: AbstractList, AbstractSet, AbstractMap, etc. 
+**Why:** A list is semantically an ordered sequence. String keys have no meaning in a list context, and non-sequential numeric keys would break index-based access assumptions.
 
-Implement:
-- constructor with strict type, 
-- `filterUniqValues`.  
+---
 
-For mutable list, map implement:
-- `ensureType`
+## 3. Set deduplication via `filterUniqValues`
 
-Use only exceptions from `src/Exception`.
+A `Set` must store only unique values. A simple `array_unique()` is not sufficient because collections often hold objects, where uniqueness must be determined by a domain-specific criterion (e.g., `id`, `uuid`...).
 
-There is no `AbstractMutableSet` cause set has only one difference with list - stores unique values and domain specification is more difficult than set specification. In another words it's simplier to implement your own mutableSet. See IntMutableSet as reference. This set contains a lot of int functions and few guards to store unique values after mutations. 
+For this reason, the abstract method `filterUniqValues()` was introduced in `AbstractCollection`. Each concrete set class implements its own deduplication logic:
+
+```php
+protected function filterUniqValues(array $items): array
+{
+    $seen = [];
+    $result = [];
+
+    foreach ($items as $item) {
+       $result[$item->getId()] = $item;
+    }
+
+    return $result;
+}
+```
+
+The method is also available on all collections via `unique()`.
+
+---
+
+## 4. Mutable collections implement `ArrayAccess`
+
+Mutable collections implement `\ArrayAccess` to allow familiar array-style mutation syntax:
+
+```php
+$map['key'] = 'value';
+$list[] = 42;
+```
+
+`ArrayAccess` method signatures are fixed by the interface (`offsetSet(mixed $offset, mixed $value): void`), so type enforcement cannot be added at the signature level. Instead, mutable collections define an abstract method:
+
+```php
+abstract protected function ensureType(mixed $value): void;
+```
+
+This method is called inside `offsetSet()` and other mutating methods before any value is stored, throwing an exception on type mismatch.
+
+---
+
+## 5. Mutable lists guard offset types and bounds
+
+Because a list only has integer indexes, `AbstractMutableList` adds two private guards:
+
+- `ensureIntOffset` — rejects any non-integer key, since `ArrayAccess` accepts `mixed` offsets.
+- `ensureIndexInBounds` — rejects writes to indexes that do not yet exist (prevents sparse arrays). Appending with `$list[] = $value` (null offset) is still allowed.
+
+---
+
+## 6. No `AbstractMutableSet`
+
+There is no `AbstractMutableSet` base class. Sets are harder to generalise in the mutable case because:
+
+- Every mutation (add, remove, replace) must re-check uniqueness.
+- Uniqueness criteria are domain-specific and vary per set type.
+- A domain-specific mutable set typically exposes many more methods related to its domain (e.g. integer arithmetic operations, string transformations) than set-specific methods. A shared base class would impose set constraints on top of domain logic that is hard to generalise.
+- The resulting base class would be more restrictive than helpful.
+
+Implement your own mutable set directly, using `IntMutableSet` as a reference. It combines integer-specific operations with the necessary uniqueness guards.
+
+---
+
+## 7. All exceptions come from `src/Exception`
+
+All exceptions thrown by this library extend the types defined in `src/Exception`. Do not throw standard PHP exceptions directly. This allows consumers to catch library-specific exceptions without depending on the PHP standard library exception hierarchy.
+
+---
+
+## How to implement a custom collection
+
+1. Extend the appropriate abstract base class: `AbstractList`, `AbstractSet`, `AbstractMap`, etc.
+2. Implement a typed variadic constructor:
+  ```php
+   public function __construct(MyType ...$items)
+   {
+       parent::__construct($items);
+   }
+  ```
+3. Implement `filterUniqValues()` (required for sets; for lists it can simply delegate to `array_unique()`).
+4. For mutable list/map variants, also implement `ensureType()`.
+5. Use only exceptions from `src/Exception`.
+
+See existing implementations as concrete references:
+- [`IntList`](../src/IntList.php)
+- [`StringMap`](../src/StringMap.php)
+- [`IntMutableSet`](../src/IntMutableSet.php)
