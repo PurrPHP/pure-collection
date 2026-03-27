@@ -7,60 +7,63 @@ Type-safe collections for PHP 8. Type safety based on native PHP features, not s
 - [Common Methods](docs/common-methods.md) — methods available on every collection
 - [Int Collections](docs/int-collections.md) — integer-typed classes and their specific API
 - [String Collections](docs/string-collections.md) — string-typed classes and their specific API
+- [Custom Collections](docs/custom-collections.md) — step-by-step guide for implementing your own typed collection
+- [Architecture Decisions](docs/adr.md) — key design decisions and their rationale
 
 ### Problem scope
 
-PHP doesn't have native features to work with object collections, there are only arrays. Sometimes it's difficult to understand object types in an array and it's necessary to write additional annotations to describe the code. Code is not safe from mistakes and writing different objects into the same array.
-
-E.g.
+PHP has no native typed collections — only plain arrays. This makes it easy to accidentally mix types or corrupt key structure:
 
 ```php
-   $uuids = [];
-   $uuids[] = Uuid::fromInteger('1');
-   $uuids[] = '00000000-0000-0000-0000-000000000001';
+$uuids = [];
+$uuids[] = Uuid::fromInteger('1');
+$uuids[] = '00000000-0000-0000-0000-000000000001'; // wrong type, no error
+
+$uuids[] = Uuid::fromInteger('2');
+$uuids['validUuid'] = Uuid::fromInteger('3');       // mixed int/string keys
 ```
 
-PHP doesn't have no guard to avoid mess in array keys. Which can be important for frontend part of application, that expects only objects or arrays.
-
-```php
-   $uuids = [];
-   $uuids[] = Uuid::fromInteger('1');
-   $uuids['validUuid'] = '00000000-0000-0000-0000-000000000001';
-```
-
-This library is implemented to solve these problems and help write stable, unambiguous, and clear code. It reduces boilerplate by implementing useful collection functions.
+This library solves these problems by providing type-safe, semantically clear collections that reduce boilerplate and prevent mistakes at runtime.
 
 ## Code structure
 
-As we said above, library is inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html). So there are next collection types:
-- list (// todo describe)
-- set (contains unique values of objects, //todo check descriptions)
-- map (dictionary, associative array)
+Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overview.html), the library provides three collection types:
 
-All of these structures have immutable (by default) and mutable implementations.
+- **List** — ordered sequence with integer keys, duplicates allowed
+- **Set** — ordered sequence of unique values
+- **Map** — associative array (key → value)
+
+Each type has an **immutable** (default) and a **mutable** variant (except set). Immutable methods return a new instance; mutable methods modify the instance in place and return `$this`.
 
 Hierarchy:
 
 ```
 CollectionInterface
-└── AbstractCollection (contains basic operation implemetations)
-    ├── AbstractList
-    │   └── AbstractSet  (unique values)
-    └── AbstractMap      (associative array)
+└── AbstractCollection
+    ├── AbstractList               — ordered list (sequential integer keys)
+    │   ├── AbstractSet            — deduplicates values on construction
+    │   └── AbstractMutableList    — ArrayAccess + in-place mutation
+    └── AbstractMap                — associative map (string/int keys)
+        └── AbstractMutableMap     — ArrayAccess + in-place mutation
 ```
 
 ## Available Classes
 
-| Class | Description                                 |
-|-------|---------------------------------------------|
-| `IntList` | List of integers                            |
-| `IntSet` | Unique list of integers with set operations |
-| `IntNotEmptyList` | Non-empty list of integers                  |
-| `IntNotEmptySet` | Non-empty unique list of integers           |
-| `IntMap` | Associative map of integers                 |
-| `StringList` | List of strings                             |
-| `StringSet` | Unique list of strings with set operations  |
-| `StringNotEmptySet` | Non-empty unique list of strings            |
+| Class | Type | Description |
+|-------|------|-------------|
+| `IntList` | Immutable list | Ordered list of integers |
+| `IntSet` | Immutable set | Ordered list of unique integers |
+| `IntNotEmptyList` | Immutable list | Same as `IntList`, throws on empty construction |
+| `IntNotEmptySet` | Immutable set | Same as `IntSet`, throws on empty construction |
+| `IntMap` | Immutable map | Associative (key → int) map |
+| `IntMutableList` | Mutable list | Ordered list of integers, in-place mutation |
+| `IntMutableMap` | Mutable map | Associative (key → int) map, in-place mutation |
+| `IntMutableSet` | Mutable set | Ordered list of unique integers, in-place mutation |
+| `StringList` | Immutable list | Ordered list of strings |
+| `StringSet` | Immutable set | Ordered list of unique strings |
+| `StringNotEmptySet` | Immutable set | Same as `StringSet`, throws on empty construction |
+| `StringMap` | Immutable map | Associative (key → string) map |
+| `StringMutableMap` | Mutable map | Associative (key → string) map, in-place mutation |
 
 ## Installation
 
@@ -122,44 +125,46 @@ $map->groupBy(fn(int $v): string => $v % 2 === 0 ? 'even' : 'odd');
 ```
 
 ### Mutable collections
-// todo describe
+
+Mutable collections modify their internal state in place and support `ArrayAccess`:
+
+```php
+use Purr\Collection\IntMutableList;
+use Purr\Collection\IntMutableSet;
+use Purr\Collection\StringMutableMap;
+
+// IntMutableList — in-place mutation, fluent chaining
+$list = new IntMutableList(3, 1, 2);
+$list->sortAsc()   // [1, 2, 3]
+     ->add(4, 5);  // [1, 2, 3, 4, 5]
+
+$list[] = 6;       // ArrayAccess append  → [1, 2, 3, 4, 5, 6]
+$list[0] = 10;     // replace by index    → [10, 2, 3, 4, 5, 6]
+unset($list[0]);   // remove by index     → [2, 3, 4, 5, 6]
+
+// IntMutableSet — same as IntMutableList but keeps values unique
+$set = new IntMutableSet(1, 2, 3);
+$set->add(3, 4); // duplicate 3 ignored  → [1, 2, 3, 4]
+
+// StringMutableMap — associative map with ArrayAccess
+$map = new StringMutableMap();
+$map['env']    = 'prod';
+$map['region'] = 'eu';
+unset($map['env']);
+$map->toArray(); // ['region' => 'eu']
+```
 
 ### Common Operations
 
-All collections implement `CollectionInterface`:
+All collections implement `CollectionInterface`. See the full reference:
 
-```php
-$collection->findFirst();                   // first item (or null)
-$collection->findFirst(fn($x) => ...);      // first matching item
-$collection->findLast();                    // last item (or null)
-$collection->findFirstAfter($needle);       // item after $needle
-$collection->contains($value);              // bool
-
-$collection->any(fn($x) => ...);            // bool — any match
-$collection->all(fn($x) => ...);            // bool — all match
-$collection->none(fn($x) => ...);           // bool — none match
-
-$collection->filter(fn($x) => ...);         // new filtered collection
-$collection->filterNot(fn($x) => ...);      // new inverted-filter collection
-
-$collection->map(fn($x) => ...);            // array
-$collection->reduce(fn($carry, $x) => ..., $initial); // scalar
-$collection->sorted(fn($a, $b) => ...);     // new sorted collection
-$collection->slice($offset, $limit);        // new sliced collection
-$collection->unique();                      // new deduplicated collection
-$collection->chunks($size);                 // array of collections
-$collection->groupBy(fn($x) => ...);        // grouped array
-$collection->flattenGroupBy(fn($x) => ...); // keyed array
-$collection->toArray();                     // plain PHP array
-$collection->count();                       // int
-
-$collection->isEmpty();                     // bool
-$collection->isNotEmpty();                  // bool
-```
+- [Common Methods](docs/common-methods.md) — searching, filtering, transforming, grouping, sizing, iteration
+- [Int Collections](docs/int-collections.md) — aggregation, sorting, set operations, and mutable variants
+- [String Collections](docs/string-collections.md) — alphabetical sorting, set operations, and mutable variants
 
 ## Extending
 
-To create a custom typed collection, extend `AbstractList`, `AbstractSet`, or `AbstractMap`:
+To create a custom typed collection, extend `AbstractList`, `AbstractSet`, or `AbstractMap`. See [Architecture Decisions](docs/adr.md) for a full guide.
 
 ```php
 use Purr\Collection\AbstractSet;
@@ -171,23 +176,19 @@ class DateSet extends AbstractSet
     {
         parent::__construct($dates);
     }
-    
-    /**
-     * @inheritDoc
-     */
-    protected function filterUniqValues(array $items) {
-        $u = [];
-        
-        foreach ($items as $item){
-            $u[$item->getTimeStamp()] = $item;
+
+    protected function filterUniqValues(array $items): array
+    {
+        $result = [];
+
+        foreach ($items as $item) {
+            $result[$item->getTimestamp()]   = $item;
         }
-        
-        return new self(...$u);
+
+        return $result;
     }
 }
 ```
-
-> **Note:** By default, `array_unique` is used for deduplication. For objects, override `filterUniqValues()` with custom comparison logic.
 
 ## Development
 

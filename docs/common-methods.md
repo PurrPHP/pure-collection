@@ -273,14 +273,6 @@ unset($list[1]);   // remove by index (re-indexes remaining elements)
 > Offset must be an `int`. Using a non-integer offset throws `InvalidArgumentTypeException`.  
 > Setting an out-of-bounds index throws `IndexOutOfBoundsException`.
 
-### `add(mixed ...$values): static`
-
-Appends one or more values to the end of the list.
-
-```php
-$list->add(4, 5); // IntMutableList(1, 2, 3, 4, 5)
-```
-
 ### `insert(int $offset, mixed ...$values): static`
 
 Inserts one or more values at the given position, shifting existing elements. Throws `IndexOutOfBoundsException` if `$offset` is out of range.

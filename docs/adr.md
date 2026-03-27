@@ -97,19 +97,4 @@ All exceptions thrown by this library extend the types defined in `src/Exception
 
 ## How to implement a custom collection
 
-1. Extend the appropriate abstract base class: `AbstractList`, `AbstractSet`, `AbstractMap`, etc.
-2. Implement a typed variadic constructor:
-  ```php
-   public function __construct(MyType ...$items)
-   {
-       parent::__construct($items);
-   }
-  ```
-3. Implement `filterUniqValues()` (required for sets; for lists it can simply delegate to `array_unique()`).
-4. For mutable list/map variants, also implement `ensureType()`.
-5. Use only exceptions from `src/Exception`.
-
-See existing implementations as concrete references:
-- [`IntList`](../src/IntList.php)
-- [`StringMap`](../src/StringMap.php)
-- [`IntMutableSet`](../src/IntMutableSet.php)
+See [Custom Collections](custom-collections.md) for a step-by-step guide with code examples for all collection types.

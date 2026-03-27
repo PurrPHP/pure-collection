@@ -10,22 +10,26 @@ alwaysApply: false
 
 ```
 AbstractCollection
-├── AbstractList     — ordered list (array_values, numeric keys)
-│   ├── AbstractSet  — set (deduplication in constructor)
-│   └── ...List / ...NotEmptyList
-└── AbstractMap      — associative map (string/int keys)
-    └── AbstractMutableMap  — mutable map (ArrayAccess)
+├── AbstractList                   — ordered list (array_values, numeric keys)
+│   ├── AbstractSet                — deduplicates values on construction
+│   ├── ...List / ...NotEmptyList
+│   └── AbstractMutableList        — extends AbstractList, ArrayAccess + in-place mutation
+└── AbstractMap                    — associative map (string/int keys)
+    └── AbstractMutableMap         — mutable map (ArrayAccess)
 ```
 
 **When to use which:**
-- `AbstractList` — order matters, duplicates are allowed
-- `AbstractSet` — unique elements, order does not matter
+- `AbstractList` — ordered sequence, duplicates allowed
+- `AbstractSet` — ordered sequence of **unique** values (extends `AbstractList`, order is preserved)
 - `AbstractMap` — key → value, immutable
-- `AbstractMutableMap` — key → value with ArrayAccess mutation
+- `AbstractMutableList` — ordered sequence with in-place mutation and `ArrayAccess`
+- `AbstractMutableMap` — key → value with in-place mutation and `ArrayAccess`
+
+> There is no `AbstractMutableSet`. Implement mutable sets by extending your concrete mutable list and re-checking uniqueness after each mutation. See `IntMutableSet` as a reference.
 
 ## Creating a new collection
 
-### Minimal List
+### Immutable List
 
 ```php
 /** @template-extends AbstractList<MyType> */
@@ -35,6 +39,11 @@ class MyTypeList extends AbstractList
     {
         parent::__construct($items);
     }
+
+    protected function filterUniqValues(array $items): array
+    {
+        return array_unique($items); // or custom logic for objects
+    }
 }
 ```
 
@@ -43,15 +52,90 @@ class MyTypeList extends AbstractList
 ```php
 class MyTypeNotEmptyList extends MyTypeList
 {
-    /**
-     * @throws \Purr\Collection\Exception\InvalidArgumentException
-     */
+    /** @throws \Purr\Collection\Exception\InvalidArgumentException */
     public function __construct(MyType ...$items)
     {
         if (!$items) {
             throw new \Purr\Collection\Exception\InvalidArgumentException('Items are empty');
         }
         parent::__construct(...$items);
+    }
+}
+```
+
+### Immutable Set
+
+```php
+/** @template-extends AbstractSet<MyType> */
+class MyTypeSet extends AbstractSet
+{
+    public function __construct(MyType ...$items)
+    {
+        parent::__construct($items);
+    }
+
+    protected function filterUniqValues(array $items): array
+    {
+        $seen   = [];
+        $result = [];
+
+        foreach ($items as $item) {
+            $key = $item->getId(); // domain-specific uniqueness criterion
+            if (!isset($seen[$key])) {
+                $seen[$key] = true;
+                $result[]   = $item;
+            }
+        }
+
+        return $result;
+    }
+}
+```
+
+### Immutable Map
+
+```php
+/** @template-extends AbstractMap<MyType> */
+class MyTypeMap extends AbstractMap
+{
+    public function __construct(MyType ...$items)
+    {
+        parent::__construct($items);
+    }
+
+    protected function filterUniqValues(array $items): array
+    {
+        return array_unique($items);
+    }
+}
+```
+
+### Mutable List
+
+Mutable variants require `ensureType()` to validate values on every write (offsetSet, insert, prepend, etc.):
+
+```php
+/** @template-extends AbstractMutableList<MyType> */
+class MyTypeMutableList extends AbstractMutableList
+{
+    public function __construct(MyType ...$items)
+    {
+        parent::__construct($items);
+    }
+
+    protected function ensureType(mixed $value): void
+    {
+        if (!$value instanceof MyType) {
+            throw new \Purr\Collection\Exception\InvalidArgumentTypeException(
+                type: get_debug_type($value),
+                expects: MyType::class,
+            );
+        }
+    }
+
+    protected function filterUniqValues(array $items): array
+    {
+        return array_unique($items);
     }
 }
 ```
@@ -68,28 +152,24 @@ return new static(...$filteredItems);
 $this->collection = $filteredItems;
 ```
 
-## Psalm annotations (required)
+## Psalm / PHPStan annotations (required)
 
 ```php
-/** @template-extends AbstractList<MyType> */        // for List/Set
-/** @template-extends AbstractCollection<string, MyType> */ // for Map
-/** @template-implements CollectionInterface<MyType> */ // on interfaces
+/** @template-extends AbstractList<MyType> */         // List, Set
+/** @template-extends AbstractSet<MyType> */          // Set
+/** @template-extends AbstractMap<MyType> */          // Map (value type only)
+/** @template-extends AbstractMutableList<MyType> */  // MutableList
+/** @template-implements CollectionInterface<MyType> */ // on custom interfaces
 ```
 
-## filterUniqValues in Set classes
+## filterUniqValues
 
-To customise deduplication (e.g. by an object field), override:
+`filterUniqValues(array $items): array` is abstract in `AbstractCollection` and **must be implemented** in every concrete class.
 
-```php
-protected function filterUniqValues(array $items): array
-{
-    $seen = [];
-    return array_filter($items, function ($item) use (&$seen) {
-        $key = $item->getId();
-        return isset($seen[$key]) ? false : ($seen[$key] = true);
-    });
-}
-```
+- For **scalars**: delegate to `array_unique($items)`.
+- For **objects**: iterate with `foreach` and track seen keys via a `$seen` map; collect results in a sequential `$result` array.
+
+The method is called in the `AbstractSet` constructor and by `unique()` on all collections. Always return a plain sequential array (list-safe).
 
 ## Exceptions
 
