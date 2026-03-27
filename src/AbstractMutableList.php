@@ -17,7 +17,7 @@ use Purr\Collection\Exception\InvalidArgumentTypeException;
  *
  * @template-implements ArrayAccess<array-key,TValue>
  */
-abstract class AbstractMutableList extends AbstractList implements \ArrayAccess
+abstract class AbstractMutableList extends AbstractList implements ArrayAccess
 {
     /**
      * @param int $offset

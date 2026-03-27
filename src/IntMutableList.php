@@ -31,6 +31,10 @@ class IntMutableList extends AbstractMutableList implements IntCollectionInterfa
 
     public function add(int ...$numbers): static
     {
+        if (empty($numbers)) {
+            return $this;
+        }
+
         /** @var array<int<0, max>, int> $merged */
         $merged = array_values([...$this->collection, ...$numbers]);
         $this->collection = $merged;

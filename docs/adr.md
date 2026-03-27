@@ -16,12 +16,20 @@ For manage types strictness we've added
 
 `abstract protected function ensureType(mixed $value): void;`
 
-To push use specific 
+Mutable lists have only int indexes, so we must check passed key in offsetSet - added `ensureIntOffset`. In mutable list we can set value only for existed index - added `ensureIndexInBounds`.
 
 
-        if (null !== $offset) {
-            $this->ensureIntOffset($offset);
-            $this->ensureIndexInBounds($offset);
-        }
+How to implement your own collection.
 
-        $this->ensureType($value);
+Implemnent childern for target collection type: AbstractList, AbstractSet, AbstractMap, etc. 
+
+Implement:
+- constructor with strict type, 
+- `filterUniqValues`.  
+
+For mutable list, map implement:
+- `ensureType`
+
+Use only exceptions from `src/Exception`.
+
+There is no AbstractMutableSet cause set has only one difference with list - stores unique values and domain specification is more difficult than set specification. In another words it's simplier to implement your own mutableSet. See IntMutableSet as reference. This set contains a lot of int functions and few guards to store unique values after mutations. 

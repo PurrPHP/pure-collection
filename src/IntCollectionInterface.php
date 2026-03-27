@@ -9,7 +9,7 @@ namespace Purr\Collection;
  */
 interface IntCollectionInterface extends CollectionInterface
 {
-    public static function fromString(string $string, string $separator): self;
+    public static function fromString(string $string, string $separator): static;
 
     /** Returns a collection with each element replaced by its absolute value. */
     public function abs(): static;
@@ -80,7 +80,19 @@ interface IntCollectionInterface extends CollectionInterface
 
     public function toStringSet(): StringSet;
 
+    /**
+     * Returns a collection of values from this collection that are not present in the given collection.
+     *
+     * $a = new IntList(1,2);
+     * $a->diff(new IntList(1,3)) returns "2".
+     */
     public function diff(IntCollectionInterface $collection): static;
 
+    /**
+     * Returns a collection of values that are present in both this collection and the given collection.
+     *
+     * $a = new IntList(1,2);
+     * $a->intersect(new IntList(1,3)) returns "1".
+     */
     public function intersect(IntCollectionInterface $collection): static;
 }

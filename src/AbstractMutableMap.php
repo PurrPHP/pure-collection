@@ -16,7 +16,7 @@ use Purr\Collection\Exception\InvalidArgumentTypeException;
  *
  * @template-implements ArrayAccess<array-key,TValue>
  */
-abstract class AbstractMutableMap extends AbstractCollection implements \ArrayAccess
+abstract class AbstractMutableMap extends AbstractCollection implements ArrayAccess
 {
     /**
      * @param callable(TValue):string $keyCallable
