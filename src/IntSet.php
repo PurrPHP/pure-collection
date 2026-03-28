@@ -11,7 +11,7 @@ namespace Purr\Collection;
  */
 class IntSet extends AbstractSet implements IntCollectionInterface
 {
-    use IntImmutableCollectionTrait;
+    use IntCollectionTrait;
 
     public function __construct(int ...$numbers)
     {

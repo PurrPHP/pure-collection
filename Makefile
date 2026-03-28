@@ -15,16 +15,13 @@ test-coverage: build ## Run tests with coverage report in Docker container
 	docker run --rm -v $(PWD)/coverage:/app/coverage $(DEV_IMAGE) composer test-coverage
 
 test-unit: build ## Run only unit tests in Docker container
-	docker run --rm $(DEV_IMAGE) ./vendor/bin/phpunit --testsuite="Unit Tests"
+	docker run --rm -v $(PWD):/app $(DEV_IMAGE) ./vendor/bin/phpunit --testsuite="Unit Tests"
 
 cs-check: build ## Check code style in Docker container
-	docker run --rm $(DEV_IMAGE) composer cs-check
+	docker run --rm -v $(PWD):/app $(DEV_IMAGE) composer cs-check
 
 cs-fix: build ## Fix code style issues in Docker container (copy changes out)
-	docker run --name temp-cs-fix $(DEV_IMAGE) composer cs-fix; \
-	docker cp temp-cs-fix:/app/src/. ./src/ 2>/dev/null || true; \
-	docker cp temp-cs-fix:/app/test/. ./test/ 2>/dev/null || true; \
-	docker rm temp-cs-fix
+	docker run --rm -v $(PWD):/app --name temp-cs-fix $(DEV_IMAGE) composer cs-fix;
 
 analyse: build ## Run static analysis in Docker container
 	docker run --rm $(DEV_IMAGE) composer analyse
@@ -39,19 +36,13 @@ shell: build ## Open interactive shell in development container
 	docker run --rm -it $(DEV_IMAGE) sh
 
 composer: build ## Run Composer command in Docker container (usage: make composer cmd="require vendor/pkg")
-	docker run --rm $(DEV_IMAGE) composer $(cmd)
+	docker run --rm -v $(PWD):/app $(DEV_IMAGE) composer $(cmd)
 
-install: ## Copy dependencies from built container to local
-	docker run --name temp-install $(DEV_IMAGE) ls; \
-	docker cp temp-install:/app/composer.lock ./composer.lock 2>/dev/null || true; \
-	docker cp temp-install:/app/vendor ./vendor 2>/dev/null || true; \
-	docker rm temp-install
+install: build ## Install Composer dependencies in Docker container
+	docker run --rm -v $(PWD):/app $(DEV_IMAGE) composer install
 
 update: build ## Update Composer dependencies in Docker container and copy out
-	docker run --name temp-update $(DEV_IMAGE) composer update; \
-	docker cp temp-update:/app/composer.lock ./composer.lock 2>/dev/null || true; \
-	docker cp temp-update:/app/vendor ./vendor 2>/dev/null || true; \
-	docker rm temp-update
+	docker run --rm -v $(PWD):/app $(DEV_IMAGE) composer update
 
 validate: build ## Validate composer.json in Docker container
 	docker run --rm $(DEV_IMAGE) composer validate --strict

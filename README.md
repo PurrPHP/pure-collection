@@ -33,7 +33,7 @@ Inspired by [Kotlin collections](https://kotlinlang.org/docs/collections-overvie
 - **Set** — ordered sequence of unique values
 - **Map** — associative array (key → value)
 
-Each type has an **immutable** (default) and a **mutable** variant (except set). Immutable methods return a new instance; mutable methods modify the instance in place and return `$this`.
+Collections are immutable and return new object after each manipulation.
 
 Hierarchy:
 
@@ -42,28 +42,22 @@ CollectionInterface
 └── AbstractCollection
     ├── AbstractList               — ordered list (sequential integer keys)
     │   ├── AbstractSet            — deduplicates values on construction
-    │   └── AbstractMutableList    — ArrayAccess + in-place mutation
     └── AbstractMap                — associative map (string/int keys)
-        └── AbstractMutableMap     — ArrayAccess + in-place mutation
 ```
 
 ## Available Classes
 
-| Class | Type | Description |
-|-------|------|-------------|
-| `IntList` | Immutable list | Ordered list of integers |
-| `IntSet` | Immutable set | Ordered list of unique integers |
-| `IntNotEmptyList` | Immutable list | Same as `IntList`, throws on empty construction |
-| `IntNotEmptySet` | Immutable set | Same as `IntSet`, throws on empty construction |
-| `IntMap` | Immutable map | Associative (key → int) map |
-| `IntMutableList` | Mutable list | Ordered list of integers, in-place mutation |
-| `IntMutableMap` | Mutable map | Associative (key → int) map, in-place mutation |
-| `IntMutableSet` | Mutable set | Ordered list of unique integers, in-place mutation |
-| `StringList` | Immutable list | Ordered list of strings |
-| `StringSet` | Immutable set | Ordered list of unique strings |
-| `StringNotEmptySet` | Immutable set | Same as `StringSet`, throws on empty construction |
-| `StringMap` | Immutable map | Associative (key → string) map |
-| `StringMutableMap` | Mutable map | Associative (key → string) map, in-place mutation |
+| Class                | Description |
+|----------------------|-------------|
+| `IntList`            | Ordered list of integers |
+| `IntSet`             | Ordered list of unique integers |
+| `IntNotEmptyList`    | Same as `IntList`, throws on empty construction |
+| `IntNotEmptySet`     | Same as `IntSet`, throws on empty construction |
+| `IntMap`             | Associative (key → int) map |
+| `StringList`         | Ordered list of strings |
+| `StringSet`          | Ordered list of unique strings |
+| `StringNotEmptySet`  | Same as `StringSet`, throws on empty construction |
+| `StringMap`          | Associative (key → string) map |
 
 ## Installation
 
@@ -124,43 +118,13 @@ $map->filter(fn(int $v): bool => $v > 1)->toArray(); // ['b' => 2, 'c' => 3]
 $map->groupBy(fn(int $v): string => $v % 2 === 0 ? 'even' : 'odd');
 ```
 
-### Mutable collections
-
-Mutable collections modify their internal state in place and support `ArrayAccess`:
-
-```php
-use Purr\Collection\IntMutableList;
-use Purr\Collection\IntMutableSet;
-use Purr\Collection\StringMutableMap;
-
-// IntMutableList — in-place mutation, fluent chaining
-$list = new IntMutableList(3, 1, 2);
-$list->sortAsc()   // [1, 2, 3]
-     ->add(4, 5);  // [1, 2, 3, 4, 5]
-
-$list[] = 6;       // ArrayAccess append  → [1, 2, 3, 4, 5, 6]
-$list[0] = 10;     // replace by index    → [10, 2, 3, 4, 5, 6]
-unset($list[0]);   // remove by index     → [2, 3, 4, 5, 6]
-
-// IntMutableSet — same as IntMutableList but keeps values unique
-$set = new IntMutableSet(1, 2, 3);
-$set->add(3, 4); // duplicate 3 ignored  → [1, 2, 3, 4]
-
-// StringMutableMap — associative map with ArrayAccess
-$map = new StringMutableMap();
-$map['env']    = 'prod';
-$map['region'] = 'eu';
-unset($map['env']);
-$map->toArray(); // ['region' => 'eu']
-```
-
 ### Common Operations
 
 All collections implement `CollectionInterface`. See the full reference:
 
 - [Common Methods](docs/common-methods.md) — searching, filtering, transforming, grouping, sizing, iteration
-- [Int Collections](docs/int-collections.md) — aggregation, sorting, set operations, and mutable variants
-- [String Collections](docs/string-collections.md) — alphabetical sorting, set operations, and mutable variants
+- [Int Collections](docs/int-collections.md) — aggregation, sorting, set operations variants
+- [String Collections](docs/string-collections.md) — alphabetical sorting, set operations variants
 
 ## Extending
 

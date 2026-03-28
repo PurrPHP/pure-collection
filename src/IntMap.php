@@ -11,7 +11,7 @@ namespace Purr\Collection;
  */
 class IntMap extends AbstractMap implements IntCollectionInterface
 {
-    use IntImmutableCollectionTrait;
+    use IntCollectionTrait;
 
     public function __construct(int ...$numbers)
     {

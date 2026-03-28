@@ -11,13 +11,11 @@ use Purr\Collection\AbstractCollection;
 use Purr\Collection\AbstractList;
 use Purr\Collection\Exception\InvalidArgumentException;
 use Purr\Collection\IntCollectionTrait;
-use Purr\Collection\IntImmutableCollectionTrait;
 use Purr\Collection\IntList;
 
 #[CoversClass(IntList::class)]
 #[CoversClass(AbstractList::class)]
 #[CoversClass(AbstractCollection::class)]
-#[CoversClass(IntImmutableCollectionTrait::class)]
 #[CoversClass(IntCollectionTrait::class)]
 class IntListTest extends TestCase
 {

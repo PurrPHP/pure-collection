@@ -22,7 +22,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Purr\\Collection\\Test\\": "test/unit"
+      "Purr\\Collection\\Test\\": "test/unit/"
     }
   },
   "prefer-stable": true,

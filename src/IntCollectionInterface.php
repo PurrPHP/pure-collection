@@ -95,4 +95,8 @@ interface IntCollectionInterface extends CollectionInterface
      * $a->intersect(new IntList(1,3)) returns "1".
      */
     public function intersect(IntCollectionInterface $collection): static;
+
+    public function add(int ...$numbers): static;
+
+    public function remove(int ...$numbers): static;
 }

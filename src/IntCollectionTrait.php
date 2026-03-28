@@ -102,6 +102,77 @@ trait IntCollectionTrait
         return StringSet::fromInts(...$this->collection);
     }
 
+    public function abs(): static
+    {
+        return new static(...array_map(static fn (int $i): int => abs($i), $this->collection));
+    }
+
+    public function multiply(int $factor): static
+    {
+        return new static(...array_map(static fn (int $i): int => $i * $factor, $this->collection));
+    }
+
+    public function negativeValues(): static
+    {
+        return new static(...$this->filter(static fn (int $i): bool => $i < 0));
+    }
+
+    public function notZeroValues(): static
+    {
+        return new static(...$this->filter(static fn (int $i): bool => 0 !== $i));
+    }
+
+    public function positiveValues(): static
+    {
+        return new static(...$this->filter(static fn (int $i): bool => $i > 0));
+    }
+
+    public function sortAsc(): static
+    {
+        $sorted = $this->collection;
+        sort($sorted);
+
+        return new static(...$sorted);
+    }
+
+    public function sortDesc(): static
+    {
+        $sorted = $this->collection;
+        rsort($sorted);
+
+        return new static(...$sorted);
+    }
+
+    public function diff(IntCollectionInterface $collection): static
+    {
+        return new static(...array_diff($this->collection, $collection->toArray()));
+    }
+
+    public function intersect(IntCollectionInterface $collection): static
+    {
+        return new static(...array_intersect($this->collection, $collection->toArray()));
+    }
+
+    public function add(int ...$numbers): static
+    {
+        return new static(...$this->collection, ...$numbers);
+    }
+
+    public function remove(int ...$numbers): static
+    {
+        $new = [];
+
+        foreach ($this as $k => $v) {
+            if (in_array($v, $numbers, true)) {
+                continue;
+            }
+
+            $new[$k] = $v;
+        }
+
+        return new static(...$new);
+    }
+
     protected function filterUniqValues(array $items): array
     {
         return array_unique($items);
