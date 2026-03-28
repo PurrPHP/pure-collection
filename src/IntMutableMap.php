@@ -29,7 +29,7 @@ class IntMutableMap extends AbstractMutableMap implements IntCollectionInterface
 
     public function multiply(int $factor): static
     {
-        array_walk($this->collection, static fn (int &$v) => $v = $v * $factor);
+        array_walk($this->collection, static fn (int &$v) => $v *= $factor);
 
         return $this;
     }
