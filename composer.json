@@ -10,10 +10,10 @@
       "homepage": "https://github.com/purrphp"
     }
   ],
-  "homepage": "https://github.com/purrphp/collection",
+  "homepage": "https://github.com/PurrPHP/pure-collection",
   "support": {
-    "issues": "https://github.com/purrphp/collection/issues",
-    "source": "https://github.com/purrphp/collection"
+    "issues": "https://github.com/PurrPHP/pure-collection/issues",
+    "source": "https://github.com/PurrPHP/pure-collection"
   },
   "autoload": {
     "psr-4": {
